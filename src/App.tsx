@@ -1,9 +1,10 @@
-import { Button } from './src/components/ui'
+import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
 export function App() {
   return (
     <div>
-      <Button as={'button'}>Text</Button>
+      <Typography variant={'Subtitle_1'}>Header</Typography>
+      <Typography variant={'Overline'}>Header</Typography>
     </div>
   )
 }

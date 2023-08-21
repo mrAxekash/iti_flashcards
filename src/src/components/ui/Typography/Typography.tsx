@@ -13,26 +13,39 @@ export const Typography = (props: PropsType) => {
         return s.H2
       case 'H3':
         return s.H3
-      case 'Body 1':
+      case 'Body_1':
         return s.Body_1
-      case 'Subtitle 1':
+      case 'Subtitle_1':
         return s.Subtitle_1
-      case 'Body 2':
+      case 'Body_2':
         return s.Body_2
       case 'Caption':
         return s.Caption
       case 'Overline':
         return s.Overline
-      case 'Link 1':
+      case 'Link_1':
         return s.Link_1
-      case 'Link 2':
+      case 'Link_2':
         return s.Link_2
       default:
         return ''
     }
   }
 
-  return <>{<div className={classSelector()}>{props.children}</div>}</>
+  const tagSelector = () => {
+    switch (props.variant) {
+      case 'H1':
+        return <h1 className={classSelector()}>{props.children}</h1>
+      case 'H2':
+        return <h2 className={classSelector()}>{props.children}</h2>
+      case 'H3':
+        return <h2 className={classSelector()}>{props.children}</h2>
+      default:
+        return <div className={classSelector()}>{props.children}</div>
+    }
+  }
+
+  return <>{tagSelector()}</>
 }
 
 type PropsType = {
@@ -41,13 +54,13 @@ type PropsType = {
     | 'H1'
     | 'H2'
     | 'H3'
-    | 'Body 1'
-    | 'Subtitle 1'
-    | 'Body 2'
-    | 'Subtitle 2'
+    | 'Body_1'
+    | 'Subtitle_1'
+    | 'Body_2'
+    | 'Subtitle_2'
     | 'Caption'
     | 'Overline'
-    | 'Link 1'
-    | 'Link 2'
+    | 'Link_1'
+    | 'Link_2'
   children: ReactNode
 }
