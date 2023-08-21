@@ -1,0 +1,74 @@
+.Large {
+  font-size: 26px;
+}
+
+.H1 {
+  font-size: 20px;
+}
+
+.H3 {
+  font-size: 16px;
+}
+
+.H2 {
+  font-size: 18px;
+}
+
+.H3,
+.Body_1,
+.Subtitle_1,
+.Subtitle_2 {
+  font-size: 16px;
+}
+
+.Body_2,
+.Subtitle_2,
+.Link_1 {
+  font-size: 14px;
+}
+
+.Caption,
+.Overline,
+.Link_2 {
+  font-size: 12px;
+  line-height: var(--line-height-s);
+}
+
+.Large,
+.H1,
+.Subtitle_1,
+.Overline {
+  font-weight: 700;
+}
+
+.Large,
+.H1,
+.H2,
+.H3,
+.Subtitle_1,
+.Overline {
+  font-weight: var(--font-weight-bold);
+}
+
+.Large,
+.H1,
+.H2,
+.H3 {
+  line-height: var(--line-height-l);
+}
+
+.H2,
+.H3,
+.Body_1,
+.Subtitle_1,
+.Body_2,
+.Subtitle_2,
+.Link_1 {
+  line-height: var(--line-height-m);
+}
+
+.Link_1,
+.Link_2 {
+  color: var(--color-info-500);
+  text-decoration-line: underline;
+}
