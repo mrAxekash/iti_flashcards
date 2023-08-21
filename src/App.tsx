@@ -1,9 +1,9 @@
-import { Button } from './src/components/ui'
+import { Select } from '@/src/components/ui/Select/Select.tsx'
 
 export function App() {
   return (
     <div>
-      <Button as={'button'}>Text</Button>
+      <Select />
     </div>
   )
 }

@@ -1,0 +1,29 @@
+.trigger,
+.content {
+  width: 210px;
+}
+
+.trigger {
+  display: flex;
+  justify-content: space-between;
+  background: black;
+  border: 1px solid grey;
+}
+
+.trigger[data-placeholder] {
+}
+
+.item[data-highlighted] {
+  background: #9747FF;
+  border: none;
+}
+
+
+.viewport {
+}
+
+.value:hover {
+  border: 1px solid red;
+}
+
+
