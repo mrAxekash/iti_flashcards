@@ -3,11 +3,17 @@ import * as RSelect from '@radix-ui/react-select'
 
 import s from './Select.module.scss'
 
-export const Select = () => {
+export const Select = (props: PropsType) => {
+  const mappedOptions = props.options.map(e => (
+    <RSelect.Item key={e.id} className={s.item} value={e.value}>
+      {e.value}
+    </RSelect.Item>
+  ))
+
   return (
-    <RSelect.Root>
+    <RSelect.Root value={props.value} onValueChange={props.onChangeOption}>
       <RSelect.Trigger className={s.trigger}>
-        <RSelect.Value placeholder="Select box" />
+        <RSelect.Value aria-label={props.value}>{props.value}</RSelect.Value>
         <RSelect.Icon>
           <ChevronDownIcon />
         </RSelect.Icon>
@@ -15,17 +21,7 @@ export const Select = () => {
       <RSelect.Portal>
         <RSelect.Content className={s.content}>
           <RSelect.ScrollUpButton />
-          <RSelect.Viewport className={s.viewport}>
-            <RSelect.Item className={s.item} value="value1">
-              Item 1
-            </RSelect.Item>
-            <RSelect.Item className={s.item} value="value1">
-              Item 2
-            </RSelect.Item>
-            <RSelect.Item className={s.item} value="value1">
-              Item 3
-            </RSelect.Item>
-          </RSelect.Viewport>
+          <RSelect.Viewport className={s.viewport}>{mappedOptions}</RSelect.Viewport>
           <RSelect.ScrollDownButton />
           <RSelect.Arrow />
         </RSelect.Content>
@@ -33,3 +29,19 @@ export const Select = () => {
     </RSelect.Root>
   )
 }
+
+export type OptionType = {
+  id: number
+  value: string
+}
+
+type PropsType = {
+  options: Array<OptionType>
+  value: string
+  onChangeOption: (option: string) => void
+}
+
+// question:
+/*
+  if blank value passed then placeholder is ignoring
+ */
