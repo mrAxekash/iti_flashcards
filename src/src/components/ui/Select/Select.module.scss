@@ -31,6 +31,20 @@
   }
 }
 
+.trigger[data-disabled] {
+  &:hover {
+    background-color: black;
+  }
+}
+
+.value {
+  //color: red;
+}
+
+.value[data-disabled] {
+  color: grey;
+}
+
 .item {
   padding: 1px 6px;
 }

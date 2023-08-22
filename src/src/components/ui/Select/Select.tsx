@@ -11,9 +11,11 @@ export const Select = (props: PropsType) => {
   ))
 
   return (
-    <RSelect.Root value={props.value} onValueChange={props.onChangeOption}>
+    <RSelect.Root value={props.value} onValueChange={props.onChangeOption} disabled={props.isDisabled ? props.isDisabled : false}>
       <RSelect.Trigger className={s.trigger}>
-        <RSelect.Value aria-label={props.value}>{props.value}</RSelect.Value>
+        <RSelect.Value aria-label={props.value} className={s.value}>
+          {props.value}
+        </RSelect.Value>
         <RSelect.Icon>
           <ChevronDownIcon />
         </RSelect.Icon>
@@ -39,6 +41,7 @@ type PropsType = {
   options: Array<OptionType>
   value: string
   onChangeOption: (option: string) => void
+  isDisabled?: boolean
 }
 
 // question:
