@@ -12,7 +12,7 @@ export function App() {
 
   return (
     <div>
-      <Select options={arr} value={value} onChangeOption={setValue} />
+      <Select options={arr} value={value} onChangeOption={setValue} isDisabled={true} />
     </div>
   )
 }

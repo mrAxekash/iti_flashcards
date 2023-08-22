@@ -32,17 +32,15 @@
 }
 
 .trigger[data-disabled] {
+  color: grey;
+
   &:hover {
     background-color: black;
   }
 }
 
 .value {
-  //color: red;
-}
-
-.value[data-disabled] {
-  color: grey;
+  color: red;
 }
 
 .item {
