@@ -17,13 +17,13 @@ export const Select = () => {
           <RSelect.ScrollUpButton />
           <RSelect.Viewport className={s.viewport}>
             <RSelect.Item className={s.item} value="value1">
-              Value 1
+              Item 1
             </RSelect.Item>
             <RSelect.Item className={s.item} value="value1">
-              Value 2
+              Item 2
             </RSelect.Item>
             <RSelect.Item className={s.item} value="value1">
-              Value 3
+              Item 3
             </RSelect.Item>
           </RSelect.Viewport>
           <RSelect.ScrollDownButton />

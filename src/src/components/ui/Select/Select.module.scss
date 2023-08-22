@@ -3,27 +3,40 @@
   width: 210px;
 }
 
-.trigger {
+.trigger,
+.item {
   display: flex;
-  justify-content: space-between;
-  background: black;
+  align-items: center;
+  height: 36px;
+}
+
+.trigger,
+.viewport {
   border: 1px solid grey;
 }
 
-.trigger[data-placeholder] {
+.trigger {
+  justify-content: space-between;
+  background-color: black;
+  border-radius: 2px;
+
+  &:focus {
+    border: 1px solid #2f68cc;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.item {
+  padding: 1px 6px;
 }
 
 .item[data-highlighted] {
-  background: #9747FF;
-  border: none;
+  color: #a280ff;
+  background: #9747ff;
+  outline: none;
 }
-
-
-.viewport {
-}
-
-.value:hover {
-  border: 1px solid red;
-}
-
-
