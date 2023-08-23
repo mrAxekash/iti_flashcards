@@ -3,7 +3,7 @@ import * as RSelect from '@radix-ui/react-select'
 
 import s from './Select.module.scss'
 
-export const Select = (props: PropsType) => {
+export const Select = (props: SelectPropsType) => {
   const mappedOptions = props.options.map(e => (
     <RSelect.Item key={e.id} className={s.item} value={e.value}>
       {e.value}
@@ -39,7 +39,7 @@ export type OptionType = {
   value: string
 }
 
-type PropsType = {
+export type SelectPropsType = {
   options: Array<OptionType>
   value: string
   onChangeOption: (option: string) => void
