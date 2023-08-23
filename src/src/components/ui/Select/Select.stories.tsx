@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-// import {OptionType, Select} from '@/src/components/ui/Select/Select.tsx'
 import { OptionType, Select } from './Select.tsx'
 
 const meta = {
