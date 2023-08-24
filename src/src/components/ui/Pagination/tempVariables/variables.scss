@@ -1,0 +1,104 @@
+// == All BrightStyle colors ==:
+$primaryColor: #f5df4e;
+$accentColor: #f0d900;
+$darkAccentColor: #d78e18;
+$bgColorCard: #F9F9FE;
+$bgSecondColor: #fff;
+$lightYellow: #F5EDB9;
+
+// основной цвет шрифта текста, применен для:
+// h1, h2, input, table
+$textColor: #2D2E46;
+
+// цвет основного фона
+$bgColorMain: linear-gradient($lightYellow, #f0e477);
+// $bgColorMain: linear-gradient($lightYellow, $accentColor) 
+/*linear-gradient(#E6D4DE, #9890C7)*/;
+// цвет фона Header
+$bgColorHeader: #f5df4e;
+// цвет фона карточек
+$bgColorCard: #F9F9FE;
+// цвет фона Search
+$bgColorSearch: #ECECF9;
+// цвет рамки Search
+$borderColorSearch: #635D80;
+// цвет фона заголовка таблицы
+$bgColorTableHead: #ECECF9;
+// цвет фона "зебры" строк таблицы
+$bgColorTableRowDark: #F5F4FA;
+// цвет тени таблицы
+$tableShadowColor: rgba(45, 46, 70, 0.15);
+// цвет фона левой части PacksList
+$bgColorSidebar: #ECECF9;
+// цвет фона блока профиля в MyPacksList
+$bgColorProfileBlock: #D9D9F1;
+
+// == Buttons ==
+// цвет синей кнопки
+$buttonColorOne: $primaryColor; /*#21268F*/
+// цвет шрифта синей кнопки
+$buttonFontColorOne: $textColor /*#ECECF9*/;
+// цвет тени синей кнопки
+$buttonShadowColorOne: rgba(33, 38, 143, 0.35),
+inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+// цвет светло-голубой кнопки
+$buttonColorTwo: $lightYellow /*#D7D8EF*/;
+// цвет шрифта светло-голубой кнопки 
+$buttonFontColorTwo: #21268F;
+// цвет красной кнопки
+$buttonColorThree: #F1453D;
+// цвет шрифта красной кнопки
+$buttonFontColorThree: #FFFFFF;
+// цвет тени красной кнопки
+$buttonShadowColorThree: 0px 4px 18px rgba(241, 69, 61, 0.35),
+inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+// цвет белой кнопки
+$buttonColorFour: #FFFFFF;
+// цвет фиолетовой кнопки
+$buttonColorFive: $darkAccentColor /*#9A91C8*/;
+// цвет шрифта кнопки disabled
+$buttonDisabled: #939597;
+
+// цвет нижней границы input
+$inputBorderBottomColor: #CECFDA;
+// цвет шрифта label input
+$inputLabelColorFont: #9393A2;
+
+// цвет ссылок меню
+$menuItemColor: #2D2E46;
+// цвет border-bottom ссылок меню
+$menuUnderlineColor: $darkAccentColor /*#161fc4*/;
+
+// цвет ссылок на формах
+$linkColor: $accentColor /*#21268F*/;
+
+
+// серый цвет текста в span на карточках
+$textColorLight: rgba(45, 46, 70, 0.5);
+
+// светлый серый цвет, горизонтальная линия в модальных окнах
+$lineColorLight: #EDF0F6;
+
+
+$titleFontFamily: 'Poppins',
+sans-serif;
+$textFontFamily: 'Poppins',
+sans-serif;
+
+$tempBorder: 1px solid lightgray;
+
+// pagination:
+// цвет квадратика пагинации
+$paginationColor: $primaryColor /*#21268F*/;
+// цвет шрифта пагинации светлый
+$paginationTextColorLight: $textColor /*#FFFFFF*/;
+// цвет шрифта пагинации темный
+$paginationTextColorDark: #2D2E46;
+
+
+//for media query
+$xs: 0px;
+$sm: 600px;
+$md: 900px;
+$lg: 1200px;
+$xl: 1536px;

@@ -1,0 +1,11 @@
+@import './../../tempVariables/variables';
+
+.select {
+  cursor: pointer;
+
+  width: 100px;
+  height: 25px;
+
+  background: $primaryColor;
+  border: none;
+}
