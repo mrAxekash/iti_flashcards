@@ -6,7 +6,7 @@ import selectStyle from './tempComponents/c5-SuperSelect/SuperSelect.module.scss
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator
-  let pages = []
+  let pages: number[] = []
 
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i)

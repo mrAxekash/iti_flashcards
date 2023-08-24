@@ -13,7 +13,7 @@ export function App() {
   const [value, setValue] = useState('Select-box')
 
   // For Pagination:
-  const totalCount = 10
+  const totalCount = 4861 // should come from server api
   const [pageCount, setPageCount] = useState(10)
   const [page, setPage] = useState(1)
   const values = ['5', '10', '20', '50', '100'] // for SuperSelect
