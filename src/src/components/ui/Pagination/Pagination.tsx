@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import s from './Paginations.module.scss'
-import SuperSelect from './tempComponents/c5-SuperSelect/SuperSelect'
-import selectStyle from './tempComponents/c5-SuperSelect/SuperSelect.module.scss'
+
+import { Select } from '@/src/components/ui/Select/Select.tsx'
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator
+
+  // console.log('pagesCount: ' + pagesCount + '\n' + )
   let pages: number[] = []
 
   for (let i = 1; i <= pagesCount; i++) {
@@ -97,12 +99,11 @@ export const Pagination: React.FC<PropsType> = props => {
       )}
       <div className={s.selectBlock}>
         <span className={s.label1}>Show</span>
-        <SuperSelect
-          options={props.superSelect.arr}
-          value={props.superSelect.valueForSsSr}
-          onChangeOption={props.superSelect.onChangeOption}
+        <Select
+          options={props.selectSettings.arr}
+          value={props.selectSettings.value}
+          onChangeOption={props.selectSettings.onChangeOption}
           onClick={props.onClickSelectHandler}
-          className={`${selectStyle.select} ${s.superSelect}`}
         />
         <span className={s.label2}>Cards per Page</span>
       </div>
@@ -114,10 +115,10 @@ type PropsType = {
   cardPacksTotalCount: number
   pageCount: number
   onClickSelectHandler: () => void
-  superSelect: {
+  selectSettings: {
     // setting for Select
-    valueForSsSr: string
-    onChangeOption: React.Dispatch<React.SetStateAction<string>>
+    value: string
+    onChangeOption: (value: string) => void
     arr: Array<string>
   }
   page: number
