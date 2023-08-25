@@ -17,7 +17,7 @@ export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
       value={props.value}
       onValueChange={e => {
         props.onChangeOption(e)
-        props.onClick(e)
+        props.onClick && props.onClick(e)
       }}
       disabled={props.isDisabled ? props.isDisabled : false}
     >
@@ -54,7 +54,7 @@ export type SelectPropsType = DefaultSelectPropsType & {
   value: string
   onChangeOption: (option: string) => void
   isDisabled?: boolean
-  onClick: (value: string) => void
+  onClick?: (value: string) => void
 }
 
 // question:
