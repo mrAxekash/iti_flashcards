@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@/src/components/ui/Card/Card.tsx'
 import { OptionType, Select } from '@/src/components/ui/Select/Select.tsx'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
@@ -16,6 +17,9 @@ export function App() {
       <Select options={arr} value={value} onChangeOption={setValue} isDisabled={true} />
       <Typography variant={'Subtitle_1'}>Header</Typography>
       <Typography variant={'Overline'}>Header</Typography>
+      <Card>
+        <div>test text</div>
+      </Card>
     </div>
   )
 }
