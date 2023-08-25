@@ -8,8 +8,8 @@ const meta = {
   component: Textfield,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      options: ['primary', 'secondary', 'tertiary'],
+    type: {
+      options: ['text', 'password', 'search'],
       control: {
         type: 'radio',
       },
@@ -21,9 +21,28 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
+export const Text: Story = {
   args: {
-    variant: 'primary',
     type: 'text',
+    inputTitle: 'Input text',
+  },
+}
+export const Password: Story = {
+  args: {
+    type: 'password',
+    inputTitle: 'Input Pasword',
+  },
+}
+export const Search: Story = {
+  args: {
+    type: 'search',
+  },
+}
+
+export const Error: Story = {
+  args: {
+    type: 'search',
+    inputTitle: 'Input search',
+    error: 'Some error',
   },
 }

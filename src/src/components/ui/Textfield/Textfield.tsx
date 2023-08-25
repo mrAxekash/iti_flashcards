@@ -33,10 +33,12 @@ import { Search } from '@/src/components/ui/icons/Search.tsx'
 type ImputPropsType = {
   inputTitle?: string
   type: 'text' | 'password' | 'search'
+  error?: string | null
+  isDisabled?: boolean
 }
 
 export const Textfield: React.FC<ImputPropsType> = props => {
-  const { inputTitle, type } = props
+  const { inputTitle, type, error, isDisabled } = props
 
   const [eyeState, setEyeState] = useState(false)
 
@@ -46,11 +48,11 @@ export const Textfield: React.FC<ImputPropsType> = props => {
   }
 
   return (
-    <div className={inputStyle[type]}>
+    <div className={` ${inputStyle[type]}`}>
       <div
         className={`${
-          type === 'text' || type === 'password' ? inputStyle.primaryTitle : inputStyle.disabled
-        }`}
+          type === 'text' || type === 'password' ? inputStyle.primaryTitle : inputStyle.deleteField
+        } ${isDisabled && inputStyle.disabled} `}
       >
         {inputTitle}
       </div>
@@ -60,9 +62,13 @@ export const Textfield: React.FC<ImputPropsType> = props => {
         }`}
       >
         {type === 'password' && (
-          <button onClick={eyeChangeHandler} className={inputStyle.button}>
-            {eyeState && <Eye />}
-            {!eyeState && <EyeOff />}
+          <button
+            onClick={eyeChangeHandler}
+            className={`${inputStyle.button} ${isDisabled && inputStyle.disabled}`}
+            disabled={isDisabled}
+          >
+            {eyeState && <Eye disabled={isDisabled} />}
+            {!eyeState && <EyeOff disabled={isDisabled} />}
           </button>
         )}
         {type === 'search' && <Search />}
@@ -72,7 +78,9 @@ export const Textfield: React.FC<ImputPropsType> = props => {
             ${type === 'password' && inputStyle.passwordInput}
              ${inputStyle.defaultInput}
           }`}
+          disabled={isDisabled}
         />
+        {error && <div className={inputStyle.error}>{error}</div>}
       </div>
     </div>
   )
