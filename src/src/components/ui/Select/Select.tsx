@@ -44,11 +44,6 @@ type DefaultSelectPropsType = DetailedHTMLProps<
   HTMLSelectElement
 >
 
-export type OptionType = {
-  id: number
-  value: string
-}
-
 export type SelectPropsType = DefaultSelectPropsType & {
   options: Array<string>
   value: string
