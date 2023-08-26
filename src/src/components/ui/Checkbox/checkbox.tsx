@@ -6,6 +6,7 @@ import { clsx } from 'clsx'
 
 import Check from '@/src/components/ui/Checkbox/check.tsx'
 import s from '@/src/components/ui/Checkbox/checkbox.module.scss'
+import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
 export type CheckboxProps = {
   className?: string
@@ -32,14 +33,14 @@ export const Checkbox: FC<CheckboxProps> = ({
     container: clsx(s.container, className),
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
     root: s.root,
-    indicator: s.indicator,
+    indicator: clsx(s.indicator, checked && s.checked),
     label: clsx(s.label, disabled && s.disabled),
   }
 
   return (
     <div className={classNames.container}>
       <LabelRadix.Root asChild>
-        <Typography className={classNames.label} as={'label'}>
+        <Typography variant="Body_2" className={classNames.label}>
           <div className={classNames.buttonWrapper}>
             <CheckboxRadix.Root
               className={classNames.root}
@@ -56,7 +57,7 @@ export const Checkbox: FC<CheckboxProps> = ({
               )}
             </CheckboxRadix.Root>
           </div>
-          {label}
+          <div>{label}</div>
         </Typography>
       </LabelRadix.Root>
     </div>
