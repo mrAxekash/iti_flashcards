@@ -1,28 +1,4 @@
-// import { ComponentPropsWithoutRef, ElementType } from 'react'
-//
-// export type InputPropsType<E extends ElementType = 'input'> = {
-//   variant?: 'primary' | 'password' | 'search'
-//   type?: string
-//   as?: E
-//   className?: string
-// } & ComponentPropsWithoutRef<E>
-// export const Textfield = <E extends ElementType = 'input'>(
-//   props: InputPropsType<E> & Omit<ComponentPropsWithoutRef<E>, keyof InputPropsType<E>>
-// ) => {
-//   const { variant = 'primary', as: Component = 'input', ...rest } = props
-//
-//   return (
-//     <div>
-//       <div>Textfield</div>
-//       <div>
-//         <Component />
-//       </div>
-//       <input type={'text'} />
-//     </div>
-//   ) //<Component {...rest}> </Component>
-// }
-
-import { useState } from 'react'
+import { useState, ComponentPropsWithoutRef, ElementType } from 'react'
 
 import inputStyle from './Textfield.module.scss'
 
@@ -30,15 +6,19 @@ import { Eye } from '@/src/components/ui/icons/Eye.tsx'
 import { EyeOff } from '@/src/components/ui/icons/EyeOff.tsx'
 import { Search } from '@/src/components/ui/icons/Search.tsx'
 
-type ImputPropsType = {
-  inputTitle?: string
+type InputPropsType<E extends ElementType = 'input'> = {
+  label?: string
   type: 'text' | 'password' | 'search'
-  error?: string | null
+  errorMessage?: string | null
   isDisabled?: boolean
-}
+  as?: E
+  onChangeValue?: (value: string) => void
+} & ComponentPropsWithoutRef<E>
 
-export const Textfield: React.FC<ImputPropsType> = props => {
-  const { inputTitle, type, error, isDisabled } = props
+export const Textfield = <E extends ElementType = 'input'>(
+  props: InputPropsType & Omit<ComponentPropsWithoutRef<E>, keyof InputPropsType<E>>
+) => {
+  const { label, type, errorMessage, isDisabled, as: Component = 'input', ...rest } = props
 
   const [eyeState, setEyeState] = useState(false)
 
@@ -49,13 +29,13 @@ export const Textfield: React.FC<ImputPropsType> = props => {
 
   return (
     <div className={` ${inputStyle[type]}`}>
-      <div
+      <label
         className={`${
           type === 'text' || type === 'password' ? inputStyle.primaryTitle : inputStyle.deleteField
         } ${isDisabled && inputStyle.disabled} `}
       >
-        {inputTitle}
-      </div>
+        {label}
+      </label>
       <div
         className={`${type === 'search' && inputStyle.iconPassword} ${
           type === 'password' && inputStyle.iconPassword
@@ -72,15 +52,18 @@ export const Textfield: React.FC<ImputPropsType> = props => {
           </button>
         )}
         {type === 'search' && <Search />}
-        <input
+        <Component
           type={finalType}
-          className={` ${inputStyle.defaultInput} ${type === 'search' && inputStyle.searchInput}
+          className={` ${errorMessage && inputStyle.error} ${inputStyle.defaultInput} ${
+            type === 'search' && inputStyle.searchInput
+          }
             ${type === 'password' && inputStyle.passwordInput}
-             ${inputStyle.defaultInput}
+
           }`}
           disabled={isDisabled}
+          {...rest}
         />
-        {error && <div className={inputStyle.error}>{error}</div>}
+        {errorMessage && <div className={inputStyle.error}>{errorMessage}</div>}
       </div>
     </div>
   )

@@ -24,13 +24,13 @@ type Story = StoryObj<typeof meta>
 export const Text: Story = {
   args: {
     type: 'text',
-    inputTitle: 'Input text',
+    label: 'Input text',
   },
 }
 export const Password: Story = {
   args: {
     type: 'password',
-    inputTitle: 'Input Pasword',
+    label: 'Input Pasword',
   },
 }
 export const Search: Story = {
@@ -39,10 +39,26 @@ export const Search: Story = {
   },
 }
 
-export const Error: Story = {
+export const ErrorText: Story = {
+  args: {
+    type: 'text',
+    label: 'Input search',
+    errorMessage: 'Some error',
+  },
+}
+
+export const ErrorSearch: Story = {
   args: {
     type: 'search',
-    inputTitle: 'Input search',
-    error: 'Some error',
+    label: 'Input search',
+    errorMessage: 'Incorrect request',
+  },
+}
+
+export const ErrorPassword: Story = {
+  args: {
+    type: 'password',
+    label: 'Input search',
+    errorMessage: 'Incorrect password',
   },
 }
