@@ -6,7 +6,7 @@ export function App() {
   return (
     <div>
       <Button as={'button'}>Text</Button>
-      <Textfield type={'search'} inputTitle={'Cards APP'} />
+      <Textfield type={'text'} label={'Cards APP'} />
     </div>
   )
 }

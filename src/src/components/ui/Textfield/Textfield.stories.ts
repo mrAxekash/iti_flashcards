@@ -7,14 +7,6 @@ const meta = {
   title: 'Components/Textfield',
   component: Textfield,
   tags: ['autodocs'],
-  argTypes: {
-    type: {
-      options: ['text', 'password', 'search'],
-      control: {
-        type: 'radio',
-      },
-    },
-  },
 } satisfies Meta<typeof Textfield>
 
 export default meta
@@ -33,32 +25,32 @@ export const Password: Story = {
     label: 'Input Pasword',
   },
 }
-export const Search: Story = {
-  args: {
-    type: 'search',
-  },
-}
+// export const Search: Story = {
+//   args: {
+//     type: 'search',
+//   },
+// }
 
-export const ErrorText: Story = {
-  args: {
-    type: 'text',
-    label: 'Input search',
-    errorMessage: 'Some error',
-  },
-}
+// export const ErrorText: Story = {
+//   args: {
+//     type: 'text',
+//     label: 'Input search',
+//     errorMessage: 'Some error',
+//   },
+// }
 
-export const ErrorSearch: Story = {
-  args: {
-    type: 'search',
-    label: 'Input search',
-    errorMessage: 'Incorrect request',
-  },
-}
+// export const ErrorSearch: Story = {
+//   args: {
+//     type: 'search',
+//     label: 'Input search',
+//     errorMessage: 'Incorrect request',
+//   },
+// }
 
-export const ErrorPassword: Story = {
-  args: {
-    type: 'password',
-    label: 'Input search',
-    errorMessage: 'Incorrect password',
-  },
-}
+// export const ErrorPassword: Story = {
+//   args: {
+//     type: 'password',
+//     label: 'Input search',
+//     errorMessage: 'Incorrect password',
+//   },
+// }
