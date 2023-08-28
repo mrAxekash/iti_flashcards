@@ -10,7 +10,8 @@ export function App() {
   return (
     <div>
       <Button as={'button'}>Text</Button>
-      <Checkbox checked={checked} onChange={setCheked} />
+      <Checkbox checked={checked} onChange={setCheked} disabled={false} />
+      <Checkbox label="Check-box" checked={checked} onChange={setCheked} disabled={true} />
       <Checkbox label="Check-box" checked={checked} onChange={setCheked} />
     </div>
   )

@@ -24,25 +24,12 @@
   border-radius: 2px;
 
   &:focus {
-    background-color: var(--color-dark-900);
     outline: none;
   }
 
   &:disabled {
     cursor: initial;
     border-color: var(--color-dark-100);
-  }
-
-  &[data-state='checked']:disabled {
-    background-color: var(--color-dark-900);
-  }
-
-  &:focus-within {
-    background-color: var(--color-dark-500);
-  }
-
-  &:active {
-    background-color: var(--color-dark-100);
   }
 }
 
@@ -58,12 +45,12 @@
 
   border-radius: 50%;
 
-  &:focus-within,
   &:hover:not(.disabled),
-  &:hover {
+  &:hover:not(.disabled) {
     background-color: var(--color-dark-500);
   }
 
+  &:focus-within,
   &:active:not(.disabled) {
     background-color: var(--color-dark-100);
   }
@@ -83,6 +70,10 @@
   color: var(--color-dark-100);
 }
 
-.checked {
+.checked:not(.disabled) {
   background: var(--color-dark-900);
+}
+
+.checked {
+  background: var(--color-light-700);
 }

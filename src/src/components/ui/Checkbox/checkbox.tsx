@@ -33,7 +33,7 @@ export const Checkbox: FC<CheckboxProps> = ({
     container: clsx(s.container, className),
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
     root: s.root,
-    indicator: clsx(s.indicator, checked && s.checked),
+    indicator: clsx(s.indicator, checked && s.checked, disabled && s.disabled),
     label: clsx(s.label, disabled && s.disabled),
   }
 
