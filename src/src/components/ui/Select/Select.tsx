@@ -1,19 +1,24 @@
+import { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
+
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import * as RSelect from '@radix-ui/react-select'
 
 import s from './Select.module.scss'
 
-export const Select = (props: SelectPropsType) => {
-  const mappedOptions = props.options.map(e => (
-    <RSelect.Item key={e.id} className={s.item} value={e.value}>
-      {e.value}
+export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
+  const mappedOptions = props.options.map((e, i) => (
+    <RSelect.Item key={'option-' + i} className={s.item} value={e}>
+      {e}
     </RSelect.Item>
   ))
 
   return (
     <RSelect.Root
       value={props.value}
-      onValueChange={props.onChangeOption}
+      onValueChange={e => {
+        props.onChangeOption(e)
+        props.onClick && props.onClick(e)
+      }}
       disabled={props.isDisabled ? props.isDisabled : false}
     >
       <RSelect.Trigger className={s.trigger}>
@@ -23,7 +28,7 @@ export const Select = (props: SelectPropsType) => {
         </RSelect.Icon>
       </RSelect.Trigger>
       <RSelect.Portal>
-        <RSelect.Content className={s.content}>
+        <RSelect.Content className={s.content} position={'popper'}>
           <RSelect.ScrollUpButton />
           <RSelect.Viewport className={s.viewport}>{mappedOptions}</RSelect.Viewport>
           <RSelect.ScrollDownButton />
@@ -34,16 +39,17 @@ export const Select = (props: SelectPropsType) => {
   )
 }
 
-export type OptionType = {
-  id: number
-  value: string
-}
+type DefaultSelectPropsType = DetailedHTMLProps<
+  SelectHTMLAttributes<HTMLSelectElement>,
+  HTMLSelectElement
+>
 
-export type SelectPropsType = {
-  options: Array<OptionType>
+export type SelectPropsType = DefaultSelectPropsType & {
+  options: Array<string>
   value: string
   onChangeOption: (option: string) => void
   isDisabled?: boolean
+  onClick?: (value: string) => void
 }
 
 // question:

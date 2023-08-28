@@ -1,21 +1,42 @@
 import { useState } from 'react'
 
-import { OptionType, Select } from '@/src/components/ui/Select/Select.tsx'
+import { Select } from './src/components/ui/Select'
+
+import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
 export function App() {
-  const arr: Array<OptionType> = [
-    { id: 1, value: 'value 1' },
-    { id: 2, value: 'value 2' },
-    { id: 3, value: 'value 3' },
-  ]
-  const [value, setValue] = useState('Select-box')
+  //For Select:
+  const [valueSelectFirst, setValueSelectFirst] = useState('Select-box')
+  const arr: Array<string> = ['value 1', 'value 2', 'value 3']
+
+  // For Pagination:
+  const totalCount = 4861 // should come from server api
+  const [pageCount, setPageCount] = useState(10)
+  const [page, setPage] = useState(1)
+  const values: Array<string> = ['5', '10', '20', '50', '100']
+  const [value, setValue] = useState(values[0]) // for SuperSelect
+  const onClickSelectHandler = () => {
+    setPageCount(+value)
+  }
 
   return (
     <div>
-      <Select options={arr} value={value} onChangeOption={setValue} isDisabled={true} />
       <Typography variant={'Subtitle_1'}>Header</Typography>
       <Typography variant={'Overline'}>Header</Typography>
+      <Select value={valueSelectFirst} onChangeOption={setValueSelectFirst} options={arr} />
+      <Pagination
+        cardPacksTotalCount={totalCount}
+        pageCount={pageCount}
+        onClickSelectHandler={onClickSelectHandler}
+        selectSettings={{
+          value: value,
+          onChangeOption: setValue,
+          arr: values,
+        }}
+        page={page}
+        currentPageHandler={setPage}
+      />
     </div>
   )
 }

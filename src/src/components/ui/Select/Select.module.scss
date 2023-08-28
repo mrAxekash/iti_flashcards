@@ -1,6 +1,15 @@
 .trigger,
 .content {
-  width: 210px;
+  //width: 210px;
+}
+
+.trigger {
+}
+
+.content {
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  background-color: black;
 }
 
 .trigger,
