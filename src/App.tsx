@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import { Select } from './src/components/ui/Select'
 
+import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
-import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 
 export function App() {
   //For Select:
