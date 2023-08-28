@@ -5,6 +5,9 @@ import { Select } from './src/components/ui/Select'
 import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
+import { Button } from './src/components/ui'
+
+import { Textfield } from '@/src/components/ui/Textfield'
 
 export function App() {
   //For Select:
@@ -24,6 +27,7 @@ export function App() {
 
   return (
     <div>
+      <Button as={'button'}>Text</Button>
       <Typography variant={'Subtitle_1'}>Header</Typography>
       <Typography variant={'Overline'}>Header</Typography>
       <Select value={valueSelectFirst} onChangeOption={setValueSelectFirst} options={arr} />
@@ -42,6 +46,7 @@ export function App() {
       <Checkbox checked={checked} onChange={setCheked} disabled={false} />
       <Checkbox label="Check-box" checked={checked} onChange={setCheked} disabled={true} />
       <Checkbox label="Check-box" checked={checked} onChange={setCheked} />
+      <Textfield type={'text'} label={'Cards APP'} />
     </div>
   )
 }

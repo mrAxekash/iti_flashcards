@@ -1,0 +1,112 @@
+.container {
+  width: 100%;
+}
+.label {
+  color: var(--color-dark-100);
+  font-size: var(--font-size-s);
+  &:disabled {
+    color: var(--color-dark-300)
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+
+.inputField {
+  width: 100%;
+  padding: 6px 12px;
+  //background: transparent;
+  border: 1px solid var(--color-dark-100);
+  color: var(--color-light-100);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  font-weight: var(--font-weight-regular);
+  outline: 0;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: var(--color-dark-100);
+  }
+  &:hover {
+    background-color: var(--color-dark-700);
+    border-color: var(--color-dark-100);
+    color: var(--color-dark-100)
+  }
+  //&:focus {
+  //  border-color: var(--color-light-100);
+  //}
+  &:focus-visible {
+    border-color: var(--color-light-100);
+  }
+  //&:focus-within {
+  //  border-color: var(--color-light-100);
+  //}
+  &.inputError {
+  color: var(--color-danger-300);
+  border-color: var(--color-danger-300);
+  &::placeholder {
+    color: var(--color-danger-300);
+  }
+  //&:focus-visible {
+  //  border-color: var(--color-info-700);
+  //  outline: 1px solid var(--color-info-700);
+  //}
+  }
+  &:disabled {
+    border-color: var(--color-dark-300);
+    &::placeholder {
+      color: var(--color-dark-300);
+    }
+  }
+}
+.disabled {
+  color: var(--color-dark-300);
+  border-color: var(--color-dark-300);
+}
+
+
+.button {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  bottom: 50%;
+  transform: translateY(-50%);
+  margin-right: 12px;
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.buttonSearch {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  bottom: 50%;
+  transform: translateY(-50%);
+  margin-left: 12px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.inputFieldSearch {
+  padding-left: 45px;
+  padding-right: 10px;
+}
+
+.subField {
+  font-size: var(--font-size-xs);
+  &.error {
+    color: var(--color-danger-300);
+  }
+}
