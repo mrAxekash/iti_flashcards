@@ -4,11 +4,13 @@ import { Select } from './src/components/ui/Select'
 
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
+import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 
 export function App() {
   //For Select:
   const [valueSelectFirst, setValueSelectFirst] = useState('Select-box')
   const arr: Array<string> = ['value 1', 'value 2', 'value 3']
+  let [checked, setCheked] = useState(true)
 
   // For Pagination:
   const totalCount = 4861 // should come from server api
@@ -37,6 +39,9 @@ export function App() {
         page={page}
         currentPageHandler={setPage}
       />
+      <Checkbox checked={checked} onChange={setCheked} disabled={false} />
+      <Checkbox label="Check-box" checked={checked} onChange={setCheked} disabled={true} />
+      <Checkbox label="Check-box" checked={checked} onChange={setCheked} />
     </div>
   )
 }
