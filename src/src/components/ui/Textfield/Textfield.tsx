@@ -1,4 +1,4 @@
-import { useState, ComponentPropsWithoutRef, ComponentProps } from 'react'
+import { useState, ComponentPropsWithoutRef, ComponentProps, forwardRef } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -16,7 +16,7 @@ export type TextfieldPropsType = {
   labelProps?: ComponentProps<'label'>
   containerProps?: ComponentProps<'div'>
 } & ComponentPropsWithoutRef<'input'>
-export const Textfield = (props: TextfieldPropsType) => {
+export const Textfield = forwardRef<HTMLInputElement, TextfieldPropsType>((props, ref) => {
   const {
     label,
     errorMessage,
@@ -65,6 +65,7 @@ export const Textfield = (props: TextfieldPropsType) => {
           className={classNames.inputField}
           placeholder={'Hello'}
           disabled={disabled}
+          ref={ref}
           {...rest}
         />
         {isShowButtonPasswordShowed && (
@@ -89,7 +90,7 @@ export const Textfield = (props: TextfieldPropsType) => {
       )}
     </div>
   )
-}
+})
 
 const getFinalType = (type: ComponentProps<'input'>['type'], showPassword: boolean) => {
   if (type === 'password' && showPassword) {
