@@ -1,10 +1,12 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 import { clsx } from 'clsx'
 
 import s from './Typography.module.scss'
 
-export const Typography = (props: PropsType) => {
+export const Typography = <T extends ElementType = 'p'>(
+  props: PropsType<T> & Omit<ComponentPropsWithoutRef<T>, keyof PropsType<T>>
+) => {
   const tagSelector = () => {
     switch (props.variant) {
       case 'H1':
@@ -21,7 +23,8 @@ export const Typography = (props: PropsType) => {
   return <>{tagSelector()}</>
 }
 
-type PropsType = {
+type PropsType<T extends ElementType> = {
+  as?: T
   variant:
     | 'Large'
     | 'H1'
