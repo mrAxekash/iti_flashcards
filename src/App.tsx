@@ -5,13 +5,13 @@ import { Select } from './src/components/ui/Select'
 
 import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
-import { Textfield } from '@/src/components/ui/Textfield'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
 export function App() {
   //For Select:
   const [valueSelectFirst, setValueSelectFirst] = useState('Select-box')
   const arr: Array<string> = ['value 1', 'value 2', 'value 3']
+  //For Checkbox
   let [checked, setCheked] = useState(true)
 
   // For Pagination:
