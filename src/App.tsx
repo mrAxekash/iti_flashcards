@@ -26,11 +26,11 @@ export function App() {
 
   return (
     <div>
-      <Button as={'button'} variant="primary" disabled={true}>
+      <Button as={'button'} variant="primary">
         Button Primary
       </Button>
       <div>
-        <Button as={'button'} variant="secondary" disabled={true}>
+        <Button as={'button'} variant="secondary">
           Button Secondary
         </Button>
       </div>
