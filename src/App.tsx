@@ -5,6 +5,7 @@ import { Select } from './src/components/ui/Select'
 
 import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
+import { Textfield } from '@/src/components/ui/Textfield'
 import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
 
 export function App() {
@@ -58,6 +59,10 @@ export function App() {
       <Checkbox checked={checked} onChange={setCheked} disabled={false} />
       <Checkbox label="Check-box" checked={checked} onChange={setCheked} disabled={true} />
       <Checkbox label="Check-box" checked={checked} onChange={setCheked} />
+      <Textfield type={'text'} label={'Text input'} />
+      <Textfield type={'password'} label={'Password input'} />
+      <Textfield type={'search'} label={'Search input'} />
+      <Textfield type={'text'} label={'Search input'} errorMessage={'Error!!!'} />
     </div>
   )
 }

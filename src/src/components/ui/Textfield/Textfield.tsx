@@ -7,6 +7,7 @@ import textfieldStyle from './Textfield.module.scss'
 import { Eye } from '@/src/assets/icons/Eye.tsx'
 import { InvisibilityOff } from '@/src/assets/icons/InvisibilityOff.tsx'
 import { Search } from '@/src/assets/icons/Search.tsx'
+import { Typography } from '@/src/components/ui/Typography'
 
 export type TextfieldPropsType = {
   onChangeValue?: (value: string) => void
@@ -53,7 +54,11 @@ export const Textfield = (props: TextfieldPropsType) => {
   return (
     <div className={classNames.container}>
       {/*Add Textarea component for label*/}
-      {label && <label className={classNames.label}> {label}</label>}
+      {label && (
+        <label className={classNames.label}>
+          <Typography variant={'Body_2'}>{label}</Typography>
+        </label>
+      )}
       <div className={classNames.wrapper}>
         <input
           type={finalType}
@@ -77,8 +82,11 @@ export const Textfield = (props: TextfieldPropsType) => {
           </button>
         )}
       </div>
-      {/*add Textarea component for error message*/}
-      {errorMessage && <div className={classNames.subField}>{errorMessage}</div>}
+      {errorMessage && (
+        <div className={classNames.subField}>
+          <Typography variant={'Caption'}>{errorMessage}</Typography>
+        </div>
+      )}
     </div>
   )
 }
