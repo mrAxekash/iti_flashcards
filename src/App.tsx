@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import { Card } from '@/src/components/ui/Card/Card.tsx'
 import { Button } from './src/components/ui'
 import { Select } from './src/components/ui/Select'
 
+import { Card } from '@/src/components/ui/Card/Card.tsx'
 import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
 import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
 import { Textfield } from '@/src/components/ui/Textfield'
