@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Card } from '@/src/components/ui/Card/Card.tsx'
 import { Button } from './src/components/ui'
 import { Select } from './src/components/ui/Select'
 
@@ -63,6 +64,9 @@ export function App() {
       <Textfield type={'password'} label={'Password input'} />
       <Textfield type={'search'} label={'Search input'} />
       <Textfield type={'text'} label={'Search input'} errorMessage={'Error!!!'} />
+      <Card>
+        <div>test text</div>
+      </Card>
     </div>
   )
 }
