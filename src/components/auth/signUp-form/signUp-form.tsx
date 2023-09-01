@@ -11,11 +11,16 @@ import { Typography } from '../../ui/Typography'
 
 import sC from '@/styles/formStyles.module.scss'
 
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  confirm: z.string().min(6),
-})
+const schema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(6),
+    confirm: z.string().min(6),
+  })
+  .refine(data => data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ['confirm'],
+  })
 
 type FormValues = z.input<typeof schema>
 
@@ -47,8 +52,18 @@ export const SignUpForm = () => {
               errorMessage={errors.email?.message}
               label={'email'}
             />
-            <Textfield {...register('password')} label={'Password'} type={'password'} />
-            <Textfield {...register('confirm')} label={'Confirm password'} type={'password'} />
+            <Textfield
+              {...register('password')}
+              label={'Password'}
+              type={'password'}
+              errorMessage={errors.password?.message}
+            />
+            <Textfield
+              {...register('confirm')}
+              label={'Confirm password'}
+              type={'password'}
+              errorMessage={errors.confirm?.message}
+            />
           </div>
           <Button type="submit" className={sC.button}>
             Sign Up

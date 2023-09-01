@@ -48,7 +48,12 @@ export const SignInForm = () => {
               errorMessage={errors.email?.message}
               label={'email'}
             />
-            <Textfield {...register('password')} label={'Password'} type={'password'} />
+            <Textfield
+              {...register('password')}
+              label={'Password'}
+              type={'password'}
+              errorMessage={errors.password?.message}
+            />
           </div>
           <ControlledCheckbox
             name={'rememberMe'}
