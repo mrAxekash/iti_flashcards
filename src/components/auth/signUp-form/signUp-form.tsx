@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '../../ui/button.tsx'
-
 import { Card } from '../../ui/Card'
 import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
+
 import sC from '@/styles/formStyles.module.scss'
 
 const schema = z.object({
@@ -47,8 +47,8 @@ export const SignUpForm = () => {
               errorMessage={errors.email?.message}
               label={'email'}
             />
-            <Textfield {...register('password')} label={'Password'} />
-            <Textfield {...register('confirm')} label={'Confirm password'} />
+            <Textfield {...register('password')} label={'Password'} type={'password'} />
+            <Textfield {...register('confirm')} label={'Confirm password'} type={'password'} />
           </div>
           <Button type="submit" className={sC.button}>
             Sign Up

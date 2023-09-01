@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '../../ui/button.tsx'
-
 import { Card } from '../../ui/Card'
-import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox.tsx'
 import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
+
+import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox.tsx'
 import sC from '@/styles/formStyles.module.scss'
 
 const schema = z.object({
