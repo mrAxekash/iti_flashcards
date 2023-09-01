@@ -7,7 +7,6 @@ import { z } from 'zod'
 import { Button } from '../../ui/button'
 
 import { Card } from '@/src/components/ui/Card'
-import { ControlledCheckbox } from '@/src/components/ui/controlled/controlled-checkbox/controlled-checkbox.tsx'
 import { Textfield } from '@/src/components/ui/Textfield'
 import { Typography } from '@/src/components/ui/Typography'
 import sC from '@/styles/formStyles.module.scss'
@@ -15,12 +14,12 @@ import sC from '@/styles/formStyles.module.scss'
 const schema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  rememberMe: z.boolean().optional(),
+  confirm: z.string().min(6),
 })
 
 type FormValues = z.input<typeof schema>
 
-export const SignInForm = () => {
+export const SignUpForm = () => {
   const {
     register,
     handleSubmit,
@@ -40,7 +39,7 @@ export const SignInForm = () => {
         <Card className={sC.card}>
           <DevTool control={control} />
           <Typography variant={'H1'} className={sC.center}>
-            Sign In
+            Sign Up
           </Typography>
           <div className={sC.values}>
             <Textfield
@@ -48,26 +47,17 @@ export const SignInForm = () => {
               errorMessage={errors.email?.message}
               label={'email'}
             />
-            <Textfield {...register('password')} label={'Password'} type={'password'} />
+            <Textfield {...register('password')} label={'Password'} />
+            <Textfield {...register('confirm')} label={'Confirm password'} />
           </div>
-          <ControlledCheckbox
-            name={'rememberMe'}
-            control={control}
-            label={'remember me'}
-            className={sC.checkbox}
-            position={'left'}
-          />
-          <Typography variant={'Body_2'} className={sC.right}>
-            Forgot Password?
-          </Typography>
           <Button type="submit" className={sC.button}>
-            Sign in
+            Sign Up
           </Button>
           <Typography variant={'Body_2'} className={clsx(sC.center, sC.colorLight)}>
-            Don&apos;t have an account?
+            Already have an account?
           </Typography>
           <Typography variant={'Link_1'} className={clsx(sC.center, sC.signUp)}>
-            Sign In
+            Sign Up
           </Typography>
         </Card>
       </div>
