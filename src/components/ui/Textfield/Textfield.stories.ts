@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Textfield } from './'
+import { Textfield } from './index.ts'
 
 // eslint-disable-next-line storybook/story-exports
 const meta = {

@@ -4,11 +4,11 @@ import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '../../ui/button'
+import { Button } from '../../ui/button.tsx'
 
-import { Card } from '@/src/components/ui/Card'
-import { Textfield } from '@/src/components/ui/Textfield'
-import { Typography } from '@/src/components/ui/Typography'
+import { Card } from '../../ui/Card'
+import { Textfield } from '../../ui/Textfield'
+import { Typography } from '../../ui/Typography'
 import sC from '@/styles/formStyles.module.scss'
 
 const schema = z.object({

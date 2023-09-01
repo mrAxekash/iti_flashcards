@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import s from './Paginations.module.scss'
 
-import { Select } from '@/src/components/ui/Select/Select.tsx'
+import { Select } from '@/components/ui/Select/Select.tsx'
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator

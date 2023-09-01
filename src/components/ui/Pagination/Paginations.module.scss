@@ -1,4 +1,4 @@
-@import './tempVariables/variables';
+@import 'tempVariables/variables';
 
 .pagination {
   display: flex;
@@ -45,11 +45,11 @@
 
   .btnLeft {
     margin-right: 15px;
-    background: url('./tempAssets/img/prev-icon.svg') 3px 2px no-repeat;
+    background: url('tempAssets/img/prev-icon.svg') 3px 2px no-repeat;
   }
 
   .btnRight {
-    background: url('./tempAssets/img/next-icon.svg') 3px 2px no-repeat;
+    background: url('tempAssets/img/next-icon.svg') 3px 2px no-repeat;
   }
 
   .btnFake {
