@@ -1,72 +1,11 @@
-import { useState } from 'react'
-
-import { Button } from './components/ui'
-import { Select } from './components/ui/Select'
-
-import { Card } from '@/components/ui/Card/Card.tsx'
-import { Checkbox } from '@/components/ui/Checkbox/checkbox.tsx'
-import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
-import { Textfield } from '@/components/ui/Textfield'
-import { Typography } from '@/components/ui/Typography/Typography.tsx'
+import { SignInForm } from '@/components/auth/signIn-form/signIn-form'
+import { SignUpForm } from '@/components/auth/signUp-form/signUp-form.tsx'
 
 export function App() {
-  //For Select:
-  const [valueSelectFirst, setValueSelectFirst] = useState('Select-box')
-  const arr: Array<string> = ['value 1', 'value 2', 'value 3']
-  //For Checkbox
-  let [checked, setCheked] = useState(true)
-
-  // For Pagination:
-  const totalCount = 4861 // should come from server api
-  const [pageCount, setPageCount] = useState(10)
-  const [page, setPage] = useState(1)
-  const values: Array<string> = ['5', '10', '20', '50', '100']
-  const [value, setValue] = useState(values[0]) // for SuperSelect
-  const onClickSelectHandler = () => {
-    setPageCount(+value)
-  }
-
   return (
     <div>
-      <Button as={'button'} variant="primary">
-        Button Primary
-      </Button>
-      <div>
-        <Button as={'button'} variant="secondary">
-          Button Secondary
-        </Button>
-      </div>
-      <div>
-        <Button as={'button'} variant="tertiary" disabled={true}>
-          Tertiary
-        </Button>
-      </div>
-
-      <Typography variant={'Subtitle_1'}>Header</Typography>
-      <Typography variant={'Overline'}>Header</Typography>
-      <Select value={valueSelectFirst} onChangeOption={setValueSelectFirst} options={arr} />
-      <Pagination
-        cardPacksTotalCount={totalCount}
-        pageCount={pageCount}
-        onClickSelectHandler={onClickSelectHandler}
-        selectSettings={{
-          value: value,
-          onChangeOption: setValue,
-          arr: values,
-        }}
-        page={page}
-        currentPageHandler={setPage}
-      />
-      <Checkbox checked={checked} onChange={setCheked} disabled={false} />
-      <Checkbox label="Check-box" checked={checked} onChange={setCheked} disabled={true} />
-      <Checkbox label="Check-box" checked={checked} onChange={setCheked} />
-      <Textfield type={'text'} label={'Text input'} />
-      <Textfield type={'password'} label={'Password input'} />
-      <Textfield type={'search'} label={'Search input'} />
-      <Textfield type={'text'} label={'Search input'} errorMessage={'Error!!!'} />
-      <Card>
-        <div>test text</div>
-      </Card>
+      <SignInForm />
+      <SignUpForm />
     </div>
   )
 }

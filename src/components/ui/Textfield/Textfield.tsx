@@ -73,6 +73,7 @@ export const Textfield = forwardRef<HTMLInputElement, TextfieldPropsType>((props
             onClick={() => setShowPassword(!showPassword)}
             className={classNames.button}
             disabled={disabled}
+            type={'button'}
           >
             {showPassword ? <InvisibilityOff /> : <Eye disabled={disabled} />}
           </button>
@@ -99,3 +100,8 @@ const getFinalType = (type: ComponentProps<'input'>['type'], showPassword: boole
 
   return type
 }
+
+/*
+addons:
++added type button in button
+*/
