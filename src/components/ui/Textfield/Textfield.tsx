@@ -4,10 +4,10 @@ import { clsx } from 'clsx'
 
 import textfieldStyle from './Textfield.module.scss'
 
-import { Eye } from '@/src/assets/icons/Eye.tsx'
-import { InvisibilityOff } from '@/src/assets/icons/InvisibilityOff.tsx'
-import { Search } from '@/src/assets/icons/Search.tsx'
-import { Typography } from '@/src/components/ui/Typography'
+import { Eye } from '@/assets/icons/Eye.tsx'
+import { InvisibilityOff } from '@/assets/icons/InvisibilityOff.tsx'
+import { Search } from '@/assets/icons/Search.tsx'
+import { Typography } from '../Typography'
 
 export type TextfieldPropsType = {
   onChangeValue?: (value: string) => void

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-import { Button } from './src/components/ui'
-import { Select } from './src/components/ui/Select'
+import { Button } from './components/ui'
+import { Select } from './components/ui/Select'
 
-import { Card } from '@/src/components/ui/Card/Card.tsx'
-import { Checkbox } from '@/src/components/ui/Checkbox/checkbox.tsx'
-import { Pagination } from '@/src/components/ui/Pagination/Pagination.tsx'
-import { Textfield } from '@/src/components/ui/Textfield'
-import { Typography } from '@/src/components/ui/Typography/Typography.tsx'
+import { Card } from '@/components/ui/Card/Card.tsx'
+import { Checkbox } from '@/components/ui/Checkbox/checkbox.tsx'
+import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
+import { Textfield } from '@/components/ui/Textfield'
+import { Typography } from '@/components/ui/Typography/Typography.tsx'
 
 export function App() {
   //For Select:

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Card } from '@/src/components/ui/Card/Card.tsx'
+import { Card } from '@/components/ui/Card/Card.tsx'
 
 const meta = {
   title: 'Components/Card',
