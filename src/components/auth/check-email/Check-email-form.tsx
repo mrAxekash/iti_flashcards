@@ -16,10 +16,11 @@ export const CheckEmailForm = (props: CheckEmailFormType) => {
     header: clsx(s.header),
     information: clsx(s.information),
     img: clsx(s.img),
+    cardStyle: clsx(s.cardWrapper),
   }
 
   return (
-    <Card>
+    <Card className={formClassNames.cardStyle}>
       <Typography variant={'Large'} className={formClassNames.header}>
         Check Email
       </Typography>
