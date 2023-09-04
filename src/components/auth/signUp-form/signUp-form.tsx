@@ -47,23 +47,29 @@ export const SignUpForm = () => {
             Sign Up
           </Typography>
           <div className={sC.values}>
-            <Textfield
-              {...register('email')}
-              errorMessage={errors.email?.message}
-              label={'email'}
-            />
-            <Textfield
-              {...register('password')}
-              label={'Password'}
-              type={'password'}
-              errorMessage={errors.password?.message}
-            />
-            <Textfield
-              {...register('confirm')}
-              label={'Confirm password'}
-              type={'password'}
-              errorMessage={errors.confirm?.message}
-            />
+            <div className={sC.element}>
+              <Textfield
+                {...register('email')}
+                errorMessage={errors.email?.message}
+                label={'email'}
+              />
+            </div>
+            <div className={sC.element}>
+              <Textfield
+                {...register('password')}
+                label={'Password'}
+                type={'password'}
+                errorMessage={errors.password?.message}
+              />
+            </div>
+            <div className={sC.element}>
+              <Textfield
+                {...register('confirm')}
+                label={'Confirm password'}
+                type={'password'}
+                errorMessage={errors.confirm?.message}
+              />
+            </div>
           </div>
           <Button type="submit" className={sC.button}>
             Sign Up

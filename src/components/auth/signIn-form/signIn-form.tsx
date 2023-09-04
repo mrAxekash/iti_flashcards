@@ -43,17 +43,21 @@ export const SignInForm = () => {
             Sign In
           </Typography>
           <div className={sC.values}>
-            <Textfield
-              {...register('email')}
-              errorMessage={errors.email?.message}
-              label={'email'}
-            />
-            <Textfield
-              {...register('password')}
-              label={'Password'}
-              type={'password'}
-              errorMessage={errors.password?.message}
-            />
+            <div className={sC.element}>
+              <Textfield
+                {...register('email')}
+                errorMessage={errors.email?.message}
+                label={'email'}
+              />
+            </div>
+            <div className={sC.element}>
+              <Textfield
+                {...register('password')}
+                label={'Password'}
+                type={'password'}
+                errorMessage={errors.password?.message}
+              />
+            </div>
           </div>
           <ControlledCheckbox
             name={'rememberMe'}
