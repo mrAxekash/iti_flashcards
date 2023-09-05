@@ -1,6 +1,5 @@
+import {Router} from "./router.tsx"
+
 export function App() {
-  return (
-    <div>
-    </div>
-  )
+    return <Router />
 }
