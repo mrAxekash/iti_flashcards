@@ -1,4 +1,5 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
+import {Decks} from "@/pages/decks.tsx"
 
 const publicRoutes: RouteObject[] = [
   {
@@ -10,7 +11,7 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <div>hello</div>,
+    element: <Decks />,
   },
 ]
 
@@ -27,7 +28,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = false
+  const isAuthenticated = true
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
