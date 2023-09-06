@@ -1,5 +1,6 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
 import {Decks} from "@/pages/decks.tsx"
+import {useGetDecksQuery} from "@/services/decks.ts"
 
 const publicRoutes: RouteObject[] = [
   {
@@ -8,11 +9,23 @@ const publicRoutes: RouteObject[] = [
   },
 ]
 
+const Compon = () => {
+  const { data } = useGetDecksQuery()
+
+  console.log(data)
+
+  return <div>2</div>
+}
+
 const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Decks />,
   },
+  {
+    path: '/2',
+    element: <Compon />,
+  }
 ]
 
 const router = createBrowserRouter([
