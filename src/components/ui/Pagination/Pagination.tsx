@@ -105,7 +105,7 @@ export const Pagination: React.FC<PropsType> = props => {
           onChangeOption={props.selectSettings.onChangeOption}
           onClick={props.onClickSelectHandler}
         />
-        <span className={s.label2}>Cards per Page</span>
+        <span className={s.label2}>per Page</span>
       </div>
     </div>
   )
