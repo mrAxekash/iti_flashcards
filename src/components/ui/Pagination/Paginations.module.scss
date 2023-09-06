@@ -1,15 +1,10 @@
-@import 'tempVariables/variables';
-
 .pagination {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
-  //border: 1px solid red;
-
   .item {
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,8 +23,8 @@
   }
 
   .select {
-    color: $paginationTextColorLight;
-    background-color: var(--color-accent-100);
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
   }
 
   .btn {
@@ -56,11 +51,6 @@
     display: flex;
     align-items: flex-end;
     margin-right: 15px;
-  }
-
-  .lastPaginationPage {
-    background-color: $bgSecondColor;
-    border: 2px solid $primaryColor;
   }
 
   .selectBlock {
