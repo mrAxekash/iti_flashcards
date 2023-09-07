@@ -2,12 +2,13 @@ import { useState, ComponentPropsWithoutRef, ComponentProps, forwardRef } from '
 
 import { clsx } from 'clsx'
 
+import { Typography } from '../Typography'
+
 import textfieldStyle from './Textfield.module.scss'
 
 import { Eye } from '@/assets/icons/Eye.tsx'
 import { InvisibilityOff } from '@/assets/icons/InvisibilityOff.tsx'
 import { Search } from '@/assets/icons/Search.tsx'
-import { Typography } from '../Typography'
 
 export type TextfieldPropsType = {
   onChangeValue?: (value: string) => void
