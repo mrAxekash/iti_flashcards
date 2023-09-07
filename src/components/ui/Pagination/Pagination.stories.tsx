@@ -17,7 +17,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-//@ts-ignore //todo: maybe fix Default unused
 export const Default: Story = {
   render: args => {
 
@@ -47,4 +46,18 @@ export const Default: Story = {
       />
     </div>
   },
+  args: {
+    cardPacksTotalCount: 0,
+    pageCount: 0,
+    onClickSelectHandler: () => undefined,
+    selectSettings: {
+      value: '',
+      onChangeOption: () => undefined,
+      arr: []
+    },
+    page: 0,
+    currentPageHandler: () => undefined
+  }
 }
+
+//todo: maybe del args values
