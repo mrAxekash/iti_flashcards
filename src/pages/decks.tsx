@@ -1,4 +1,4 @@
-import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks.ts"
+import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.ts"
 import {Button} from "@/components/ui"
 
 export const Decks = () => {

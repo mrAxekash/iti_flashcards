@@ -1,6 +1,6 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
 import {Decks} from "@/pages/decks.tsx"
-import {useGetDecksQuery} from "@/services/decks.ts"
+import {useGetDecksQuery} from "@/services/decks/decks.ts"
 
 const publicRoutes: RouteObject[] = [
   {
