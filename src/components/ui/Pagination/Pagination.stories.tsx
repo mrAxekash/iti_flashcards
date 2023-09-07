@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Pagination } from './Pagination.tsx'
-import s from './Paginations.module.scss'
+import sC from '../../../styles/common.module.scss'
 
 const meta = {
   title: 'Components/Pagination',
@@ -31,7 +31,7 @@ export const Default: Story = {
       setPageCount(+value)
     }
 
-    return <div className={s.container}>
+    return <div className={sC.storyContainer}>
       <Pagination
         {...args}
         cardPacksTotalCount={totalCount}

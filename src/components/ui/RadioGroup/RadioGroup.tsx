@@ -1,14 +1,14 @@
-import * as RadioGroup from '@radix-ui/react-radio-group'
+import * as RRadioGroup from '@radix-ui/react-radio-group'
 import './styles.css'
 
-export const RadioGroupDemo = (props: PropsType) => {
+export const RadioGroup = (props: PropsType) => {
 
   const Element = (props: RadioElementType) => {
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <RadioGroup.Item className="RadioGroupItem" value={props.value} id={props.id}>
-          <RadioGroup.Indicator className="RadioGroupIndicator" />
-        </RadioGroup.Item>
+        <RRadioGroup.Item className="RadioGroupItem" value={props.value} id={props.id}>
+          <RRadioGroup.Indicator className="RadioGroupIndicator" />
+        </RRadioGroup.Item>
         <label className="Label" htmlFor={props.id}>
           {props.label}
         </label>
@@ -17,7 +17,7 @@ export const RadioGroupDemo = (props: PropsType) => {
   }
 
   return (
-    <RadioGroup.Root
+    <RRadioGroup.Root
       className="RadioGroupRoot"
       defaultValue={props.value}
       aria-label="View density"
@@ -27,7 +27,7 @@ export const RadioGroupDemo = (props: PropsType) => {
       {props.options.map(e => (
         <Element key={e.id} id={e.id} value={e.value} label={e.label} />
       ))}
-    </RadioGroup.Root>
+    </RRadioGroup.Root>
   )
 }
 

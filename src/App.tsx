@@ -1,4 +1,4 @@
-import {RadioElementType, RadioGroupDemo} from '@/src/components/ui/RadioGroup/RadioGroup.tsx'
+import {RadioElementType, RadioGroup} from '@/components/ui/RadioGroup/RadioGroup.tsx'
 import {useState} from "react"
 
 export function App() {
@@ -12,7 +12,7 @@ export function App() {
 
   return (
     <div>
-      <RadioGroupDemo options={arr} onValueChange={setValue} value={value}/>
+      <RadioGroup options={arr} onValueChange={setValue} value={value}/>
     </div>
   )
 }
