@@ -1,13 +1,14 @@
 import {baseApi} from "@/services/base-api.ts"
-import {DecksResponse} from "@/services/decks/types.ts"
+import {DeckParams, DecksResponse} from "@/services/decks/types.ts"
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getDecks: builder.query<DecksResponse,void>({
-      query: () => {
+    getDecks: builder.query<DecksResponse, DeckParams>({
+      query: params => {
         return {
           url: 'v1/decks',
           method: 'GET',
+          params: params ?? {},
         }
       },
       providesTags: ['Decks'],

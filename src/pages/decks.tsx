@@ -1,8 +1,12 @@
 import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.ts"
 import {Button} from "@/components/ui"
+import {useState} from "react"
 
 export const Decks = () => {
-  const decks = useGetDecksQuery()
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const decks = useGetDecksQuery({
+    itemsPerPage: itemsPerPage,
+  })
   const [createDeck] = useCreateDeckMutation()
 
   console.log(decks)
@@ -18,6 +22,8 @@ export const Decks = () => {
       >
         create deck
       </Button>
+      <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
+      <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       <table>
         <thead>
           <tr>
@@ -32,7 +38,7 @@ export const Decks = () => {
       {
 
 
-        decks.data?.items?.map((deck: any) => {
+        decks.data?.items?.map((deck) => {
           return (
             <tr key={deck.id}>
               <td>{deck.name}</td>
