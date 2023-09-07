@@ -28,7 +28,12 @@ export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
         </RSelect.Icon>
       </RSelect.Trigger>
       <RSelect.Portal>
-        <RSelect.Content className={s.content} position={'popper'}>
+        <RSelect.Content
+          className={s.content}
+          position={'popper'}
+          collisionPadding={0}
+          sideOffset={-10}
+        >
           <RSelect.ScrollUpButton />
           <RSelect.Viewport className={s.viewport}>{mappedOptions}</RSelect.Viewport>
           <RSelect.ScrollDownButton />

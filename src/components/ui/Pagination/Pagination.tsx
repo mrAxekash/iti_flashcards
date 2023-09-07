@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 
 import s from './Paginations.module.scss'
 
-import { Select } from '@/src/components/ui/Select/Select.tsx'
+import { Select } from '@/components/ui/Select/Select.tsx'
+import {ChevronLeftIcon, ChevronRightIcon} from "@radix-ui/react-icons"
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator
@@ -40,7 +41,7 @@ export const Pagination: React.FC<PropsType> = props => {
     <div className={s.pagination}>
       {portion === 1 && (
         <>
-          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}>&lt;</button>
+          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}><ChevronLeftIcon /></button>
         </>
       )}
       {portion > 1 && (
@@ -52,7 +53,7 @@ export const Pagination: React.FC<PropsType> = props => {
               setPortion(portion - 1)
             }}
           >
-            &lt;
+            <ChevronLeftIcon />
           </button>
           <div className={s.item} onClick={onFirstPageClick}>
             1
@@ -94,7 +95,7 @@ export const Pagination: React.FC<PropsType> = props => {
             props.currentPageHandler(portionSize * portion + 1)
           }}
         >
-          &gt;
+          <ChevronRightIcon />
         </button>
       )}
       <div className={s.selectBlock}>
