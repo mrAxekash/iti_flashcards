@@ -1,2 +1,16 @@
-
+.button {
+  //all: unset;
+  border-radius: 100%;
+}
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+}
+.dropDownMenuContent {
+  border: 1px solid var(--color-dark-100);
+}
+.dropDownMenuItem {
+  display: flex;
+}
 

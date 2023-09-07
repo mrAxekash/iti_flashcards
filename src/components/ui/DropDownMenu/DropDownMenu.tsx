@@ -1,14 +1,38 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
-export const DropDownMenu = () => {
+import s from './DropDownMenu.module.scss'
+
+import { Typography } from '@/components/ui/Typography'
+
+type DropDownMenuType = {
+  avatar?: string
+  userName?: string
+  userEmail?: string
+}
+export const DropDownMenu = ({ avatar, userName, userEmail }: DropDownMenuType) => {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger />
+      <DropdownMenu.Trigger asChild>
+        <button className={s.button}>
+          <img src={avatar} alt="avatar" className={s.userAvatar} />
+        </button>
+      </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content>
-          <DropdownMenu.Label />
-          <DropdownMenu.Item />
+        <DropdownMenu.Content className={s.dropDownMenuContent}>
+          <DropdownMenu.Item className={s.dropDownMenuItem}>
+            <img src={avatar} alt="avatar" className={s.userAvatar} />
+            <div>
+              <Typography variant={'Subtitle_2'}> {userName} </Typography>
+              <Typography variant={'Caption'}>{userEmail}</Typography>
+            </div>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <Typography variant={'Caption'}>My Profile</Typography>{' '}
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <Typography variant={'Caption'}>Sign Out</Typography>{' '}
+          </DropdownMenu.Item>
 
           <DropdownMenu.Group>
             <DropdownMenu.Item />
