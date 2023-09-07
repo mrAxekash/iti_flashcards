@@ -9,13 +9,15 @@ const decksApi = baseApi.injectEndpoints({
           method: 'GET',
         }
       },
+      providesTags: ['Decks'],
     }),
     createDeck: builder.mutation<any, { name: string }>({
       query: ({name}) => ({
         url: `v1/decks`,
         method: 'POST',
         body: { name },
-      })
+      }),
+      invalidatesTags: ['Decks']
     })
   })
 })
