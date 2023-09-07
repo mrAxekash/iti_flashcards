@@ -8,7 +8,7 @@ import textfieldStyle from './Textfield.module.scss'
 
 import { Eye } from '@/assets/icons/Eye.tsx'
 import { InvisibilityOff } from '@/assets/icons/InvisibilityOff.tsx'
-import { Search } from '@/assets/icons/Search.tsx'
+import { Search } from '@/assets/icons/Search'
 
 export type TextfieldPropsType = {
   onChangeValue?: (value: string) => void
