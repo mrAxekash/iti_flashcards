@@ -1,13 +1,16 @@
 import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.ts"
 import {Button} from "@/components/ui"
 import {useState} from "react"
+import {Textfield} from "@/components/ui/Textfield"
 
 export const Decks = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
+  const [search, setSearch] = useState('')
   const decks = useGetDecksQuery({
-    itemsPerPage: itemsPerPage,
+    itemsPerPage,
+    name: search
   })
-  const [createDeck] = useCreateDeckMutation()
+  const [createDeck, {isLoading}] = useCreateDeckMutation()
 
   console.log(decks)
   if (decks.isLoading) return <div>Loading...</div>
@@ -15,10 +18,12 @@ export const Decks = () => {
 
   return (
     <div>
+      <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
       <Button
         onClick={() => {
           createDeck({name: '123'})
         }}
+        disabled={isLoading}
       >
         create deck
       </Button>
