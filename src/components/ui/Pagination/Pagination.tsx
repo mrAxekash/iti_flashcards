@@ -123,5 +123,5 @@ type PropsType = {
     arr: Array<string>
   }
   page: number
-  currentPageHandler(page: number): void
+  currentPageHandler: (page: number) => void
 }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Pagination } from './Pagination.tsx'
-import s from './Paginations.module.scss'
+import sC from '../../../styles/common.module.scss'
 
 const meta = {
   title: 'Components/Pagination',
@@ -17,7 +17,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-//@ts-ignore //todo: maybe fix Default unused
 export const Default: Story = {
   render: args => {
 
@@ -31,7 +30,7 @@ export const Default: Story = {
       setPageCount(+value)
     }
 
-    return <div className={s.container}>
+    return <div className={sC.storyContainer}>
       <Pagination
         {...args}
         cardPacksTotalCount={totalCount}
@@ -47,4 +46,18 @@ export const Default: Story = {
       />
     </div>
   },
+  args: {
+    cardPacksTotalCount: 0,
+    pageCount: 0,
+    onClickSelectHandler: () => undefined,
+    selectSettings: {
+      value: '',
+      onChangeOption: () => undefined,
+      arr: []
+    },
+    page: 0,
+    currentPageHandler: () => undefined
+  }
 }
+
+//todo: maybe del args values
