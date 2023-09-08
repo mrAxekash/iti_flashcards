@@ -2,7 +2,7 @@ import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from
 import {Decks} from "@/pages/decks.tsx"
 import {useGetDecksQuery} from "@/services/decks/decks.ts"
 import {SignInPage} from "@/pages/sing-in.tsx"
-import {SignUpPage} from "@/pages/sing-up.tsx"
+import {SignUpPage} from "@/pages/sign-up.tsx"
 
 const publicRoutes: RouteObject[] = [
   {

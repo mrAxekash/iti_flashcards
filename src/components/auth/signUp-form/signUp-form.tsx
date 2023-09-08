@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { omit } from 'remeda'
 
 import { Button } from '../../ui/button.tsx'
 import { Card } from '../../ui/Card'
@@ -10,12 +11,14 @@ import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
 
 import sC from '@/styles/formStyles.module.scss'
+import {useSignUpMutation} from "@/services/auth.ts"
+import {useEffect} from "react"
 
 const schema = z
   .object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirm: z.string().min(6),
+    email: z.string(),
+    password: z.string().min(2),
+    confirm: z.string().min(2),
   })
   .refine(data => data.password === data.confirm, {
     message: "Passwords don't match",
@@ -25,21 +28,49 @@ const schema = z
 type FormValues = z.input<typeof schema>
 
 export const SignUpForm = () => {
+  const [signUp, {error}] = useSignUpMutation()
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    setError
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
+  const handleFormSubmitted = handleSubmit(data =>
+    signUp(omit(data, ['confirm']))
+  )
+
+
+  useEffect(() => {
+    console.log(error)
+    if( error) {
+      if (
+        'status' in error &&
+        'data' in error &&
+        error.status === 400 &&
+        typeof error.data === 'object' &&
+        error.data &&
+        'errorMessages' in error.data
+      ) {
+        console.log('here')
+        // @ts-ignore
+        error.data.errorMessages.forEach((errorMessage: any) => {
+          setError(errorMessage.field, {
+            type: 'custom',
+            message: errorMessage.message as string,
+          })
+        })
+      }
+    }
+  }, [error])
+
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleFormSubmitted}>
       <div className={sC.outerContainer}>
         <Card className={sC.card}>
           <DevTool control={control} />
