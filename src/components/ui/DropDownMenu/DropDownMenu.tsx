@@ -11,54 +11,58 @@ type DropDownMenuType = {
 }
 export const DropDownMenu = ({ avatar, userName, userEmail }: DropDownMenuType) => {
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
-        <button className={s.button}>
+    <div style={{ marginLeft: '100px', marginTop: '30px' }}>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          {/*<button className={s.button}>*/}
           <img src={avatar} alt="avatar" className={s.userAvatar} />
-        </button>
-      </DropdownMenu.Trigger>
+          {/*</button>*/}
+        </DropdownMenu.Trigger>
 
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content className={s.dropDownMenuContent}>
-          <DropdownMenu.Item className={s.dropDownMenuItem}>
-            <img src={avatar} alt="avatar" className={s.userAvatar} />
-            <div>
-              <Typography variant={'Subtitle_2'}> {userName} </Typography>
-              <Typography variant={'Caption'}>{userEmail}</Typography>
-            </div>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item>
-            <Typography variant={'Caption'}>My Profile</Typography>{' '}
-          </DropdownMenu.Item>
-          <DropdownMenu.Item>
-            <Typography variant={'Caption'}>Sign Out</Typography>{' '}
-          </DropdownMenu.Item>
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content className={s.dropDownMenuContent}>
+            <DropdownMenu.Arrow width={10} height={8} className={s.dropDownMenuArrow} />
 
-          <DropdownMenu.Group>
-            <DropdownMenu.Item />
-          </DropdownMenu.Group>
+            <DropdownMenu.Item className={s.dropDownMenuItem}>
+              <img src={avatar} alt="avatar" className={s.userAvatar} />
+              <div>
+                <Typography variant={'Subtitle_2'}> {userName} </Typography>
+                <Typography variant={'Caption'}>{userEmail}</Typography>
+              </div>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <Typography variant={'Caption'}>My Profile</Typography>{' '}
+            </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <Typography variant={'Caption'}>Sign Out</Typography>{' '}
+            </DropdownMenu.Item>
 
-          <DropdownMenu.CheckboxItem>
-            <DropdownMenu.ItemIndicator />
-          </DropdownMenu.CheckboxItem>
+            <DropdownMenu.Group>
+              <DropdownMenu.Item />
+            </DropdownMenu.Group>
 
-          <DropdownMenu.RadioGroup>
-            {/*<DropdownMenu.RadioItem>*/}
-            {/*  <DropdownMenu.ItemIndicator />*/}
-            {/*</DropdownMenu.RadioItem>*/}
-          </DropdownMenu.RadioGroup>
+            <DropdownMenu.CheckboxItem>
+              <DropdownMenu.ItemIndicator />
+            </DropdownMenu.CheckboxItem>
 
-          <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger />
-            <DropdownMenu.Portal>
-              <DropdownMenu.SubContent />
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
+            <DropdownMenu.RadioGroup>
+              {/*<DropdownMenu.RadioItem>*/}
+              {/*  <DropdownMenu.ItemIndicator />*/}
+              {/*</DropdownMenu.RadioItem>*/}
+            </DropdownMenu.RadioGroup>
 
-          <DropdownMenu.Separator />
-          <DropdownMenu.Arrow />
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
+            <DropdownMenu.Sub>
+              <DropdownMenu.SubTrigger />
+              <DropdownMenu.Portal>
+                <DropdownMenu.SubContent />
+              </DropdownMenu.Portal>
+            </DropdownMenu.Sub>
+
+            <DropdownMenu.Separator />
+            <DropdownMenu.Arrow />
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
+    </div>
   )
 }
