@@ -2,12 +2,17 @@ import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from
 import {Decks} from "@/pages/decks.tsx"
 import {useGetDecksQuery} from "@/services/decks/decks.ts"
 import {SignInPage} from "@/pages/sing-in.tsx"
+import {SignUpPage} from "@/pages/sing-up.tsx"
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
     element: <SignInPage />,
   },
+  {
+    path: '/sign-up',
+    element: <SignUpPage />
+  }
 ]
 
 const Compon = () => {

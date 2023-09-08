@@ -26,7 +26,6 @@ export const SignInForm = () => {
   const [login, {error}] = useLoginMutation()
 
   const {
-    // register,
     handleSubmit,
     control,
     formState: {errors},
@@ -43,7 +42,6 @@ export const SignInForm = () => {
         error.data &&
         'message' in error.data
       ) {
-        console.log('ERROR', error)
         setError('password', {
           type: 'custom',
           message: error.data.message as string,
