@@ -47,17 +47,16 @@ export const SignUpForm = () => {
 
   useEffect(() => {
     console.log(error)
-    if( error) {
       if (
+        error &&
         'status' in error &&
         'data' in error &&
         error.status === 400 &&
         typeof error.data === 'object' &&
         error.data &&
-        'errorMessages' in error.data
+        'errorMessages' in error.data &&
+        Array.isArray(error.data.errorMessages)
       ) {
-        console.log('here')
-        // @ts-ignore
         error.data.errorMessages.forEach((errorMessage: any) => {
           setError(errorMessage.field, {
             type: 'custom',
@@ -65,7 +64,6 @@ export const SignUpForm = () => {
           })
         })
       }
-    }
   }, [error])
 
 
