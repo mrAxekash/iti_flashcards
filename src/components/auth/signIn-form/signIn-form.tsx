@@ -4,7 +4,6 @@ import {clsx} from 'clsx'
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 
-import {Button} from '../../ui/button.tsx'
 import {Card} from '../../ui/Card'
 import {Typography} from '../../ui/Typography'
 
@@ -13,6 +12,7 @@ import sC from '@/styles/formStyles.module.scss'
 import {useLoginMutation} from "@/services/auth.ts"
 import {ControlledTextField} from "@/components/ui/controlled/controlled-text-field"
 import {useEffect} from "react"
+import {Button} from "@/components/ui/Button"
 
 const schema = z.object({
   email: z.string().email(),

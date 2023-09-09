@@ -1,7 +1,7 @@
 import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.ts"
-import {Button} from "@/components/ui"
 import {useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
+import { Button } from "@/components/ui/Button"
 
 export const Decks = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
