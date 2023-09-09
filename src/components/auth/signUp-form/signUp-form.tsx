@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { omit } from 'remeda'
 
-import { Button } from '../../ui/button.tsx'
+import { Button } from '../../ui/Button/button.tsx'
 import { Card } from '../../ui/Card'
 import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
