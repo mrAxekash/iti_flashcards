@@ -1,59 +1,92 @@
+import { ComponentPropsWithoutRef, FC, ReactNode } from 'react'
+
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
-import s from './DropDownMenu.module.scss'
+// eslint-disable-next-line import/order
+import { clsx } from 'clsx'
+import { MoreVerticalOutline } from '@/assets/icons/MoreVerticalOutline.tsx'
 
-import { Logout } from '@/assets/icons/Logout.tsx'
-import { Person } from '@/assets/icons/Person.tsx'
+// import { Person } from '@/assets/icons/Person.tsx'
+import s from '@/components/ui/DropDownMenu/DropDownMenu.module.scss'
 import { Typography } from '@/components/ui/Typography'
+// import { Typography } from '@/components/ui/Typography'
 
-type DropDownMenuType = {
-  avatar?: string
-  userName?: string
-  userEmail?: string
+export type DropDownMenuType = {
+  children?: ReactNode
+  trigger?: ReactNode
+  align?: 'start' | 'center' | 'end'
 }
-export const DropDownMenu = ({ avatar, userName, userEmail }: DropDownMenuType) => {
+export const DropDownMenu: FC<DropDownMenuType> = ({
+  children,
+  trigger = <MoreVerticalOutline color={'var(--color-light-100)'} />,
+  align = 'end',
+}) => {
   return (
-    <div style={{ marginLeft: '200px', marginTop: '30px' }}>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <button className={s.button}>
-            <img src={avatar} alt="avatar" className={s.userAvatar} />
-          </button>
-        </DropdownMenu.Trigger>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger className={s.button}>{trigger}</DropdownMenu.Trigger>
 
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content
-            avoidCollisions={true}
-            align={'end'}
-            className={s.dropDownMenuContent}
-          >
-            <DropdownMenu.Arrow width={15} height={8} className={s.dropDownMenuArrow} />
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          avoidCollisions={true}
+          align={align}
+          className={s.dropDownMenuContent}
+        >
+          <DropdownMenu.Arrow width={15} height={8} className={s.dropDownMenuArrow} />
+          {children}
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
+  )
+}
 
-            <DropdownMenu.Item className={s.dropDownMenuItem}>
-              <img src={avatar} alt="avatar" className={s.userAvatar} />
-              <div>
-                <Typography variant={'Subtitle_2'} className={s.userName}>
-                  {' '}
-                  {userName}{' '}
-                </Typography>
-                <Typography variant={'Caption'} className={s.userEmail}>
-                  {userEmail}
-                </Typography>
-              </div>
-            </DropdownMenu.Item>
-            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownMenu.Item className={s.dropDownMenuItem}>
-              <Person color={'var(--color-light-100)'} className={s.icons} />
-              <Typography variant={'Caption'}>My Profile</Typography>{' '}
-            </DropdownMenu.Item>
-            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownMenu.Item className={s.dropDownMenuItem}>
-              <Logout color={'var(--color-light-100)'} className={s.icons} />
-              <Typography variant={'Caption'}>Sign Out</Typography>{' '}
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
-    </div>
+export type DropdownMenuWithIconType = Omit<DropdownItemWithAvatarType, 'children'> & {
+  icon?: ReactNode
+  menuTitle?: string
+} & ComponentPropsWithoutRef<'div'>
+export const DropdownItemWithIcon: FC<DropdownMenuWithIconType> = ({
+  icon,
+  title,
+  className,
+  onSelect,
+  disabled,
+  ...rest
+}) => {
+  const classNames = {
+    container: s.dropDownMenuItem,
+    title: clsx(className),
+  }
+
+  return (
+    <DropdownMenu.Item
+      className={classNames.container}
+      disabled={disabled}
+      onSelect={onSelect}
+      {...rest}
+    >
+      {icon}
+      <Typography variant={'Caption'} className={classNames.title}>
+        {title}
+      </Typography>
+    </DropdownMenu.Item>
+  )
+}
+
+export type DropdownItemWithAvatarType = {
+  children?: ReactNode
+  disabled?: boolean
+  onSelect?: (event: Event) => void
+  className?: string
+  trigger?: string
+}
+export const DropdownItemWithAvatar: FC<DropdownItemWithAvatarType> = ({
+  children,
+  disabled,
+  trigger,
+}) => {
+  return (
+    <DropdownMenu.Item disabled={disabled} className={s.dropDownMenuItem}>
+      <img src={trigger} alt="userAvatar" className={s.userAvatar} />
+      <div>{children}</div>
+    </DropdownMenu.Item>
   )
 }
