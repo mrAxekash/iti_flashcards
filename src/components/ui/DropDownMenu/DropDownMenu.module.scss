@@ -2,12 +2,9 @@
   all: unset;
   //border-radius: 100%;
 }
-//.userAvatar {
-//  width: 36px;
-//  height: 36px;
-//  border-radius: 100%;
-//  margin-right: 8px;
-//}
+.userAvatar {
+  margin-right: 8px;
+}
 //.userName {
 //  font-weight: var(--font-weight-bold);
 //}
@@ -22,15 +19,7 @@
   background-color: var(--color-dark-700);
 
 }
-.dropDownMenuItem {
-  display: flex;
-  outline: none;
-  //border-radius: 6px;
-}
-.dropDownMenuItem[data-highlighted] {
-  background-color: var(--color-accent-900);
 
-}
 .dropDownMenuArrow {
   fill: var(--color-dark-500);
   //fill: var(--color-dark-100);
@@ -47,10 +36,4 @@
   margin-right: 6px;
 }
 
-.userAvatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 100%;
-  margin-right: 8px;
-}
 
