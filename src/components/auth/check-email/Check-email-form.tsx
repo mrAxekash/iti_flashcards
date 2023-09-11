@@ -5,7 +5,7 @@ import { Typography } from '../../ui/Typography'
 import s from './Check-email-form.module.scss'
 
 import { EmailImage } from '@/assets/images/EmailImage'
-import { Button } from '@/components/ui'
+import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 
 type CheckEmailFormType = {
