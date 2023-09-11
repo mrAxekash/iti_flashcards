@@ -2,6 +2,7 @@ import { DetailedHTMLProps, SelectHTMLAttributes } from 'react'
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import * as RSelect from '@radix-ui/react-select'
+import { clsx } from 'clsx'
 
 import s from './Select.module.scss'
 
@@ -21,7 +22,7 @@ export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
       }}
       disabled={props.isDisabled ? props.isDisabled : false}
     >
-      <RSelect.Trigger className={s.trigger}>
+      <RSelect.Trigger className={clsx(s.trigger, props.isGreyColor ? s.triggerGrey : '')}>
         <RSelect.Value aria-label={props.value}>{props.value}</RSelect.Value>
         <RSelect.Icon>
           <ChevronDownIcon />
@@ -29,7 +30,7 @@ export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
       </RSelect.Trigger>
       <RSelect.Portal>
         <RSelect.Content
-          className={s.content}
+          className={clsx(s.content, props.isGreyColor ? s.contentGrey : '')}
           position={'popper'}
           collisionPadding={0}
           sideOffset={-10}
@@ -55,9 +56,5 @@ export type SelectPropsType = DefaultSelectPropsType & {
   onChangeOption: (option: string) => void
   isDisabled?: boolean
   onClick?: (value: string) => void
+  isGreyColor?: boolean
 }
-
-// question:
-/*
-  if blank value passed then placeholder is ignoring
- */

@@ -105,6 +105,7 @@ export const Pagination: React.FC<PropsType> = props => {
           value={props.selectSettings.value}
           onChangeOption={props.selectSettings.onChangeOption}
           onClick={props.onClickSelectHandler}
+          isGreyColor={true}
         />
         <span className={s.label2}>Cards per Page</span>
       </div>

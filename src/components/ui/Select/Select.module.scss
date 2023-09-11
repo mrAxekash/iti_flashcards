@@ -1,59 +1,64 @@
 .trigger,
 .content {
-  //width: 210px;
+    //width: 210px;
 }
 
 .trigger {
 }
 
 .content {
-  width: var(--radix-select-trigger-width);
-  max-height: var(--radix-select-content-available-height);
-  background-color: black;
+    width: var(--radix-select-trigger-width);
+    max-height: var(--radix-select-content-available-height);
+    background-color: var(--color-dark-900);
 }
 
 .trigger,
 .item {
-  display: flex;
-  align-items: center;
-  height: 36px;
+    display: flex;
+    align-items: center;
+    height: 36px;
 }
 
 .trigger,
 .viewport {
-  border: 1px solid grey;
+    border: 1px solid grey;
 }
 
 .trigger {
-  justify-content: space-between;
-  background-color: black;
-  border-radius: 2px;
-
-  &:focus {
-    border: 1px solid #2f68cc;
+    justify-content: space-between;
+    background-color: var(--color-dark-900);
     border-radius: 2px;
-    outline: none;
-  }
 
-  &:hover {
-    background-color: #333;
-  }
+    &:focus {
+        border: 1px solid var(--color-info-700);
+        border-radius: 2px;
+        outline: none;
+    }
+
+    &:hover {
+        background-color: var(--color-dark-500)
+    }
 }
 
 .trigger[data-disabled] {
-  color: grey;
+    color: var(--dark-500);
 
-  &:hover {
-    background-color: black;
-  }
+    &:hover {
+        background-color: var(--color-dark-900);
+    }
 }
 
 .item {
-  padding: 1px 6px;
+    padding: 1px 6px;
 }
 
 .item[data-highlighted] {
-  color: #a280ff;
-  background: #9747ff;
-  outline: none;
+    color: var(--color-accent-300);
+    background: var(--color-accent-900);
+    outline: none;
+}
+
+
+.triggerGrey, .contentGrey {
+    background-color: var(--color-dark-700);
 }
