@@ -1,5 +1,11 @@
-import s from './App.module.scss'
+import {Router} from "./router.tsx"
+import {Provider} from "react-redux"
+import {store} from "@/services/store.ts"
 
 export function App() {
-  return <div className={s.container}></div>
+  return (
+    <Provider store={store}>
+      <Router/>
+    </Provider>
+  )
 }
