@@ -10,7 +10,11 @@ const meta = {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    isDisabled: {
+      options: [true, false],
+    },
+  },
 } satisfies Meta<typeof RadioGroup>
 
 export default meta
