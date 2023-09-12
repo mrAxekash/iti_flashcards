@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Slider } from '@/components/ui/Slider/slider.tsx'
 
 export function App() {
-  const [value, setValue] = useState([1, 10])
+  const [value, setValue] = useState([1, 12])
 
   return (
     <div>
@@ -13,7 +13,7 @@ export function App() {
         onValueChange={values => setValue(values)}
         step={1}
         min={1}
-        max={10}
+        max={12}
         minStepsBetweenThumbs={1}
       />
     </div>
