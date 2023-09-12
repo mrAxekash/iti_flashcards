@@ -1,4 +1,4 @@
-import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.ts"
+import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
 import {useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import { Button } from "@/components/ui/Button"

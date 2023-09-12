@@ -1,7 +1,7 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
 import {Decks} from "@/pages/decks.tsx"
-import {useGetDecksQuery} from "@/services/decks/decks.ts"
-import {SignInPage} from "@/pages/sing-in.tsx"
+import {useGetDecksQuery} from "@/services/decks/decks.service.ts"
+import {SignInPage} from "@/pages/sing-in-page/sing-in-page.tsx"
 import {SignUpPage} from "@/pages/sign-up.tsx"
 
 const publicRoutes: RouteObject[] = [

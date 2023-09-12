@@ -22,7 +22,7 @@ const schema = z.object({
 
 type FormValues = z.input<typeof schema>
 
-export const SignInForm = () => {
+export const SignIn = () => {
   const [login, {error}] = useLoginMutation()
 
   const {
