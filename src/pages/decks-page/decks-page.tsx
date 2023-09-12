@@ -3,7 +3,7 @@ import {useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import { Button } from "@/components/ui/Button"
 
-export const Decks = () => {
+export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [search, setSearch] = useState('')
   const decks = useGetDecksQuery({

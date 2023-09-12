@@ -9,9 +9,7 @@ import {Typography} from '../../ui/Typography'
 
 import {ControlledCheckbox} from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox.tsx'
 import sC from '@/styles/formStyles.module.scss'
-import {useLoginMutation} from "@/services/auth.ts"
 import {ControlledTextField} from "@/components/ui/controlled/controlled-text-field"
-import {useEffect} from "react"
 import {Button} from "@/components/ui/Button"
 
 const schema = z.object({
@@ -22,34 +20,18 @@ const schema = z.object({
 
 type FormValues = z.input<typeof schema>
 
-export const SignIn = () => {
-  const [login, {error}] = useLoginMutation()
+export const SignIn = (props: PropsType) => {
 
   const {
     handleSubmit,
     control,
     formState: {errors},
-    setError
   } = useForm<FormValues>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
   })
 
-  useEffect(() => {
-    if(!error) return
-      if ('status' in error &&
-        typeof error.data === 'object' &&
-        error.data &&
-        'message' in error.data
-      ) {
-        setError('password', {
-          type: 'custom',
-          message: error.data.message as string,
-        })
-      }
-  }, [error])
-
-  const handleFormSubmitted = handleSubmit(login)
+  const handleFormSubmitted = handleSubmit(props.onSubmit)
 
   return (
     <form onSubmit={handleFormSubmitted}>
@@ -102,3 +84,24 @@ export const SignIn = () => {
     </form>
   )
 }
+
+type FormType = z.infer<typeof schema>
+
+type PropsType = {
+  onSubmit: (data: FormType) => void
+}
+
+// archive ot typing of error
+/*  useEffect(() => {
+    if(!error) return
+      if ('status' in error &&
+        typeof error.data === 'object' &&
+        error.data &&
+        'message' in error.data
+      ) {
+        setError('password', {
+          type: 'custom',
+          message: error.data.message as string,
+        })
+      }
+  }, [error])*/
