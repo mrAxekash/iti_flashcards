@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 
 import s from './slider.module.scss'
 
-const Slider = forwardRef<
+export const Slider = forwardRef<
   ElementRef<typeof SliderPrimitive.Root>,
   ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => (
@@ -13,7 +13,7 @@ const Slider = forwardRef<
     <span>{props?.value?.[0]}</span>
     <SliderPrimitive.Root ref={ref} className={clsx(s.root, className)} {...props}>
       <SliderPrimitive.Track className={s.track}>
-        <SliderPrimitive.Range />
+        <SliderPrimitive.Range className={s.range} />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb className={s.thumb} />
       <SliderPrimitive.Thumb className={s.thumb} />
@@ -21,7 +21,3 @@ const Slider = forwardRef<
     <span>{props?.value?.[1]}</span>
   </div>
 ))
-
-Slider.displayName = SliderPrimitive.Root.displayName
-
-export { Slider }
