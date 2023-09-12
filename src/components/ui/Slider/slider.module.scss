@@ -1,26 +1,45 @@
 .container {
   display: flex;
+
+  //gap: 10;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  gap: 10px;
+
+  //width: 100%;
+  width: 251px;
+  height: 36px;
+  margin: 10px;
+  padding: 20px 10px;
+}
+
+.value {
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 5px;
+
+  text-align: center;
+
+  border: 1px solid var(--color-dark-300);
 }
 
 .root {
-  display: flex;
   position: relative;
-  width: 100%;
-  user-select: none;
-  touch-action: none;
+  display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .track {
   position: relative;
+
   width: 100%;
   height: 4px;
+
+  opacity: 0.5;
   background-color: var(--color-accent-500);
-  opacity: 50%;
   border-radius: 2px;
 }
 
@@ -31,12 +50,16 @@
 }
 
 .thumb {
+  touch-action: pan-x;
+  cursor: pointer;
+
   display: block;
-  height: 16px;
+
   width: 16px;
+  height: 16px;
+
   background-color: var(--color-light-100);
   border-radius: 9999px;
-  cursor: pointer;
-  touch-action: pan-x;
+
   transition: transform 0.2s ease-in-out;
 }

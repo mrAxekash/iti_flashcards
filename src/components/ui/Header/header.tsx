@@ -13,7 +13,7 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
   const classNames = {
     header: clsx(s.header, className),
   }
-  const isLogied = true
+  const isLogied = false
 
   return (
     <>
