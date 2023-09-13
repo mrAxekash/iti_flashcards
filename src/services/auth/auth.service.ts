@@ -23,13 +23,10 @@ const authService = baseApi.injectEndpoints({
       providesTags: ['Me'],
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
-      query: ({email, password}) => ({
+      query: data => ({
         url: `/v1/auth/login`,
         method: 'POST',
-        body: {
-          email,
-          password
-        },
+        body: data,
       }),
       invalidatesTags: ['Me'],
     }),
