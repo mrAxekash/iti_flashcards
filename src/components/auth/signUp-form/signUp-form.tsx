@@ -11,8 +11,8 @@ import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
 
 import sC from '@/styles/formStyles.module.scss'
-import {useSignUpMutation} from "@/services/auth.ts"
 import {useEffect} from "react"
+import {useSignUpMutation} from "@/services/auth/auth.service.ts"
 
 const schema = z
   .object({
