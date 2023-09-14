@@ -1,27 +1,49 @@
 import {baseApi} from "@/services/base-api.ts"
-import {DeckParams, DecksResponse} from "@/services/decks/types.ts"
+import {Deck, DeckParams, DecksResponse} from "@/services/decks/deck.types.ts"
 
-const decksApi = baseApi.injectEndpoints({
+const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
     getDecks: builder.query<DecksResponse, DeckParams>({
-      query: params => {
-        return {
-          url: 'v1/decks',
-          method: 'GET',
-          params: params ?? {},
-        }
-      },
-      providesTags: ['Me'], // was ['Decks'] before my fix
+      query: params => ({
+        url: 'v1/decks',
+        method: 'GET',
+        params: params ?? {},
+      }),
+      providesTags: ['Decks'],
     }),
-    createDeck: builder.mutation<any, { name: string }>({
-      query: ({name}) => ({
+    createDeck: builder.mutation<Deck, { name: string }>({
+      query: data => ({
         url: `v1/decks`,
         method: 'POST',
-        body: { name },
+        body: data,
       }),
-      invalidatesTags: ['Me'] // was ['Decks'] before my fix
-    })
-  })
+      async onQueryStarted(_, {dispatch, queryFulfilled}) {
+        try {
+        const response = await queryFulfilled
+
+        dispatch(
+          decksService.util.updateQueryData(
+            'getDecks',
+            {authorId: '1', currentPage: 1},
+            draft => {
+            draft.items.push(response.data)
+          }
+          )
+        )
+        } catch (error) {
+          console.log(error)
+        }
+
+          /**
+           * Alternatively, on failure you can invalidate the corresponding cache tags
+           * to trigger a re-fetch:
+           * dispatch(api.util.invalidateTags(['Post']))
+           */
+
+      },
+      invalidatesTags: ['Decks'],
+    }),
+  }),
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation } = decksApi
+export const {useGetDecksQuery, useCreateDeckMutation} = decksService

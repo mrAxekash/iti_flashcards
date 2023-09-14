@@ -20,11 +20,11 @@ export const DecksPage = () => {
       <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
       <Button
         onClick={() => {
-          createDeck({name: '123'})
+          createDeck({name: 'New Deck'})
         }}
         disabled={isLoading}
       >
-        create deck
+        Add new deck
       </Button>
       <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
       <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
@@ -38,10 +38,7 @@ export const DecksPage = () => {
           </tr>
         </thead>
         <tbody>
-
       {
-
-
         decks.data?.items?.map((deck) => {
           return (
             <tr key={deck.id}>
@@ -54,7 +51,6 @@ export const DecksPage = () => {
         })
       }
         </tbody>
-
       </table>
     </div>
   )
