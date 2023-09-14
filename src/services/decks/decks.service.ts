@@ -11,7 +11,7 @@ const decksApi = baseApi.injectEndpoints({
           params: params ?? {},
         }
       },
-      providesTags: ['Decks'],
+      providesTags: ['Me'], // was ['Decks'] before my fix
     }),
     createDeck: builder.mutation<any, { name: string }>({
       query: ({name}) => ({
@@ -19,7 +19,7 @@ const decksApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { name },
       }),
-      invalidatesTags: ['Decks']
+      invalidatesTags: ['Me'] // was ['Decks'] before my fix
     })
   })
 })
