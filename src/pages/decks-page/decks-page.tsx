@@ -2,13 +2,20 @@ import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/
 import {useEffect, useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import {Button} from "@/components/ui/Button"
+import {useAppDispatch, useAppSelector} from "@/hooks.ts"
+import {decksSlice} from "@/services/decks/decks.slice.ts"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
+  const currentPage = useAppSelector(state => state.decks.currentPage)
+  const dispatch = useAppDispatch()
+
+  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const [search, setSearch] = useState('')
-  const {data: decks, isLoading: decksLoading, isError: decksIsError} = useGetDecksQuery({
+  const {currentData: decks, isLoading: decksLoading, isError: decksIsError} = useGetDecksQuery({
     itemsPerPage,
-    name: search
+    name: search,
+    currentPage,
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
   const [deleteDeck, {error}] = useDeleteDeckMutation()
@@ -28,6 +35,7 @@ export const DecksPage = () => {
       <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
       <Button
         onClick={() => {
+          updateCurrentPage(1)
           createDeck({name: 'New Deck 4'})
         }}
         disabled={isLoading}
@@ -69,6 +77,12 @@ export const DecksPage = () => {
         }
         </tbody>
       </table>
+
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+        <Button key={item} onClick={() => updateCurrentPage(item)}>
+          {item}
+        </Button>
+      ))}
     </div>
   )
 }

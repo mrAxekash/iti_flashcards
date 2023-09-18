@@ -1,5 +1,6 @@
 import {baseApi} from "@/services/base-api.ts"
 import {Deck, DeckParams, DecksResponse} from "@/services/decks/deck.types.ts"
+import {RootState} from "@/services/store.ts"
 
 const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -17,7 +18,9 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      async onQueryStarted(_, {dispatch, queryFulfilled}) { // pessimistic update (not works)
+      async onQueryStarted(_, {dispatch, queryFulfilled, getState}) { // pessimistic update (not works)
+        const state = getState() as RootState
+
         try {
           const response = await queryFulfilled
 
@@ -26,7 +29,7 @@ const decksService = baseApi.injectEndpoints({
           dispatch(
             decksService.util.updateQueryData(
               'getDecks',
-              {authorId: '1', currentPage: 1},
+              {authorId: '1', currentPage: state.decks.currentPage},
               draft => {
                 draft.items.unshift(response.data)
               }
@@ -50,11 +53,14 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${data.id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted({id}, {dispatch, queryFulfilled}) { // optimistic update (not works)
+      async onQueryStarted({id}, {dispatch, queryFulfilled, getState}) { // optimistic update (not works)
+
+        const state = getState() as RootState
+
         const patchResult = dispatch(
           decksService.util.updateQueryData(
             'getDecks',
-            {authorId: '1', currentPage: 1},
+            {authorId: '1', currentPage: state.decks.currentPage},
             draft => {
               draft.items = draft.items.filter(item => item.id !== id)
             }
