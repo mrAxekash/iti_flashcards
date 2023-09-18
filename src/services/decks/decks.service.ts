@@ -17,7 +17,7 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      async onQueryStarted(_, {dispatch, queryFulfilled}) { // pessimistic updates (not works)
+      async onQueryStarted(_, {dispatch, queryFulfilled}) { // pessimistic update (not works)
         try {
           const response = await queryFulfilled
 
@@ -50,7 +50,7 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${data.id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted({id}, {dispatch, queryFulfilled}) { // optimistic updates (not works)
+      async onQueryStarted({id}, {dispatch, queryFulfilled}) { // optimistic update (not works)
         const patchResult = dispatch(
           decksService.util.updateQueryData(
             'getDecks',

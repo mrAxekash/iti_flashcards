@@ -1,17 +1,24 @@
 import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
-import { Button } from "@/components/ui/Button"
+import {Button} from "@/components/ui/Button"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [search, setSearch] = useState('')
-  const {currentData: decks, isLoading: decksLoading, isError: decksIsError} = useGetDecksQuery({
+  const {data: decks, isLoading: decksLoading, isError: decksIsError} = useGetDecksQuery({
     itemsPerPage,
     name: search
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
-  const [deleteDeck] = useDeleteDeckMutation()
+  const [deleteDeck, {error}] = useDeleteDeckMutation()
+
+  useEffect(() => { // error handling v2
+      if (!error) return
+      // @ts-ignore
+      alert(error?.data?.message)
+    }, [error]
+  )
 
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
@@ -31,27 +38,35 @@ export const DecksPage = () => {
       <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       <table>
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Cards</th>
-            <th>Updated</th>
-            <th>Created By</th>
-          </tr>
+        <tr>
+          <th>Name</th>
+          <th>Cards</th>
+          <th>Updated</th>
+          <th>Created By</th>
+        </tr>
         </thead>
         <tbody>
-      {
-        decks?.items?.map((deck) => {
-          return (
-            <tr key={deck.id}>
-              <td>{deck.name}</td>
-              <td>{deck.cardsCount}</td>
-              <td>{deck.updated}</td>
-              <td>{deck.author.name}</td>
-              <td><Button onClick={() => deleteDeck({id: deck.id})}>delete</Button></td>
-            </tr>
+        {
+          decks?.items?.map((deck) => {
+            return (
+              <tr key={deck.id}>
+                <td>{deck.name}</td>
+                <td>{deck.cardsCount}</td>
+                <td>{deck.updated}</td>
+                <td>{deck.author.name}</td>
+                <td><Button onClick={
+                  () =>
+                    deleteDeck({id: deck.id}) // error handling v1
+                  // .unwrap()
+                  // .catch((err) => {
+                  //     alert(err?.data?.message)
+                  //   }
+                  // )
+                }>delete</Button></td>
+              </tr>
             )
-        })
-      }
+          })
+        }
         </tbody>
       </table>
     </div>
