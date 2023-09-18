@@ -1,4 +1,4 @@
-import {useCreateDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
+import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
 import {useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import { Button } from "@/components/ui/Button"
@@ -11,6 +11,7 @@ export const DecksPage = () => {
     name: search
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
 
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
@@ -46,6 +47,7 @@ export const DecksPage = () => {
               <td>{deck.cardsCount}</td>
               <td>{deck.updated}</td>
               <td>{deck.author.name}</td>
+              <td><Button onClick={() => deleteDeck({id: deck.id})}>delete</Button></td>
             </tr>
             )
         })

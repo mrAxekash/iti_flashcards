@@ -45,7 +45,17 @@ const decksService = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Decks'],
     }),
+    deleteDeck: builder.mutation<Deck, { id: string }>({
+      query: data => ({
+        url: `v1/decks/${data.id}`,
+        method: 'DELETE',
+      }),
+      /*async onQueryStarted({id}, {dispatch, queryFulfilled}) {
+
+      },*/
+      invalidatesTags: ['Decks'],
+      }),
   }),
 })
 
-export const {useGetDecksQuery, useCreateDeckMutation} = decksService
+export const {useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation} = decksService
