@@ -17,30 +17,30 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      async onQueryStarted(_, {dispatch, queryFulfilled}) {
+      async onQueryStarted(_, {dispatch, queryFulfilled}) { // pessimistic updates (not works)
         try {
-        const response = await queryFulfilled
+          const response = await queryFulfilled
 
-        console.log(response)
+          console.log(response)
 
-        dispatch(
-          decksService.util.updateQueryData(
-            'getDecks',
-            {authorId: '1', currentPage: 1},
-            draft => {
-            draft.items.unshift(response.data)
-          }
+          dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              {authorId: '1', currentPage: 1},
+              draft => {
+                draft.items.unshift(response.data)
+              }
+            )
           )
-        )
         } catch (error) {
           console.log(error)
         }
 
-          /**
-           * Alternatively, on failure you can invalidate the corresponding cache tags
-           * to trigger a re-fetch:
-           * dispatch(api.util.invalidateTags(['Post']))
-           */
+        /**
+         * Alternatively, on failure you can invalidate the corresponding cache tags
+         * to trigger a re-fetch:
+         * dispatch(api.util.invalidateTags(['Post']))
+         */
 
       },
       invalidatesTags: ['Decks'],
@@ -50,11 +50,25 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${data.id}`,
         method: 'DELETE',
       }),
-      /*async onQueryStarted({id}, {dispatch, queryFulfilled}) {
+      async onQueryStarted({id}, {dispatch, queryFulfilled}) { // optimistic updates (not works)
+        const patchResult = dispatch(
+          decksService.util.updateQueryData(
+            'getDecks',
+            {authorId: '1', currentPage: 1},
+            draft => {
+              draft.items = draft.items.filter(item => item.id !== id)
+            }
+          )
+        )
 
-      },*/
+        try {
+          await queryFulfilled
+        } catch (error) {
+          patchResult.undo()
+        }
+      },
       invalidatesTags: ['Decks'],
-      }),
+    }),
   }),
 })
 
