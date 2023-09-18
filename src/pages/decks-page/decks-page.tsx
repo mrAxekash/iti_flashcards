@@ -6,21 +6,21 @@ import { Button } from "@/components/ui/Button"
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [search, setSearch] = useState('')
-  const decks = useGetDecksQuery({
+  const {currentData: decks, isLoading: decksLoading, isError: decksIsError} = useGetDecksQuery({
     itemsPerPage,
     name: search
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
 
-  if (decks.isLoading) return <div>Loading...</div>
-  if (decks.isError) return <div>Error</div>
+  if (decksLoading) return <div>Loading...</div>
+  if (decksIsError) return <div>Error</div>
 
   return (
     <div>
       <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
       <Button
         onClick={() => {
-          createDeck({name: 'New Deck'})
+          createDeck({name: 'New Deck 4'})
         }}
         disabled={isLoading}
       >
@@ -39,7 +39,7 @@ export const DecksPage = () => {
         </thead>
         <tbody>
       {
-        decks.data?.items?.map((deck) => {
+        decks?.items?.map((deck) => {
           return (
             <tr key={deck.id}>
               <td>{deck.name}</td>

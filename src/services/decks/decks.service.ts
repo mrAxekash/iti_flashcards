@@ -21,12 +21,14 @@ const decksService = baseApi.injectEndpoints({
         try {
         const response = await queryFulfilled
 
+        console.log(response)
+
         dispatch(
           decksService.util.updateQueryData(
             'getDecks',
             {authorId: '1', currentPage: 1},
             draft => {
-            draft.items.push(response.data)
+            draft.items.unshift(response.data)
           }
           )
         )
