@@ -14,7 +14,7 @@ const schema = z.object({
   password: z.string().min(6),
 })
 
-type FormType = z.input<typeof schema>
+type FormType = z.infer<typeof schema>
 
 export const CreateNewPassword = () => {
   const {

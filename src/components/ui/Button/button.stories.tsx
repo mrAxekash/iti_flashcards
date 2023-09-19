@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from './index.ts'
 
+import { Vector } from '@/components/ui/Button/vector.tsx'
+
 const meta = {
   title: 'Components/Button',
   component: Button,
@@ -60,6 +62,18 @@ export const AsLink: Story = {
   args: {
     variant: 'primary',
     children: 'Link that looks like a button',
+    disabled: false,
     as: 'a',
+  },
+}
+export const WithIcon: Story = {
+  args: {
+    variant: 'primary',
+    disabled: false,
+    children: (
+      <>
+        <Vector /> Primary Button
+      </>
+    ),
   },
 }

@@ -14,7 +14,7 @@ const schema = z.object({
   email: z.string().email(),
 })
 
-type FormType = z.input<typeof schema>
+type FormType = z.infer<typeof schema>
 
 export const RecoverPassword = () => {
   const {
