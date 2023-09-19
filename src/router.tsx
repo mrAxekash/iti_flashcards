@@ -1,6 +1,6 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
 import {DecksPage} from "@/pages/decks-page/decks-page.tsx"
-import {SignInPage} from "@/pages/sing-in-page/sing-in-page.tsx"
+import {SignInPage} from "@/pages/sign-in-page/sign-in-page.tsx"
 import {SignUpPage} from "@/pages/sign-up.tsx"
 import {useGetMeQuery} from "@/services/auth/auth.service.ts"
 

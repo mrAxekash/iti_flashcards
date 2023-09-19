@@ -4,11 +4,14 @@ import {Textfield} from "@/components/ui/Textfield"
 import {Button} from "@/components/ui/Button"
 import {useAppDispatch, useAppSelector} from "@/hooks.ts"
 import {decksSlice} from "@/services/decks/decks.slice.ts"
+import s from './deck-page.module.scss'
+import {useLogoutMutation} from "@/services/auth/auth.service.ts"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
+  const [logout] = useLogoutMutation()
 
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const [search, setSearch] = useState('')
@@ -31,19 +34,24 @@ export const DecksPage = () => {
   if (decksIsError) return <div>Error</div>
 
   return (
-    <div>
-      <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
-      <Button
-        onClick={() => {
-          updateCurrentPage(1)
-          createDeck({name: 'New Deck 4'})
-        }}
-        disabled={isLoading}
-      >
-        Add new deck
-      </Button>
-      <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
-      <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
+    <div className={s.component}>
+      <div className={s.searchContainer}>
+        <Textfield value={search} onChange={e => setSearch(e.currentTarget.value)} label={'Search by name'}/>
+      </div>
+      <div className={s.buttonsContainer}>
+        <Button
+          onClick={() => {
+            updateCurrentPage(1)
+            createDeck({name: 'New Deck 4'})
+          }}
+          disabled={isLoading}
+        >
+          Add new deck
+        </Button>
+        <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
+        <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
+      </div>
+
       <table>
         <thead>
         <tr>
@@ -78,11 +86,14 @@ export const DecksPage = () => {
         </tbody>
       </table>
 
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
-        <Button key={item} onClick={() => updateCurrentPage(item)}>
-          {item}
-        </Button>
-      ))}
+      <div className={s.paginationContainer}>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+          <Button key={item} onClick={() => updateCurrentPage(item)}>
+            {item}
+          </Button>
+        ))}
+      </div>
+      <Button onClick={() => logout()}>Sign Out</Button>
     </div>
   )
 }

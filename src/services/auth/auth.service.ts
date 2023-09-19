@@ -8,14 +8,14 @@ const authService = baseApi.injectEndpoints({
         const result = await baseQuery({
           url: `/v1/auth/me`,
           method: 'GET'
-        });
+        })
 
         if (result.error) {
           // don't refetch on 404
-          return { data: {success: false} };
+          return {data: {success: false}}
         }
 
-        return { data: result.data};
+        return {data: result.data}
       },
       extraOptions: {
         maxRetries: 0,
@@ -27,6 +27,13 @@ const authService = baseApi.injectEndpoints({
         url: `/v1/auth/login`,
         method: 'POST',
         body: data,
+      }),
+      invalidatesTags: ['Me'],
+    }),
+    logout: builder.mutation<any, void>({
+      query: () => ({
+        url: `/v1/auth/logout`,
+        method: 'POST',
       }),
       invalidatesTags: ['Me'],
     }),
@@ -42,4 +49,9 @@ const authService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useSignUpMutation } = authService
+export const {
+  useGetMeQuery,
+  useLoginMutation,
+  useSignUpMutation,
+  useLogoutMutation,
+} = authService

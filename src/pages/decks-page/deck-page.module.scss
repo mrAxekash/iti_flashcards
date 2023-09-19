@@ -1,0 +1,19 @@
+.component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .searchContainer {
+        width: 100%;
+    }
+
+    .buttonsContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .paginationContainer {
+        margin-bottom: 10px;
+    }
+}

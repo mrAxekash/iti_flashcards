@@ -1,17 +1,8 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.icons {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-}
-
-.dropDownMenuSeparator {
-    background-color: var(--color-dark-500);
-    height: 1px;
-    margin: 12px 0;
+.app {
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
 }
