@@ -5,13 +5,11 @@ import {Button} from "@/components/ui/Button"
 import {useAppDispatch, useAppSelector} from "@/hooks.ts"
 import {decksSlice} from "@/services/decks/decks.slice.ts"
 import s from './deck-page.module.scss'
-import {useLogoutMutation} from "@/services/auth/auth.service.ts"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
-  const [logout] = useLogoutMutation()
 
   const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
   const [search, setSearch] = useState('')
@@ -93,7 +91,6 @@ export const DecksPage = () => {
           </Button>
         ))}
       </div>
-      <Button onClick={() => logout()}>Sign Out</Button>
     </div>
   )
 }

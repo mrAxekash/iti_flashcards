@@ -6,11 +6,15 @@ import defaultAva from '@/assets/images/defaultAva.png'
 import {Button} from '@/components/ui/Button'
 import {Vector} from '@/components/ui/Button/vector.tsx'
 import Logo from '@/components/ui/Header/logo.tsx'
-import {useGetMeQuery} from "@/services/auth/auth.service.ts"
+import {useGetMeQuery, useLogoutMutation} from "@/services/auth/auth.service.ts"
 import {DropdownItemWithAvatar} from "@/components/ui/DropDownMenu/DropdownMenuWithAvatar/DropdownMenuWithAvatar"
 import {Avatar} from "@/components/ui/Avatar/Avatar.tsx"
 import {Typography} from "@/components/ui/Typography"
 import {DropDownMenu} from "@/components/ui/DropDownMenu/DropDownMenu.tsx"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import {DropdownItemWithIcon} from "@/components/ui/DropDownMenu/DropdownMenuWithIcon"
+import {Logout} from "@/assets/icons/Logout.tsx"
+import {Person} from "@/assets/icons/Person.tsx"
 
 export type HeaderProps = ComponentProps<'header'>
 
@@ -27,6 +31,8 @@ export const Header: FC<HeaderProps> = ({className, ...rest}) => {
   const classNames = {
     header: clsx(s.header, className),
   }
+
+  const [logout] = useLogoutMutation()
 
   return (
     <>
@@ -45,6 +51,18 @@ export const Header: FC<HeaderProps> = ({className, ...rest}) => {
                     {me && me.email}
                   </Typography>
                 </DropdownItemWithAvatar>
+                <DropdownMenu.Separator />
+                <DropdownItemWithIcon
+                  icon={<Person color={'var(--color-light-100)'} className={s.icons} />}
+                  className={s.dropDownMenuItem}
+                  title={'My Profile'}
+                />
+                <DropdownMenu.Separator />
+                <DropdownItemWithIcon
+                  icon={<Logout color={'var(--color-light-100)'} className={s.icons} />}
+                  title={'Sign Out'}
+                  onClick={() => logout()}
+                />
               </DropDownMenu>
             </div>
           ) : (
