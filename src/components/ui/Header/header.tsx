@@ -31,7 +31,10 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
         <div className={s.wrapper}>
           <Logo />
           {isLoggedIn ? (
-            <div className={s.button}>avatar</div>
+            <div className={s.containerNameAva}>
+              <div className={s.name}>{me && me.name}</div>
+              <div className={s.button}>avatar</div>
+            </div>
           ) : (
             <Button className={s.button} variant="primary">
               <Vector />

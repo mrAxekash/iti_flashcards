@@ -1,4 +1,3 @@
-import {DevTool} from '@hookform/devtools'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {clsx} from 'clsx'
 import {useForm} from 'react-hook-form'
@@ -42,7 +41,6 @@ export const SignIn = (props: PropsType) => {
     <form onSubmit={handleFormSubmitted}>
       <div className={sC.outerContainer}>
         <Card className={sC.card}>
-          <DevTool control={control}/>
           <Typography variant={'H1'} className={sC.center}>
             Sign In
           </Typography>
@@ -82,7 +80,7 @@ export const SignIn = (props: PropsType) => {
             Don&apos;t have an account?
           </Typography>
           <Typography variant={'Link_1'} className={clsx(sC.center, sC.signUp)}>
-            Sign In
+            Sign Up
           </Typography>
         </Card>
       </div>
@@ -95,18 +93,3 @@ type FormType = z.infer<typeof schema>
 type PropsType = {
   onSubmit: (data: FormType) => void
 }
-
-// archive ot typing of error
-/*  useEffect(() => {
-    if(!error) return
-      if ('status' in error &&
-        typeof error.data === 'object' &&
-        error.data &&
-        'message' in error.data
-      ) {
-        setError('password', {
-          type: 'custom',
-          message: error.data.message as string,
-        })
-      }
-  }, [error])*/
