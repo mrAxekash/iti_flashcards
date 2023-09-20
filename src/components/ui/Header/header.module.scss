@@ -28,7 +28,13 @@
     align-items: center;
 
     .name {
-      margin-right: 10px;
+      margin-right: 14px;
+    }
+
+    .ava {
+      width: 37px;
+      height: 37px;
+      cursor: pointer;
     }
   }
 }
