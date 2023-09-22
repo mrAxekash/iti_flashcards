@@ -1,10 +1,12 @@
 import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
-import {useEffect, useState} from "react"
+import {useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import {Button} from "@/components/ui/Button"
 import {useAppDispatch, useAppSelector} from "@/hooks.ts"
 import {decksSlice} from "@/services/decks/decks.slice.ts"
 import s from './deck-page.module.scss'
+import {Table} from "@/components/ui/Table"
+import trashIcon from '@/assets/icons/trashIcon.png'
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -19,14 +21,7 @@ export const DecksPage = () => {
     currentPage,
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
-  const [deleteDeck, {error}] = useDeleteDeckMutation()
-
-  useEffect(() => { // error handling v2
-      if (!error) return
-      // @ts-ignore
-      alert(error?.data?.message)
-    }, [error]
-  )
+  const [deleteDeck] = useDeleteDeckMutation()
 
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
@@ -50,39 +45,40 @@ export const DecksPage = () => {
         <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       </div>
 
-      <table>
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Cards</th>
-          <th>Updated</th>
-          <th>Created By</th>
-        </tr>
-        </thead>
-        <tbody>
-        {
-          decks?.items?.map((deck) => {
-            return (
-              <tr key={deck.id}>
-                <td>{deck.name}</td>
-                <td>{deck.cardsCount}</td>
-                <td>{deck.updated}</td>
-                <td>{deck.author.name}</td>
-                <td><Button onClick={
-                  () =>
-                    deleteDeck({id: deck.id}) // error handling v1
-                  // .unwrap()
-                  // .catch((err) => {
-                  //     alert(err?.data?.message)
-                  //   }
-                  // )
-                }>delete</Button></td>
-              </tr>
-            )
-          })
-        }
-        </tbody>
-      </table>
+      <Table.Root className={s.tableContainer}>
+        <Table.Head>
+          <Table.Row>
+            <Table.HeadCell>Name</Table.HeadCell>
+            <Table.HeadCell>Cards</Table.HeadCell>
+            <Table.HeadCell>Last Updated</Table.HeadCell>
+            <Table.HeadCell>Created By</Table.HeadCell>
+            <Table.HeadCell/>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {
+            decks?.items?.map((deck) => {
+              return (
+                <Table.Row key={deck.id}>
+                  <Table.Cell>{deck.name}</Table.Cell>
+                  <Table.Cell>{deck.cardsCount}</Table.Cell>
+                  <Table.Cell>{deck.updated}</Table.Cell>
+                  <Table.Cell>{deck.author.name}</Table.Cell>
+                  <Table.Cell>
+                    <div className={s.iconContainer}>
+                      <img src={trashIcon} alt="" className={s.trashIcon} onClick={
+                        () => deleteDeck({id: deck.id})
+                          .unwrap()
+                          .catch((err) => {alert(err?.data?.message)})
+                      }/>
+                    </div>
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })
+          }
+        </Table.Body>
+      </Table.Root>
 
       <div className={s.paginationContainer}>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
