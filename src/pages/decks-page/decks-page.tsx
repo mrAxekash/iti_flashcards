@@ -1,15 +1,17 @@
 import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
-import {useState} from "react"
+import {useMemo, useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import {Button} from "@/components/ui/Button"
 import {useAppDispatch, useAppSelector} from "@/hooks.ts"
 import {decksSlice} from "@/services/decks/decks.slice.ts"
 import s from './deck-page.module.scss'
-import {Table} from "@/components/ui/Table"
+import {Column, Table} from "@/components/ui/Table"
 import trashIcon from '@/assets/icons/trashIcon.png'
+import {Sort} from "@/services/common/types.ts"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
+
   const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
 
@@ -22,6 +24,60 @@ export const DecksPage = () => {
   })
   const [createDeck, {isLoading}] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
+
+  // for sorting cells in table
+  const [sort, setSort] = useState<Sort>(null)
+  const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
+
+  console.log(sort, sortString)
+
+  const sortedData = useMemo(() => {
+    if (!sortString) {
+      return decks?.items
+    }
+    const [key, direction] = sortString.split('-')
+
+    if (decks && decks?.items && key) {
+      return [...decks?.items].sort((a, b) => {
+        if (direction === 'asc') {
+          return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
+        }
+
+        return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
+      })
+    } else {
+      return []
+    }
+
+  }, [sortString])
+
+  const columns: Column[] = [
+    {
+      key: 'name',
+      title: 'Name',
+      sortable: true,
+    },
+    {
+      key: 'cardsCount',
+      title: 'cardsCount',
+      sortable: true,
+    },
+    {
+      key: 'lastUpdated',
+      title: 'Last Updated',
+      sortable: true,
+    },
+    {
+      key: 'createdBy',
+      title: 'Created by',
+      sortable: true,
+    },
+    {
+      key: 'options',
+      title: '',
+    },
+  ]
+
 
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
@@ -46,18 +102,10 @@ export const DecksPage = () => {
       </div>
 
       <Table.Root className={s.tableContainer}>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Cards</Table.HeadCell>
-            <Table.HeadCell>Last Updated</Table.HeadCell>
-            <Table.HeadCell>Created By</Table.HeadCell>
-            <Table.HeadCell/>
-          </Table.Row>
-        </Table.Head>
+        <Table.Header columns={columns} onSort={setSort} sort={sort}/>
         <Table.Body>
           {
-            decks?.items?.map((deck) => {
+            sortedData && sortedData.map((deck) => {
               return (
                 <Table.Row key={deck.id}>
                   <Table.Cell>{deck.name}</Table.Cell>
