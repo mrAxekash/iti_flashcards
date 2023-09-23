@@ -1,5 +1,5 @@
 import {useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery} from "@/services/decks/decks.service.ts"
-import {useMemo, useState} from "react"
+import {useEffect, useState} from "react"
 import {Textfield} from "@/components/ui/Textfield"
 import {Button} from "@/components/ui/Button"
 import {useAppDispatch, useAppSelector} from "@/hooks.ts"
@@ -8,6 +8,7 @@ import s from './deck-page.module.scss'
 import {Column, Table} from "@/components/ui/Table"
 import trashIcon from '@/assets/icons/trashIcon.png'
 import {Sort} from "@/services/common/types.ts"
+import {Deck} from "@/services/decks/deck.types.ts"
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -28,28 +29,25 @@ export const DecksPage = () => {
   // for sorting cells in table
   const [sort, setSort] = useState<Sort>(null)
   const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
+  const [sortArray, setSortArray] = useState<Deck[]>([])
 
-  console.log(sort, sortString)
-
-  const sortedData = useMemo(() => {
+  useEffect(() => {
     if (!sortString) {
-      return decks?.items
-    }
-    const [key, direction] = sortString.split('-')
-
-    if (decks && decks?.items && key) {
-      return [...decks?.items].sort((a, b) => {
-        if (direction === 'asc') {
-          return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
-        }
-
-        return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
-      })
+      setSortArray(decks?.items as Deck[])
     } else {
-      return []
+      const [key, direction] = sortString.split('-')
+      if (decks && decks?.items && key) {
+        const sorted = [...decks?.items].sort((a, b) => {
+          if (direction === 'asc') {
+            return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
+          }
+          return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
+        })
+        setSortArray(sorted)
+      }
     }
+  }, [sortString, decks?.items])
 
-  }, [sortString])
 
   const columns: Column[] = [
     {
@@ -105,7 +103,7 @@ export const DecksPage = () => {
         <Table.Header columns={columns} onSort={setSort} sort={sort}/>
         <Table.Body>
           {
-            sortedData && sortedData.map((deck) => {
+            sortArray && sortArray.map((deck) => {
               return (
                 <Table.Row key={deck.id}>
                   <Table.Cell>{deck.name}</Table.Cell>
@@ -117,7 +115,9 @@ export const DecksPage = () => {
                       <img src={trashIcon} alt="" className={s.trashIcon} onClick={
                         () => deleteDeck({id: deck.id})
                           .unwrap()
-                          .catch((err) => {alert(err?.data?.message)})
+                          .catch((err) => {
+                            alert(err?.data?.message)
+                          })
                       }/>
                     </div>
                   </Table.Cell>
