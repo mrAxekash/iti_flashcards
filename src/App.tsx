@@ -10,12 +10,10 @@ export function App() {
   return (
     <div className={s.app}>
       <Provider store={store}>
-        <body>
-          <Header />
-          <div className={s.container}>
-            <Router />
-          </div>
-        </body>
+        <Header />
+        <div className={s.container}>
+          <Router />
+        </div>
       </Provider>
     </div>
   )
