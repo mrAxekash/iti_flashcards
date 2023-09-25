@@ -7,7 +7,7 @@ import s from './create-new-password.module.scss'
 
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
-import { Textfield } from '@/components/ui/Textfield'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import { Typography } from '@/components/ui/Typography'
 
 const schema = z.object({
@@ -15,27 +15,18 @@ const schema = z.object({
 })
 
 type FormType = z.infer<typeof schema>
-
-export const CreateNewPassword = () => {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormType>({
+type Props = {
+  onSubmit: (data: FormType) => void
+}
+export const CreateNewPassword = (props: Props) => {
+  const { control, handleSubmit } = useForm<FormType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
       password: '',
     },
   })
-  const onSubmit = (data: FormType) => {
-    console.log(data)
-  }
-  /*const handleFormSubmitted = handleSubmit(props.onSubmit)
-      type Props = {
-        onSubmit: (data: FormType) => void
-      }*/
+  const handleFormSubmitted = handleSubmit(props.onSubmit)
 
   return (
     <>
@@ -44,13 +35,13 @@ export const CreateNewPassword = () => {
         <Typography variant="Large" className={s.title}>
           Create new password
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleFormSubmitted}>
           <div className={s.input}>
-            <Textfield
-              {...register('password')}
-              label={'Password'}
+            <ControlledTextField
+              placeholder={'Password'}
+              name={'password'}
+              control={control}
               type={'password'}
-              errorMessage={errors.password?.message}
             />
           </div>
           <Typography variant="Caption" className={s.instructions}>
