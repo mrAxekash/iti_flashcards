@@ -26,10 +26,6 @@
     border: 1px solid var(--color-accent-500);
 }
 
-.TabsTrigger:active:has {
-    border: none;
-}
-
 .TabsTrigger:active {
     position: relative;
     background: var(--color-dark-700);
