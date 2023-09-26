@@ -12,33 +12,31 @@ export const TabSwitcher = (props: PropsType) => {
   return (
     <Tabs.Root className={s.TabsRoot} defaultValue="tab1">
       <Tabs.List className={s.TabsList} aria-label="Manage your account">
-        <Tabs.Trigger
-          className={s.TabsTrigger}
-          value="tab1"
-          onClick={() => props.setActiveTabIndex(1)}
-        >
-          Switcher 1
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className={s.TabsTrigger}
-          value="tab2"
-          onClick={() => props.setActiveTabIndex(2)}
-        >
-          Switcher 2
-        </Tabs.Trigger>
-        <Tabs.Trigger
-          className={s.TabsTrigger}
-          value="tab3"
-          onClick={() => props.setActiveTabIndex(3)}
-        >
-          Switcher 3
-        </Tabs.Trigger>
+        {props.values.map(v => {
+          return (
+            <Tabs.Trigger
+              key={v.index}
+              className={s.TabsTrigger}
+              value={v.value}
+              onClick={() => props.setActiveTabIndex(v.index)}
+            >
+              {v.text}
+            </Tabs.Trigger>
+          )
+        })}
       </Tabs.List>
     </Tabs.Root>
   )
 }
 
+export type TabSwitcherValuesType = {
+  index: number
+  value: string
+  text: string
+}
+
 type PropsType = {
   activeTabIndex: number
   setActiveTabIndex: (index: number) => void
+  values: Array<TabSwitcherValuesType>
 }
