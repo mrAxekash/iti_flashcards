@@ -1,23 +1,20 @@
+import { Provider } from 'react-redux'
+
 import s from './App.module.scss'
 
-import { TabSwitcher, TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
+import { Header } from '@/components/ui/Header/header.tsx'
+import { Router } from '@/router.tsx'
+import { store } from '@/services/store.ts'
 
 export function App() {
-  const valuesArr: Array<TabSwitcherValuesType> = [
-    { index: 1, value: 'tab1', text: 'Switcher 1' },
-    { index: 2, value: 'tab2', text: 'Switcher 2' },
-    { index: 3, value: 'tab3', text: 'Switcher 3' },
-  ]
-
-  const onChange = (index: number) => {
-    console.log(`Selected tab 111: ${index}`)
-  }
-
   return (
     <div className={s.app}>
-      <div className={s.container}>
-        <TabSwitcher values={valuesArr} onChangeCallback={onChange} />
-      </div>
+      <Provider store={store}>
+        <Header />
+        <div className={s.container}>
+          <Router />
+        </div>
+      </Provider>
     </div>
   )
 }

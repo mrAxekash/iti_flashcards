@@ -13,6 +13,7 @@ export const TabSwitcher = (props: PropsType) => {
               className={s.TabsTrigger}
               value={v.value}
               onClick={() => props.onChangeCallback(v.index)}
+              disabled={props.isDisabled}
             >
               {v.text}
             </Tabs.Trigger>
@@ -32,4 +33,5 @@ export type TabSwitcherValuesType = {
 type PropsType = {
   onChangeCallback: (index: number) => void
   values: Array<TabSwitcherValuesType>
+  isDisabled?: boolean
 }

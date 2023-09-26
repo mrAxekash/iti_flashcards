@@ -6,7 +6,11 @@ const meta = {
   title: 'Components/TabSwitcher',
   component: TabSwitcher,
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    isDisabled: {
+      options: [true, false],
+    },
+  },
 } satisfies Meta<typeof TabSwitcher>
 
 export default meta
@@ -30,5 +34,6 @@ export const Default: Story = {
   args: {
     values: [],
     onChangeCallback: () => {},
+    isDisabled: false,
   },
 }
