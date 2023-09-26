@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import { Meta, StoryObj } from '@storybook/react'
 
 import { TabSwitcher, TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -16,11 +14,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-    const [activeTabIndex, setActiveTabIndex] = useState(1)
-
-    useEffect(() => {
-      console.log(`Selected tab: ${activeTabIndex}`)
-    }, [activeTabIndex])
+    const onChange = (index: number) => {
+      console.log(`Selected tab 111: ${index}`)
+    }
 
     const valuesArr: Array<TabSwitcherValuesType> = [
       { index: 1, value: 'tab1', text: 'Switcher 1' },
@@ -28,19 +24,11 @@ export const Default: Story = {
       { index: 3, value: 'tab3', text: 'Switcher 3' },
     ]
 
-    return (
-      <TabSwitcher
-        {...args}
-        activeTabIndex={activeTabIndex}
-        setActiveTabIndex={setActiveTabIndex}
-        values={valuesArr}
-      />
-    )
+    return <TabSwitcher {...args} values={valuesArr} onChangeCallback={onChange} />
   },
 
   args: {
-    activeTabIndex: 0,
-    setActiveTabIndex: () => {},
     values: [],
+    onChangeCallback: () => {},
   },
 }
