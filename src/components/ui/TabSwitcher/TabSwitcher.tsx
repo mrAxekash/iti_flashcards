@@ -4,7 +4,7 @@ import s from './TabSwitcher.module.scss'
 
 export const TabSwitcher = (props: PropsType) => {
   return (
-    <Tabs.Root className={s.TabsRoot} defaultValue="tab1">
+    <Tabs.Root className={s.TabsRoot} defaultValue={props.defaultValue}>
       <Tabs.List className={s.TabsList} aria-label="Manage your account">
         {props.values.map(v => {
           return (
@@ -12,7 +12,7 @@ export const TabSwitcher = (props: PropsType) => {
               key={v.index}
               className={s.TabsTrigger}
               value={v.value}
-              onClick={() => props.onChangeCallback(v.index)}
+              onClick={() => props.onChangeCallback(v.value)}
               disabled={props.isDisabled}
             >
               {v.text}
@@ -31,7 +31,8 @@ export type TabSwitcherValuesType = {
 }
 
 type PropsType = {
-  onChangeCallback: (index: number) => void
+  onChangeCallback: (index: string) => void
   values: Array<TabSwitcherValuesType>
   isDisabled?: boolean
+  defaultValue?: string
 }

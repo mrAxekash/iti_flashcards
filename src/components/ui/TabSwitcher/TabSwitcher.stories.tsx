@@ -18,8 +18,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-    const onChange = (index: number) => {
-      console.log(`Selected tab 111: ${index}`)
+    const onChange = (value: string) => {
+      console.log(`Selected tab 111: ${value}`)
     }
 
     const valuesArr: Array<TabSwitcherValuesType> = [
@@ -28,7 +28,9 @@ export const Default: Story = {
       { index: 3, value: 'tab3', text: 'Switcher 3' },
     ]
 
-    return <TabSwitcher {...args} values={valuesArr} onChangeCallback={onChange} />
+    return (
+      <TabSwitcher {...args} values={valuesArr} onChangeCallback={onChange} defaultValue={'tab1'} />
+    )
   },
 
   args: {
