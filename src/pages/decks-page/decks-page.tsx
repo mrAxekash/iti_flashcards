@@ -49,7 +49,6 @@ export const DecksPage = () => {
   const [sortArray, setSortArray] = useState<Deck[]>([])
 
   //for tabSwitcher
-
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [
     { index: 1, value: 'MyCards', text: 'My Cards' },
     { index: 2, value: 'AllCards', text: 'All Cards' },
@@ -138,13 +137,13 @@ export const DecksPage = () => {
           onChangeCallback={onTabChange}
           values={tabSwitcherValues}
           defaultValue={'AllCards'}
+          label={'Show packs cards'}
         />
       </div>
       <div className={s.buttonsContainer}>
         <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
         <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       </div>
-
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
