@@ -19,31 +19,29 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service.ts'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
+import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
   const { data: me } = useGetMeQuery()
 
-  const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
 
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  const updateCurrentPageCallback = (page: number) => {
+    dispatch(updateCurrentPage(page))
+  }
   const [search, setSearch] = useState('')
   const {
     currentData: decks,
     isLoading: decksLoading,
     isError: decksIsError,
   } = useGetDecksQuery({
-    itemsPerPage,
+    itemsPerPage: +itemsPerPage,
     name: search,
     currentPage,
     authorId,
   })
-
-  console.log('decks')
-  console.log(decks)
 
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
@@ -68,8 +66,7 @@ export const DecksPage = () => {
 
   // for pagination
   //// select inside pagination
-  const selectValues: Array<string> = ['5', '9', '20', '50', '100']
-  const [selectValue, setSelectValue] = useState(selectValues[1]) // for SuperSelect
+  const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
 
   useEffect(() => {
     if (!sortString) {
@@ -118,6 +115,7 @@ export const DecksPage = () => {
     },
   ]
 
+  // logging
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
@@ -151,8 +149,8 @@ export const DecksPage = () => {
         />
       </div>
       <div className={s.buttonsContainer}>
-        <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
-        <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
+        <Button onClick={() => setItemsPerPageCallback('20')}>20 items per page</Button>
+        <Button onClick={() => setItemsPerPageCallback('10')}>10 items per page</Button>
       </div>
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
@@ -188,23 +186,17 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
-          <Button key={item} onClick={() => updateCurrentPage(item)}>
-            {item}
-          </Button>
-        ))}*/}
         {decks && (
           <Pagination
             cardPacksTotalCount={decks.pagination.totalItems}
             pageCount={decks.pagination.totalPages}
-            onClickSelectHandler={() => setItemsPerPage(+selectValue)}
             selectSettings={{
-              value: selectValue,
-              onChangeOption: setSelectValue,
+              value: itemsPerPage.toString(),
+              onChangeOption: setItemsPerPageCallback,
               arr: selectValues,
             }}
             page={decks.pagination.currentPage}
-            currentPageHandler={(item: number) => updateCurrentPage(item)}
+            currentPageHandler={updateCurrentPageCallback}
           />
         )}
       </div>

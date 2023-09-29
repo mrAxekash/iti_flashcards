@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
+
 import s from './Paginations.module.scss'
 
 import { Select } from '@/components/ui/Select/Select.tsx'
-import {ChevronLeftIcon, ChevronRightIcon} from "@radix-ui/react-icons"
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator
@@ -41,7 +42,9 @@ export const Pagination: React.FC<PropsType> = props => {
     <div className={s.pagination}>
       {portion === 1 && (
         <>
-          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}><ChevronLeftIcon /></button>
+          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}>
+            <ChevronLeftIcon />
+          </button>
         </>
       )}
       {portion > 1 && (
@@ -104,7 +107,6 @@ export const Pagination: React.FC<PropsType> = props => {
           options={props.selectSettings.arr}
           value={props.selectSettings.value}
           onChangeOption={props.selectSettings.onChangeOption}
-          onClick={props.onClickSelectHandler}
           isGreyColor={true}
         />
         <span className={s.label2}>Cards per Page</span>
@@ -116,7 +118,7 @@ export const Pagination: React.FC<PropsType> = props => {
 type PropsType = {
   cardPacksTotalCount: number
   pageCount: number
-  onClickSelectHandler: () => void
+  // onClickSelectHandler: (value: string) => void
   selectSettings: {
     // setting for Select
     value: string
