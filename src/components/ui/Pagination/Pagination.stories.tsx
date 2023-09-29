@@ -20,17 +20,17 @@ export const Default: Story = {
   render: args => {
     // For Pagination:
     const totalCount = 4861 // should come from server api
-    const [pageCount, setPageCount] = useState('10')
     const [page, setPage] = useState(1)
     const values: Array<string> = ['5', '10', '20', '50', '100']
-    const [value, setValue] = useState(values['10']) // for SuperSelect
+    const pageCount = values[1]
+    const [value, setValue] = useState(values[0]) // for SuperSelect
 
     return (
       <div className={sC.storyContainer}>
         <Pagination
           {...args}
           cardPacksTotalCount={totalCount}
-          pageCount={pageCount}
+          pageCount={+pageCount}
           selectSettings={{
             value: value,
             onChangeOption: setValue,

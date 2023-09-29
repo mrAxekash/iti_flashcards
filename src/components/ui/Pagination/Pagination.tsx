@@ -118,7 +118,6 @@ export const Pagination: React.FC<PropsType> = props => {
 type PropsType = {
   cardPacksTotalCount: number
   pageCount: number
-  // onClickSelectHandler: (value: string) => void
   selectSettings: {
     // setting for Select
     value: string
