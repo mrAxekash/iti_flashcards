@@ -68,8 +68,8 @@ export const DecksPage = () => {
 
   // for pagination
   //// select inside pagination
-  const values: Array<string> = ['5', '10', '20', '50', '100']
-  const [value, setValue] = useState(values[0]) // for SuperSelect
+  const selectValues: Array<string> = ['5', '9', '20', '50', '100']
+  const [selectValue, setSelectValue] = useState(selectValues[1]) // for SuperSelect
 
   useEffect(() => {
     if (!sortString) {
@@ -197,11 +197,11 @@ export const DecksPage = () => {
           <Pagination
             cardPacksTotalCount={decks.pagination.totalItems}
             pageCount={decks.pagination.totalPages}
-            onClickSelectHandler={() => setItemsPerPage(+value)}
+            onClickSelectHandler={() => setItemsPerPage(+selectValue)}
             selectSettings={{
-              value: value,
-              onChangeOption: setValue,
-              arr: values,
+              value: selectValue,
+              onChangeOption: setSelectValue,
+              arr: selectValues,
             }}
             page={decks.pagination.currentPage}
             currentPageHandler={(item: number) => updateCurrentPage(item)}
