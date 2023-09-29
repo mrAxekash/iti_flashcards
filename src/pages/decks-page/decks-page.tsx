@@ -4,6 +4,7 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
+import { Pagination } from '@/components/ui/Pagination'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -40,6 +41,10 @@ export const DecksPage = () => {
     currentPage,
     authorId,
   })
+
+  console.log('decks')
+  console.log(decks)
+
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
@@ -60,6 +65,11 @@ export const DecksPage = () => {
       setAuthorId('')
     }
   }
+
+  // for pagination
+  //// select inside pagination
+  const values: Array<string> = ['5', '10', '20', '50', '100']
+  const [value, setValue] = useState(values[0]) // for SuperSelect
 
   useEffect(() => {
     if (!sortString) {
@@ -178,11 +188,25 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
+        {/*{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
           <Button key={item} onClick={() => updateCurrentPage(item)}>
             {item}
           </Button>
-        ))}
+        ))}*/}
+        {decks && (
+          <Pagination
+            cardPacksTotalCount={decks.pagination.totalItems}
+            pageCount={decks.pagination.totalPages}
+            onClickSelectHandler={() => setItemsPerPage(+value)}
+            selectSettings={{
+              value: value,
+              onChangeOption: setValue,
+              arr: values,
+            }}
+            page={decks.pagination.currentPage}
+            currentPageHandler={(item: number) => updateCurrentPage(item)}
+          />
+        )}
       </div>
     </div>
   )

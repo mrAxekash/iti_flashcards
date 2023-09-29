@@ -2,16 +2,15 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Pagination } from './Pagination.tsx'
 import sC from '../../../styles/common.module.scss'
+
+import { Pagination } from './Pagination.tsx'
 
 const meta = {
   title: 'Components/Pagination',
   component: Pagination,
   tags: ['autodocs'],
-  argTypes: {
-
-  },
+  argTypes: {},
 } satisfies Meta<typeof Pagination>
 
 export default meta
@@ -19,7 +18,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-
     // For Pagination:
     const totalCount = 4861 // should come from server api
     const [pageCount, setPageCount] = useState(10)
@@ -30,21 +28,23 @@ export const Default: Story = {
       setPageCount(+value)
     }
 
-    return <div className={sC.storyContainer}>
-      <Pagination
-        {...args}
-        cardPacksTotalCount={totalCount}
-        pageCount={pageCount}
-        onClickSelectHandler={onClickSelectHandler}
-        selectSettings={{
-          value: value,
-          onChangeOption: setValue,
-          arr: values,
-        }}
-        page={page}
-        currentPageHandler={setPage}
-      />
-    </div>
+    return (
+      <div className={sC.storyContainer}>
+        <Pagination
+          {...args}
+          cardPacksTotalCount={totalCount}
+          pageCount={pageCount}
+          onClickSelectHandler={onClickSelectHandler}
+          selectSettings={{
+            value: value,
+            onChangeOption: setValue,
+            arr: values,
+          }}
+          page={page}
+          currentPageHandler={setPage}
+        />
+      </div>
+    )
   },
   args: {
     cardPacksTotalCount: 0,
@@ -53,11 +53,11 @@ export const Default: Story = {
     selectSettings: {
       value: '',
       onChangeOption: () => undefined,
-      arr: []
+      arr: [],
     },
     page: 0,
-    currentPageHandler: () => undefined
-  }
+    currentPageHandler: () => undefined,
+  },
 }
 
 //todo: maybe del args values
