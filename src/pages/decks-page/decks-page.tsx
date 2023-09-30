@@ -67,10 +67,16 @@ export const DecksPage = () => {
     } else {
       const [key, direction] = sortString.split('-')
 
+      // todo: need to do sort on server
       if (decks && decks?.items && key) {
-        const sorted = [...decks?.items].sort((a, b) => {
+        const sorted = [...(decks?.items || [])].sort((a, b) => {
           if (direction === 'asc') {
-            return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
+            const varA = a[key as keyof typeof a]
+            const varB = b[key as keyof typeof b]
+
+            if (varA && varB) {
+              return varA > varB ? 1 : -1
+            }
           }
 
           return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
