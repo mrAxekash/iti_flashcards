@@ -125,7 +125,7 @@ export const DecksPage = () => {
         <Typography variant="Large">Packs list</Typography>
         <Button
           onClick={() => {
-            updateCurrentPage(1)
+            dispatch(updateCurrentPage(1))
             createDeck({ name: 'New Deck 4' })
           }}
           disabled={isLoading}
@@ -147,10 +147,6 @@ export const DecksPage = () => {
           defaultValue={'AllCards'}
           label={'Show packs cards'}
         />
-      </div>
-      <div className={s.buttonsContainer}>
-        <Button onClick={() => setItemsPerPageCallback('20')}>20 items per page</Button>
-        <Button onClick={() => setItemsPerPageCallback('10')}>10 items per page</Button>
       </div>
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
@@ -195,7 +191,7 @@ export const DecksPage = () => {
               onChangeOption: setItemsPerPageCallback,
               arr: selectValues,
             }}
-            page={decks.pagination.currentPage}
+            page={currentPage}
             currentPageHandler={updateCurrentPageCallback}
           />
         )}

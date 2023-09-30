@@ -5,12 +5,16 @@
     .topContainer, .middleContainer {
         display: flex;
         justify-content: space-between;
-        align-items: center;
         margin-bottom: 10px;
+    }
+
+    .topContainer {
+        align-items: center;
     }
 
     .middleContainer {
         flex-direction: row;
+        align-items: end;
         .searchContainer {
             width: 100%;
             max-width: 299px;
@@ -24,7 +28,6 @@
     .tableContainer {
         width: 100%;
     }
-
 
     .paginationContainer {
         margin-top: 10px;
