@@ -189,9 +189,9 @@ export const DecksPage = () => {
         {decks && (
           <Pagination
             cardPacksTotalCount={decks.pagination.totalItems}
-            pageCount={decks.pagination.totalPages}
+            pageCount={Number(itemsPerPage)}
             selectSettings={{
-              value: itemsPerPage.toString(),
+              value: itemsPerPage,
               onChangeOption: setItemsPerPageCallback,
               arr: selectValues,
             }}
@@ -203,3 +203,5 @@ export const DecksPage = () => {
     </div>
   )
 }
+
+// todo: I`m not using pagination.totalPages, maybe later need to check
