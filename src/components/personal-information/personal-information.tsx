@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { clsx } from 'clsx'
 
+import defaultAva from '../../assets/images/defaultAva.png'
 import { Card } from '../ui/Card'
 import { Typography } from '../ui/Typography'
 
@@ -9,15 +10,16 @@ import s from './personal-information.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Logout } from '@/assets/icons/Logout.tsx'
+import { Avatar } from '@/components/ui/Avatar/Avatar.tsx'
 import { Button } from '@/components/ui/Button'
 import { Textfield } from '@/components/ui/Textfield'
-import { useGetMeQuery, useLogoutMutation } from '@/services/auth/auth.service.ts'
 
 type PersonalInformationType = {
   userName?: string
   userEmail?: string
-  avatar?: string
+  avatar?: string | null
   onChangeUserName?: (userName: string) => void
+  onLogout?: () => void
   onChangeAvatar?: (newAvatar: string) => void
 }
 export const PersonalInformation = ({
@@ -26,6 +28,7 @@ export const PersonalInformation = ({
   avatar = 'https://img.freepik.com/free-vector/cute-cat-gaming-cartoon_138676-2969.jpg?w=826&t=st=1693944282~exp=1693944882~hmac=db975532c35e66aee49662f13349eb1ca1eab57963a6931222633c594a4f5a90',
   onChangeUserName,
   onChangeAvatar,
+  onLogout,
 }: PersonalInformationType) => {
   const classNames = {
     imageContainer: clsx(s.imageContainer),
@@ -50,6 +53,8 @@ export const PersonalInformation = ({
     setEditMode(!editMode)
   }
 
+  const finalUrl = avatar ? avatar : defaultAva
+
   // const changeAvatarHandler = () => {
   //   onChangeAvatar && onChangeAvatar('newAvatar')
   // }
@@ -58,10 +63,8 @@ export const PersonalInformation = ({
   //   onChangeUserName && onChangeUserName('New Name')
   // }
 
-  const [logout] = useLogoutMutation()
-  const { data } = useGetMeQuery()
   const logoutHandler = () => {
-    logout && logout()
+    onLogout && onLogout()
   }
 
   return (
@@ -70,11 +73,7 @@ export const PersonalInformation = ({
         Personal Information
       </Typography>
       <div className={classNames.imageContainer}>
-        <img
-          src={data.avatar ? data.avatar : avatar}
-          alt="personalImg"
-          className={classNames.image}
-        />
+        <Avatar urlAdress={finalUrl} className={classNames.image} />
         {!editMode && (
           <Button
             variant={'secondary'}
@@ -101,7 +100,7 @@ export const PersonalInformation = ({
         <>
           <div className={classNames.subtitleContainer}>
             <Typography variant={'H1'} className={classNames.userName}>
-              {data.name ? data.name : userName}
+              {userName}
             </Typography>
             <Button variant={'link'} onClick={onChangeEditMode}>
               <Edit color={'var(--color-light-100)'} className={classNames.iconButton} />
@@ -109,7 +108,7 @@ export const PersonalInformation = ({
           </div>
           <div>
             <Typography variant={'Body_2'} className={classNames.userEmail}>
-              {data.email ? data.email : userEmail}
+              {userEmail}
             </Typography>
           </div>
 

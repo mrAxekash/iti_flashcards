@@ -2,7 +2,7 @@ import { ComponentProps, FC, useEffect, useState } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
 
