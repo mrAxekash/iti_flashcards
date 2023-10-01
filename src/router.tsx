@@ -1,8 +1,19 @@
-import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
-import {DecksPage} from "@/pages/decks-page/decks-page.tsx"
-import {SignInPage} from "@/pages/sign-in-page/sign-in-page.tsx"
-import {SignUpPage} from "@/pages/sign-up.tsx"
-import {useGetMeQuery} from "@/services/auth/auth.service.ts"
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouteObject,
+  RouterProvider,
+} from 'react-router-dom'
+
+import { Header } from './components/ui/Header/header'
+import { Layout } from './layout'
+
+import { DecksPage } from '@/pages/decks-page/decks-page.tsx'
+import { PersonalInformationPage } from '@/pages/personal-information/personal-information-page.tsx'
+import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
+import { SignUpPage } from '@/pages/sign-up.tsx'
+import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -11,8 +22,8 @@ const publicRoutes: RouteObject[] = [
   },
   {
     path: '/sign-up',
-    element: <SignUpPage />
-  }
+    element: <SignUpPage />,
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -20,18 +31,30 @@ const privateRoutes: RouteObject[] = [
     path: '/',
     element: <DecksPage />,
   },
+  {
+    path: '/personal-information',
+    element: <PersonalInformationPage />,
+  },
 ]
 
 const router = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    element: <Layout />,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+      {
+        element: <Header />,
+        children: publicRoutes,
+      },
+    ],
   },
-  ...publicRoutes
 ])
 
 export const Router = () => {
-  const {isLoading: isMeLoading} = useGetMeQuery()
+  const { isLoading: isMeLoading } = useGetMeQuery()
 
   if (isMeLoading) return <div>Loading...</div>
 
@@ -39,7 +62,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const {data: me, isLoading: isMeLoading} = useGetMeQuery()
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
 
   const isAuthenticated = me && me?.success !== false
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
+
 import s from './Paginations.module.scss'
 
 import { Select } from '@/components/ui/Select/Select.tsx'
-import {ChevronLeftIcon, ChevronRightIcon} from "@radix-ui/react-icons"
 
 export const Pagination: React.FC<PropsType> = props => {
   let pagesCount = Math.ceil(props.cardPacksTotalCount / props.pageCount) // count of ALL pages, before the paginator
@@ -41,7 +42,9 @@ export const Pagination: React.FC<PropsType> = props => {
     <div className={s.pagination}>
       {portion === 1 && (
         <>
-          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}><ChevronLeftIcon /></button>
+          <button className={`${s.btn} ${s.btnLeft} ${s.btnFake}`}>
+            <ChevronLeftIcon />
+          </button>
         </>
       )}
       {portion > 1 && (
