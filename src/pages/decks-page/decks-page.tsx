@@ -4,7 +4,7 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
-import { ArticlePagination } from '@/components/ui/Pagination/Article/ArticlePagination.tsx'
+import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -195,11 +195,11 @@ export const DecksPage = () => {
               page={currentPage}
               currentPageHandler={updateCurrentPageCallback}
             />*/}
-            <ArticlePagination
+            <Pagination
               onPageChange={updateCurrentPageCallback}
               totalCount={decks.pagination.totalItems}
               currentPage={currentPage}
-              pageSize={5}
+              pageSize={+itemsPerPage}
               siblingCount={2}
               selectSettings={{
                 value: itemsPerPage,
