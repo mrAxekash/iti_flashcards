@@ -201,6 +201,11 @@ export const DecksPage = () => {
               currentPage={currentPage}
               pageSize={5}
               siblingCount={2}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
             />
           </div>
         )}

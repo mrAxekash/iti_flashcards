@@ -7,6 +7,8 @@ import { v4 } from 'uuid'
 import s from './ArticlePagination.module.scss'
 import { usePagination, DOTS } from './usePagination'
 
+import { Select } from '@/components/ui/Select'
+
 export const ArticlePagination = (props: PropsType) => {
   const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props
 
@@ -82,6 +84,16 @@ export const ArticlePagination = (props: PropsType) => {
       >
         <ChevronRightIcon />
       </li>
+      <div className={s.selectBlock}>
+        <span className={s.label1}>Show</span>
+        <Select
+          options={props.selectSettings.arr}
+          value={props.selectSettings.value}
+          onChangeOption={props.selectSettings.onChangeOption}
+          isGreyColor={true}
+        />
+        <span className={s.label2}>Cards per Page</span>
+      </div>
     </div>
   )
 }
@@ -93,4 +105,10 @@ type PropsType = {
   currentPage: number
   pageSize: number
   className?: string
+  selectSettings: {
+    // setting for Select
+    value: string
+    onChangeOption: (value: string) => void
+    arr: Array<string>
+  }
 }
