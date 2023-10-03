@@ -4,7 +4,7 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
-import { Pagination } from '@/components/ui/Pagination/Article/Pagination.tsx'
+import { ArticlePagination } from '@/components/ui/Pagination/Article/ArticlePagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -183,23 +183,26 @@ export const DecksPage = () => {
 
       <div className={s.paginationContainer}>
         {decks && (
-          /*<Pagination
-            cardPacksTotalCount={decks.pagination.totalItems}
-            pageCount={Number(itemsPerPage)}
-            selectSettings={{
-              value: itemsPerPage,
-              onChangeOption: setItemsPerPageCallback,
-              arr: selectValues,
-            }}
-            page={currentPage}
-            currentPageHandler={updateCurrentPageCallback}
-          />*/
-          <Pagination
-            onPageChange={updateCurrentPageCallback}
-            totalCount={decks.pagination.totalItems}
-            currentPage={currentPage}
-            pageSize={5}
-          />
+          <div>
+            {/*<Pagination
+              cardPacksTotalCount={decks.pagination.totalItems}
+              pageCount={Number(itemsPerPage)}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
+              page={currentPage}
+              currentPageHandler={updateCurrentPageCallback}
+            />*/}
+            <ArticlePagination
+              onPageChange={updateCurrentPageCallback}
+              totalCount={decks.pagination.totalItems}
+              currentPage={currentPage}
+              pageSize={5}
+              siblingCount={2}
+            />
+          </div>
         )}
       </div>
     </div>
