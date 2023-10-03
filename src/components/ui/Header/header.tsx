@@ -65,6 +65,7 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                 className={s.dropDownMenuItem}
                 title={'My Profile'}
                 onClick={onClickHandler}
+                onSelect={() => {}}
               />
               <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
               <DropdownItemWithIcon

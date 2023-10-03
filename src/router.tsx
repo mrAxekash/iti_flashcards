@@ -6,7 +6,6 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { Header } from './components/ui/Header/header'
 import { Layout } from './layout'
 
 import { DecksPage } from '@/pages/decks-page/decks-page.tsx'
@@ -46,7 +45,7 @@ const router = createBrowserRouter([
         children: privateRoutes,
       },
       {
-        element: <Header />,
+        element: <Layout />,
         children: publicRoutes,
       },
     ],
