@@ -4,7 +4,7 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
-import { Pagination } from '@/components/ui/Pagination'
+import { Pagination } from '@/components/ui/Pagination/Article/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -28,8 +28,8 @@ export const DecksPage = () => {
 
   const dispatch = useAppDispatch()
 
-  const updateCurrentPageCallback = (page: number) => {
-    dispatch(updateCurrentPage(page))
+  const updateCurrentPageCallback = (page: number | string) => {
+    dispatch(updateCurrentPage(+page))
   }
   const [search, setSearch] = useState('')
   const {
@@ -183,7 +183,7 @@ export const DecksPage = () => {
 
       <div className={s.paginationContainer}>
         {decks && (
-          <Pagination
+          /*<Pagination
             cardPacksTotalCount={decks.pagination.totalItems}
             pageCount={Number(itemsPerPage)}
             selectSettings={{
@@ -193,6 +193,12 @@ export const DecksPage = () => {
             }}
             page={currentPage}
             currentPageHandler={updateCurrentPageCallback}
+          />*/
+          <Pagination
+            onPageChange={updateCurrentPageCallback}
+            totalCount={decks.pagination.totalItems}
+            currentPage={currentPage}
+            pageSize={5}
           />
         )}
       </div>
