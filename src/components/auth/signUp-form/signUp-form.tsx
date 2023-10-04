@@ -44,7 +44,6 @@ export const SignUpForm = () => {
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])))
 
   useEffect(() => {
-    console.log(error)
     if (
       error &&
       'status' in error &&

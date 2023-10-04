@@ -4,9 +4,14 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
+import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
+import { TabSwitcher } from '@/components/ui/TabSwitcher'
+import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
 import { Textfield } from '@/components/ui/Textfield'
+import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
+import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
 import { Deck } from '@/services/decks/deck.types.ts'
 import {
@@ -14,25 +19,30 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service.ts'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
+import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
+  const [authorId, setAuthorId] = useState('')
+  const { data: me } = useGetMeQuery()
 
-  const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
 
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  const updateCurrentPageCallback = (page: number | string) => {
+    dispatch(updateCurrentPage(+page))
+  }
   const [search, setSearch] = useState('')
   const {
     currentData: decks,
     isLoading: decksLoading,
     isError: decksIsError,
   } = useGetDecksQuery({
-    itemsPerPage,
+    itemsPerPage: +itemsPerPage,
     name: search,
     currentPage,
+    authorId,
   })
+
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
@@ -40,6 +50,23 @@ export const DecksPage = () => {
   const [sort, setSort] = useState<Sort>(null)
   const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
   const [sortArray, setSortArray] = useState<Deck[]>([])
+
+  //for tabSwitcher
+  const tabSwitcherValues: Array<TabSwitcherValuesType> = [
+    { index: 1, value: 'MyCards', text: 'My Cards' },
+    { index: 2, value: 'AllCards', text: 'All Cards' },
+  ]
+  const onTabChange = (value: string) => {
+    if (value === 'MyCards') {
+      setAuthorId(me.id)
+    } else {
+      setAuthorId('')
+    }
+  }
+
+  // for pagination
+  //// select inside pagination
+  const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
 
   useEffect(() => {
     if (!sortString) {
@@ -88,32 +115,39 @@ export const DecksPage = () => {
     },
   ]
 
+  // logging
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
   return (
     <div className={s.component}>
-      <div className={s.searchContainer}>
-        <Textfield
-          value={search}
-          onChange={e => setSearch(e.currentTarget.value)}
-          label={'Search by name'}
-        />
-      </div>
-      <div className={s.buttonsContainer}>
+      <div className={s.topContainer}>
+        <Typography variant="Large">Packs list</Typography>
         <Button
           onClick={() => {
-            updateCurrentPage(1)
+            dispatch(updateCurrentPage(1))
             createDeck({ name: 'New Deck 4' })
           }}
           disabled={isLoading}
         >
-          Add new deck
+          Add New Pack
         </Button>
-        <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
-        <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       </div>
-
+      <div className={s.middleContainer}>
+        <div className={s.searchContainer}>
+          <Textfield
+            value={search}
+            onChange={e => setSearch(e.currentTarget.value)}
+            placeholder={'Input search'}
+          />
+        </div>
+        <TabSwitcher
+          onChangeCallback={onTabChange}
+          values={tabSwitcherValues}
+          defaultValue={'AllCards'}
+          label={'Show packs cards'}
+        />
+      </div>
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
@@ -148,12 +182,36 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
-          <Button key={item} onClick={() => updateCurrentPage(item)}>
-            {item}
-          </Button>
-        ))}
+        {decks && (
+          <div>
+            {/*<Pagination
+              cardPacksTotalCount={decks.pagination.totalItems}
+              pageCount={Number(itemsPerPage)}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
+              page={currentPage}
+              currentPageHandler={updateCurrentPageCallback}
+            />*/}
+            <Pagination
+              onPageChange={updateCurrentPageCallback}
+              totalCount={decks.pagination.totalItems}
+              currentPage={currentPage}
+              pageSize={+itemsPerPage}
+              siblingCount={2}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+// todo: I`m not using pagination.totalPages, maybe later need to check

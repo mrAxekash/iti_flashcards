@@ -44,7 +44,7 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
           {isLoggedIn ? (
             <div className={s.containerNameAva}>
               <div className={s.name}>{me && me.name}</div>
-              <DropDownMenu trigger={<Avatar urlAdress={defaultAva} />}>
+              <DropDownMenu trigger={<Avatar urlAdress={defaultAva} />} align={'end'}>
                 <DropdownItemWithAvatar trigger={<Avatar urlAdress={defaultAva} />}>
                   <Typography variant={'Subtitle_2'} className={s.userName}>
                     {me && me.name}
@@ -53,13 +53,13 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                     {me && me.email}
                   </Typography>
                 </DropdownItemWithAvatar>
-                <DropdownMenu.Separator />
+                <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
                 <DropdownItemWithIcon
                   icon={<Person color={'var(--color-light-100)'} className={s.icons} />}
                   className={s.dropDownMenuItem}
                   title={'My Profile'}
                 />
-                <DropdownMenu.Separator />
+                <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
                 <DropdownItemWithIcon
                   icon={<Logout color={'var(--color-light-100)'} className={s.icons} />}
                   title={'Sign Out'}

@@ -25,8 +25,6 @@ const decksService = baseApi.injectEndpoints({
         try {
           const response = await queryFulfilled
 
-          console.log(response)
-
           dispatch(
             decksService.util.updateQueryData(
               'getDecks',
