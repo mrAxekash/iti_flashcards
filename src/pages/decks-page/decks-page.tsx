@@ -1,18 +1,20 @@
+import { useEffect, useState } from 'react'
+
+import s from './deck-page.module.scss'
+
+import trashIcon from '@/assets/icons/trashIcon.png'
+import { Button } from '@/components/ui/Button'
+import { Column, Table } from '@/components/ui/Table'
+import { Textfield } from '@/components/ui/Textfield'
+import { useAppDispatch, useAppSelector } from '@/hooks.ts'
+import { Sort } from '@/services/common/types.ts'
+import { Deck } from '@/services/decks/deck.types.ts'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service.ts'
-import { useEffect, useState } from 'react'
-import { Textfield } from '@/components/ui/Textfield'
-import { Button } from '@/components/ui/Button'
-import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { decksSlice } from '@/services/decks/decks.slice.ts'
-import s from './deck-page.module.scss'
-import { Column, Table } from '@/components/ui/Table'
-import trashIcon from '@/assets/icons/trashIcon.png'
-import { Sort } from '@/services/common/types.ts'
-import { Deck } from '@/services/decks/deck.types.ts'
 
 export const DecksPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -44,13 +46,16 @@ export const DecksPage = () => {
       setSortArray(decks?.items as Deck[])
     } else {
       const [key, direction] = sortString.split('-')
+
       if (decks && decks?.items && key) {
         const sorted = [...decks?.items].sort((a, b) => {
           if (direction === 'asc') {
             return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
           }
+
           return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
         })
+
         setSortArray(sorted)
       }
     }

@@ -16,7 +16,10 @@ const schema = z.object({
 
 type FormType = z.infer<typeof schema>
 
-export const RecoverPassword = () => {
+type Props = {
+  onSubmit: (data: FormType) => void
+}
+export const RecoverPassword = (props: Props) => {
   const {
     register,
     control,
@@ -30,9 +33,7 @@ export const RecoverPassword = () => {
     },
   })
 
-  const onSubmit = (data: FormType) => {
-    console.log(data)
-  }
+  const handleFormSubmitted = handleSubmit(props.onSubmit)
 
   return (
     <>
@@ -41,7 +42,7 @@ export const RecoverPassword = () => {
         <Typography variant="Large" className={s.title}>
           Forgot your password?
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleFormSubmitted}>
           <div className={s.form}>
             <Textfield
               {...register('email')}

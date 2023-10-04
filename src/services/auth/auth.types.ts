@@ -7,3 +7,7 @@ export type LoginArgs = {
 export type LoginResponse = {
   accessToken: string
 }
+
+export type RecoverArgs = {
+  email: string
+}
