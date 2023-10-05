@@ -16,6 +16,7 @@
   .middleContainer {
     flex-direction: row;
     align-items: end;
+
     .searchContainer {
       width: 100%;
       max-width: 299px;
@@ -36,6 +37,7 @@
 
   .iconContainer {
     display: flex;
+
     .trashIcon {
       cursor: pointer;
     }

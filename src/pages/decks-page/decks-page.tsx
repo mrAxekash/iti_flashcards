@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import s from './deck-page.module.scss'
 
+import { Trash } from '@/assets/icons/Trash.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
@@ -148,16 +149,32 @@ export const DecksPage = () => {
           defaultValue={'AllCards'}
           label={'Show packs cards'}
         />
+        <Slider
+          value={[1, 10]}
+          defaultValue={[1]}
+          onValueChange={() => {}}
+          step={1}
+          min={1}
+          max={10}
+          minStepsBetweenThumbs={1}
+        />
+        <Button variant="secondary">
+          <img
+            src={trashIcon}
+            alt=""
+            className={s.trashIcon}
+            onClick={() =>
+              deleteDeck({ id: deck.id })
+                .unwrap()
+                .catch(err => {
+                  alert(err?.data?.message)
+                })
+            }
+          />
+          Clear Filter
+        </Button>
       </div>
-      <Slider
-        value={[1, 10]}
-        defaultValue={[1]}
-        onValueChange={() => {}}
-        step={1}
-        min={1}
-        max={10}
-        minStepsBetweenThumbs={1}
-      />
+
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
@@ -171,18 +188,7 @@ export const DecksPage = () => {
                   <Table.Cell>{deck.author.name}</Table.Cell>
                   <Table.Cell>
                     <div className={s.iconContainer}>
-                      <img
-                        src={trashIcon}
-                        alt=""
-                        className={s.trashIcon}
-                        onClick={() =>
-                          deleteDeck({ id: deck.id })
-                            .unwrap()
-                            .catch(err => {
-                              alert(err?.data?.message)
-                            })
-                        }
-                      />
+                      <img src={trashIcon} alt="" className={s.trashIcon} />
                     </div>
                   </Table.Cell>
                 </Table.Row>
