@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ComponentPropsWithoutRef, FC, useMemo, useState } from 'react'
 
 const data = [
   {
@@ -33,39 +33,80 @@ const data = [
   },
 ]
 
-export const WithSort = () => {
-  const [sort, setSort] = useState<Sort>(null)
+const columns: Array<Column> = [
+  {
+    key: 'name',
+    title: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'cardsCount',
+    title: 'Cards',
+    sortable: true,
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+    sortable: true,
+  },
+  {
+    key: 'createdBy',
+    title: 'Created by',
+    sortable: true,
+  },
+]
 
-  const handleSort = (key: string) => {
-    if (sort && sort.key === key) {
-      setSort({
-        key,
-        direction: sort.direction === 'asc' ? 'desc' : 'asc',
-      })
-    } else {
-      setSort({
-        key,
-        direction: 'asc',
-      })
-    }
+export const Header: FC<
+  Omit<
+    ComponentPropsWithoutRef<'thead'> & {
+      columns: Column[]
+      sort?: Sort
+      onSort?: (sort: Sort) => void
+    },
+    'children'
+  >
+> = ({ columns, sort, onSort, ...restProps }) => {
+  const handleSort = (key: string, sortable?: boolean) => () => {
+    if (!onSort || !sortable) return
 
-    console.log(console.log(sort))
+    if (sort?.key !== key) return onSort({ key, direction: 'asc' })
+
+    if (sort.direction === 'desc') return onSort(null)
+
+    return onSort({
+      key,
+      direction: sort?.direction === 'asc' ? 'desc' : 'asc',
+    })
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th onClick={() => handleSort('name')}>
-            Name
-            {sort && sort.key === 'name' && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+    <thead {...restProps}>
+      <tr>
+        {columns.map(({ title, key, sortable }) => (
+          <th key={key} onClick={handleSort(key, sortable)}>
+            {title}
+            {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
           </th>
-          <th onClick={() => handleSort('cardsCount')}>Cards</th>
-          <th onClick={() => handleSort('updated')}>Last Updated</th>
-          <th onClick={() => handleSort('createdBy')}>Created by</th>
-          <th></th>
-        </tr>
-      </thead>
+        ))}
+      </tr>
+    </thead>
+  )
+}
+
+export const WithSort = () => {
+  const [sort, setSort] = useState<Sort>(null)
+
+  const sortedString = useMemo(() => {
+    if (!sort) return null
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
+
+  console.log(console.log(sortedString))
+
+  return (
+    <table>
+      <Header columns={columns} sort={sort} onSort={setSort} />
       <tbody>
         {data.map(item => (
           <tr key={item.title}>
@@ -85,3 +126,8 @@ type Sort = {
   key: string
   direction: 'asc' | 'desc'
 } | null
+type Column = {
+  key: string
+  title: string
+  sortable: boolean
+}
