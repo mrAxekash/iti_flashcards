@@ -32,12 +32,16 @@ export type DecksResponse = {
   pagination: PaginationType
 }
 
+type Direction = 'asc' | 'desc'
+type Field = 'name' | 'updated'
 export type DeckParams = {
+  name?: string
+  authorId?: string
+  orderBy?: `${Field}-${Direction}`
   minCardsCount?: number
   maxCardsCount?: number
-  authorId?: string
-  orderBy?: string
   currentPage?: number
   itemsPerPage?: number
-  name?: string
-} | void
+}
+
+// const orderBy: DeckParams['orderBy'] = 'updated-desc'
