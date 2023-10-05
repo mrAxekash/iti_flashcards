@@ -1,6 +1,7 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './recover-password.module.scss'
@@ -14,12 +15,13 @@ const schema = z.object({
   email: z.string().email(),
 })
 
-type FormType = z.infer<typeof schema>
+export type FormType = z.infer<typeof schema>
 
 type Props = {
   onSubmit: (data: FormType) => void
 }
 export const RecoverPassword = (props: Props) => {
+  const navigate = useNavigate()
   const {
     register,
     control,
@@ -60,7 +62,7 @@ export const RecoverPassword = (props: Props) => {
         <Typography variant="Body_2" className={s.caption}>
           Did you remember your password?
         </Typography>
-        <Button variant="link" className={s.loginLink}>
+        <Button variant="link" className={s.loginLink} onClick={() => navigate('/login')}>
           Try logging in
         </Button>
       </Card>

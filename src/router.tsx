@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { CheckEmailPage } from '@/pages/check-email-page/check-email-page.tsx'
+import { CreateNewPasswordPage } from '@/pages/create-new-password/create-new-password-page.tsx'
 import { DecksPage } from '@/pages/decks-page/decks-page.tsx'
 import { RecoverPasswordPage } from '@/pages/recover-password-page/recover-password-page.tsx'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
@@ -30,6 +31,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/recover-password',
     element: <RecoverPasswordPage />,
+  },
+  {
+    path: '/create-new-password',
+    element: <CreateNewPasswordPage />,
   },
 ]
 

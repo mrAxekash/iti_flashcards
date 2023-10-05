@@ -15,7 +15,6 @@ const authService = baseApi.injectEndpoints({
           // don't refetch on 404
           return { data: { success: false } }
         }
-        console.log(result)
 
         return { data: result.data }
       },
@@ -55,9 +54,27 @@ const authService = baseApi.injectEndpoints({
           method: 'POST',
           body: {
             ...params,
-            html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
+            html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/confirm-email/##token##">here</a> to recover your password</p>',
             subject: 'string',
           },
+        }
+      },
+    }),
+    checkEmail: builder.mutation<any, RecoverArgs>({
+      query: params => {
+        return {
+          url: '/v1/auth/recover-password',
+          method: 'POST',
+          body: params,
+        }
+      },
+    }),
+    createNewPassword: builder.mutation<any, void>({
+      query: data => {
+        return {
+          url: '/v1/auth/create-new-password',
+          method: 'POST',
+          body: data,
         }
       },
     }),
@@ -70,4 +87,6 @@ export const {
   useSignUpMutation,
   useLogoutMutation,
   useRecoverPasswordMutation,
+  useCheckEmailMutation,
+  useCreateNewPasswordMutation,
 } = authService
