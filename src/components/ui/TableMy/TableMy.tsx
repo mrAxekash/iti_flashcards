@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 const data = [
   {
@@ -37,37 +37,24 @@ const columns: Array<Column> = [
   {
     key: 'name',
     title: 'Name',
-    sortable: true,
   },
   {
     key: 'cardsCount',
     title: 'Cards',
-    sortable: true,
   },
   {
     key: 'updated',
     title: 'Last Updated',
-    sortable: true,
   },
   {
     key: 'createdBy',
     title: 'Created by',
-    sortable: true,
   },
 ]
 
-export const Header: FC<
-  Omit<
-    ComponentPropsWithoutRef<'thead'> & {
-      columns: Column[]
-      sort?: Sort
-      onSort?: (sort: Sort) => void
-    },
-    'children'
-  >
-> = ({ columns, sort, onSort, ...restProps }) => {
-  const handleSort = (key: string, sortable?: boolean) => () => {
-    if (!onSort || !sortable) return
+export const TableHeader: FC<TableHeaderType> = ({ columns, sort, onSort }) => {
+  const handleSort = (key: string) => () => {
+    if (!onSort) return
 
     if (sort?.key !== key) return onSort({ key, direction: 'asc' })
 
@@ -80,10 +67,10 @@ export const Header: FC<
   }
 
   return (
-    <thead {...restProps}>
+    <thead>
       <tr>
-        {columns.map(({ title, key, sortable }) => (
-          <th key={key} onClick={handleSort(key, sortable)}>
+        {columns.map(({ title, key }) => (
+          <th key={key} onClick={handleSort(key)}>
             {title}
             {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
           </th>
@@ -106,7 +93,7 @@ export const WithSort = () => {
 
   return (
     <table>
-      <Header columns={columns} sort={sort} onSort={setSort} />
+      <TableHeader columns={columns} sort={sort} onSort={setSort} />
       <tbody>
         {data.map(item => (
           <tr key={item.title}>
@@ -126,8 +113,14 @@ type Sort = {
   key: string
   direction: 'asc' | 'desc'
 } | null
+
 type Column = {
   key: string
   title: string
-  sortable: boolean
+}
+
+type TableHeaderType = {
+  columns: Column[]
+  sort?: Sort
+  onSort?: (sort: Sort) => void
 }
