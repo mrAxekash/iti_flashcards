@@ -19,7 +19,7 @@ export type AuthMeResponse = {
 }
 
 export type UpdateUserDataArgs = {
-  avatar: string
-  name: string
-  email: string
+  avatar?: string
+  name?: string
+  email?: string
 }

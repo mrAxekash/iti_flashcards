@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -23,19 +24,24 @@ type PersonalInformationType = {
   onLogout?: () => void
   //onChange?: (avatar: string, email: string, name: string) => void
   //onChange?: any
-  onChangeUserName?: (data: any) => void
+  onChangeUserName?: (newName: string) => void
   //onChangeAvatar?: (newAvatar: string) => void
 }
 
 const schema = z.object({
-  // avatar: z.string(),
+  //avatar: z.string().optional(),
+  avatar: z.custom(),
   name: z.string().min(1),
-  // email: z.string().email(),
+  email: z.string().email().optional(),
 })
 
 type FormValues = z.input<typeof schema>
 
-// type FormValues = z.input<typeof schema>
+// type FormValues = {
+//   avatar: any
+//   name: string
+//   email: string
+// }
 export const PersonalInformation = ({
   userName = 'Ivan',
   userEmail = 'google-shmoogle.gsh.com',
@@ -60,20 +66,19 @@ export const PersonalInformation = ({
   }
 
   const { handleSubmit, control } = useForm<FormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
-      // avatar: '',
+      avatar: avatar,
       name: userName,
-      // email: userEmail,
+      email: userEmail,
     },
   })
 
   const handleFormSubmitted = handleSubmit(data => {
-    onChangeUserName && onChangeUserName(data)
+    console.log(data)
+    onChangeUserName && onChangeUserName(data?.name)
     setEditMode(!editMode)
   })
-  // const onSubmit = (data: FormValues) => {
-  //   console.log(data)
-  // }
 
   const [editMode, setEditMode] = useState(false)
 
@@ -91,7 +96,6 @@ export const PersonalInformation = ({
   //
   //   setEditMode(!editMode)
   // }
-
   // const changeAvatarHandler = () => {
   //   onChangeAvatar && onChangeAvatar('newAvatar')
   // }
@@ -123,7 +127,14 @@ export const PersonalInformation = ({
       </div>
       {editMode ? (
         <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
+          <input name={'avatar'} type={'file'} accept={'image/*'} />
           <ControlledTextField name={'name'} control={control} label={'Nickname'} type={'text'} />
+          <ControlledTextField
+            name={'email'}
+            control={control}
+            label={'New Email'}
+            type={'email'}
+          />
           <Button
             type="submit"
             variant={'primary'}

@@ -11,8 +11,11 @@ export const PersonalInformationPage = () => {
   const { data } = useGetMeQuery()
   const [updateData] = usePatchMeMutation()
 
-  const onChangeUserName = (data: any) => {
-    updateData(data)
+  const onChangeUserName = (newName: string) => {
+    updateData({
+      name: newName,
+      //email: data.email,
+    })
   }
 
   return (
