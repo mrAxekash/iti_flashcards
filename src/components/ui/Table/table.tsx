@@ -9,8 +9,6 @@ import s from './table.module.scss'
 import ChevronUp from '@/assets/icons/chevron-up.tsx'
 import { Typography } from '@/components/ui/Typography'
 
-export type RootProps = ComponentProps<'table'>
-
 export const Root: FC<RootProps> = ({ className, ...rest }) => {
   const classNames = {
     table: clsx(className, s.table),
@@ -19,31 +17,11 @@ export const Root: FC<RootProps> = ({ className, ...rest }) => {
   return <table className={classNames.table} {...rest} />
 }
 
-export type HeadProps = ComponentProps<'thead'>
-
 export const Head: FC<HeadProps> = props => {
   return <thead {...props} />
 }
-export type Sort = {
-  key: string
-  direction: 'asc' | 'desc'
-} | null
 
-export type Column = {
-  title: string
-  key: string
-  sortable?: boolean
-}
-export const Header: FC<
-  Omit<
-    HeadProps & {
-      columns: Column[]
-      sort?: Sort
-      onSort?: (sort: Sort) => void
-    },
-    'children'
-  >
-> = ({ columns, sort, onSort, ...restProps }) => {
+export const Header: FC<HeaderType> = ({ columns, sort, onSort, ...restProps }) => {
   const classNames = {
     chevron: sort?.direction === 'asc' ? '' : s.chevronDown,
   }
@@ -73,20 +51,13 @@ export const Header: FC<
     </Head>
   )
 }
-export type BodyProps = ComponentProps<'tbody'>
 
 export const Body: FC<BodyProps> = props => {
   return <tbody {...props} />
 }
 
-export type RowProps = ComponentProps<'tr'>
-
 export const Row: FC<RowProps> = props => {
   return <tr {...props} />
-}
-
-export type HeadCellProps = ComponentProps<'th'> & {
-  sortable?: boolean
 }
 
 export const HeadCell: FC<HeadCellProps> = ({ className, children, sortable, ...rest }) => {
@@ -100,8 +71,6 @@ export const HeadCell: FC<HeadCellProps> = ({ className, children, sortable, ...
     </th>
   )
 }
-
-export type CellProps = ComponentProps<'td'>
 
 export const Cell: FC<CellProps> = ({ className, ...rest }) => {
   const classNames = {
@@ -126,13 +95,10 @@ export const Empty: FC<ComponentProps<'div'> & { mt?: string; mb?: string }> = (
       className={classNames.empty}
       style={{ marginTop: mt, marginBottom: mb }}
     >
-      Пока тут еще нет данных! :(
+      No data
     </Typography>
   )
 }
-
-export type TableProps = {}
-export const TableComponent = () => {}
 
 export const Table = {
   Root,
@@ -144,3 +110,30 @@ export const Table = {
   Cell,
   Empty,
 }
+
+export type RootProps = ComponentProps<'table'>
+export type HeadProps = ComponentProps<'thead'>
+export type Sort = {
+  key: string
+  direction: 'asc' | 'desc'
+} | null
+
+export type Column = {
+  title: string
+  key: string
+  sortable?: boolean
+}
+export type BodyProps = ComponentProps<'tbody'>
+export type RowProps = ComponentProps<'tr'>
+export type HeadCellProps = ComponentProps<'th'> & {
+  sortable?: boolean
+}
+export type CellProps = ComponentProps<'td'>
+type HeaderType = Omit<
+  HeadProps & {
+    columns: Column[]
+    sort?: Sort
+    onSort?: (sort: Sort) => void
+  },
+  'children'
+>

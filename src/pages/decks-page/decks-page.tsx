@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
-import { FieldType } from '@/common/types.ts'
+import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
@@ -14,7 +14,6 @@ import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
-import { Deck } from '@/services/decks/deck.types.ts'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -25,7 +24,7 @@ import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice
 export const DecksPage = () => {
   const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
-  const [orderBy, setOrderBy] = useState<FieldType | undefined>(undefined)
+  const [orderBy, setOrderBy] = useState<OrderByType | undefined>(undefined)
   const { data: me } = useGetMeQuery()
 
   const dispatch = useAppDispatch()
@@ -73,7 +72,7 @@ export const DecksPage = () => {
     const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
     console.log(sortString)
-    setOrderBy(sortString)
+    setOrderBy(sortString as OrderByType) // todo: maybe fix this later
   }, [sort])
 
   const columns: Column[] = [
