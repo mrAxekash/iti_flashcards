@@ -159,18 +159,7 @@ export const DecksPage = () => {
           minStepsBetweenThumbs={1}
         />
         <Button variant="secondary">
-          <img
-            src={trashIcon}
-            alt=""
-            className={s.trashIcon}
-            onClick={() =>
-              deleteDeck({ id: deck.id })
-                .unwrap()
-                .catch(err => {
-                  alert(err?.data?.message)
-                })
-            }
-          />
+          <img src={trashIcon} alt="" className={s.trashIcon} />
           Clear Filter
         </Button>
       </div>
