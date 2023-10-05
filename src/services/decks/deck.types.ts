@@ -1,3 +1,5 @@
+import { OrderByType } from '@/common/types.ts'
+
 export type Author = {
   id: string
   name: string
@@ -32,12 +34,10 @@ export type DecksResponse = {
   pagination: PaginationType
 }
 
-type Direction = 'asc' | 'desc'
-type Field = 'name' | 'updated'
 export type DeckParams = {
   name?: string
   authorId?: string
-  orderBy?: `${Field}-${Direction}`
+  orderBy?: OrderByType
   minCardsCount?: number
   maxCardsCount?: number
   currentPage?: number

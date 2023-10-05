@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
+import { FieldType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
@@ -24,6 +25,7 @@ import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice
 export const DecksPage = () => {
   const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
+  const [orderBy, setOrderBy] = useState<FieldType | undefined>(undefined)
   const { data: me } = useGetMeQuery()
 
   const dispatch = useAppDispatch()
@@ -41,6 +43,7 @@ export const DecksPage = () => {
     name: search,
     currentPage,
     authorId,
+    orderBy,
   })
 
   const [createDeck, { isLoading }] = useCreateDeckMutation()
@@ -48,8 +51,6 @@ export const DecksPage = () => {
 
   // for sorting cells in table
   const [sort, setSort] = useState<Sort>(null)
-  const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
-  const [sortArray, setSortArray] = useState<Deck[]>([])
 
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [
@@ -69,30 +70,11 @@ export const DecksPage = () => {
   const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
 
   useEffect(() => {
-    if (!sortString) {
-      setSortArray(decks?.items as Deck[])
-    } else {
-      const [key, direction] = sortString.split('-')
+    const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
-      // todo: need to do sort on server
-      if (decks && decks?.items && key) {
-        const sorted = [...(decks?.items || [])].sort((a, b) => {
-          const varA = a[key as keyof typeof a]
-          const varB = b[key as keyof typeof b]
-
-          if (varA && varB) {
-            if (direction === 'asc') {
-              return varA > varB ? 1 : -1
-            }
-
-            return varA < varB ? 1 : -1
-          } else return 0
-        })
-
-        setSortArray(sorted)
-      }
-    }
-  }, [sortString, decks?.items])
+    console.log(sortString)
+    setOrderBy(sortString)
+  }, [sort])
 
   const columns: Column[] = [
     {
@@ -106,12 +88,12 @@ export const DecksPage = () => {
       sortable: true,
     },
     {
-      key: 'lastUpdated',
+      key: 'updated',
       title: 'Last Updated',
       sortable: true,
     },
     {
-      key: 'createdBy',
+      key: 'created',
       title: 'Created by',
       sortable: true,
     },
@@ -157,8 +139,8 @@ export const DecksPage = () => {
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
-          {sortArray &&
-            sortArray.map(deck => {
+          {decks?.items &&
+            decks.items.map(deck => {
               return (
                 <Table.Row key={deck.id}>
                   <Table.Cell>{deck.name}</Table.Cell>
@@ -190,17 +172,6 @@ export const DecksPage = () => {
       <div className={s.paginationContainer}>
         {decks && (
           <div>
-            {/*<Pagination
-              cardPacksTotalCount={decks.pagination.totalItems}
-              pageCount={Number(itemsPerPage)}
-              selectSettings={{
-                value: itemsPerPage,
-                onChangeOption: setItemsPerPageCallback,
-                arr: selectValues,
-              }}
-              page={currentPage}
-              currentPageHandler={updateCurrentPageCallback}
-            />*/}
             <Pagination
               onPageChange={updateCurrentPageCallback}
               totalCount={decks.pagination.totalItems}
