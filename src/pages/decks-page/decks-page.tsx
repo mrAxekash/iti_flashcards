@@ -5,6 +5,7 @@ import s from './deck-page.module.scss'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
+import { Slider } from '@/components/ui/Slider/slider.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -148,6 +149,15 @@ export const DecksPage = () => {
           label={'Show packs cards'}
         />
       </div>
+      <Slider
+        value={[1, 10]}
+        defaultValue={[1]}
+        onValueChange={() => {}}
+        step={1}
+        min={1}
+        max={10}
+        minStepsBetweenThumbs={1}
+      />
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>

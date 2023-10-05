@@ -1,4 +1,4 @@
-import { LoginArgs, LoginResponse } from './auth.types.ts'
+import { LoginArgs, LoginResponse, RecoverArgs } from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 
@@ -8,15 +8,16 @@ const authService = baseApi.injectEndpoints({
       async queryFn(_name, _api, _extraOptions, baseQuery) {
         const result = await baseQuery({
           url: `/v1/auth/me`,
-          method: 'GET'
+          method: 'GET',
         })
 
         if (result.error) {
           // don't refetch on 404
-          return {data: {success: false}}
+          return { data: { success: false } }
         }
+        console.log(result)
 
-        return {data: result.data}
+        return { data: result.data }
       },
       extraOptions: {
         maxRetries: 0,
@@ -52,7 +53,11 @@ const authService = baseApi.injectEndpoints({
         return {
           url: '/v1/auth/recover-password',
           method: 'POST',
-          body: params,
+          body: {
+            ...params,
+            html: '<h1>Hi, ##name##</h1><p>Click <a href="##token##">here</a> to recover your password</p>',
+            subject: 'string',
+          },
         }
       },
     }),
