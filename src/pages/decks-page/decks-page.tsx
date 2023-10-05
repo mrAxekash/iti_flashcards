@@ -4,6 +4,7 @@ import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
+import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
 import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
@@ -18,28 +19,30 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service.ts'
-import { decksSlice } from '@/services/decks/decks.slice.ts'
+import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
-  const [itemsPerPage, setItemsPerPage] = useState(10)
+  const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
   const { data: me } = useGetMeQuery()
 
-  const currentPage = useAppSelector(state => state.decks.currentPage)
   const dispatch = useAppDispatch()
 
-  const updateCurrentPage = (page: number) => dispatch(decksSlice.actions.updateCurrentPage(page))
+  const updateCurrentPageCallback = (page: number | string) => {
+    dispatch(updateCurrentPage(+page))
+  }
   const [search, setSearch] = useState('')
   const {
     currentData: decks,
     isLoading: decksLoading,
     isError: decksIsError,
   } = useGetDecksQuery({
-    itemsPerPage,
+    itemsPerPage: +itemsPerPage,
     name: search,
     currentPage,
     authorId,
   })
+
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
@@ -60,6 +63,10 @@ export const DecksPage = () => {
       setAuthorId('')
     }
   }
+
+  // for pagination
+  //// select inside pagination
+  const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
 
   useEffect(() => {
     if (!sortString) {
@@ -114,6 +121,7 @@ export const DecksPage = () => {
     },
   ]
 
+  // logging
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
@@ -123,7 +131,7 @@ export const DecksPage = () => {
         <Typography variant="Large">Packs list</Typography>
         <Button
           onClick={() => {
-            updateCurrentPage(1)
+            dispatch(updateCurrentPage(1))
             createDeck({ name: 'New Deck 4' })
           }}
           disabled={isLoading}
@@ -145,10 +153,6 @@ export const DecksPage = () => {
           defaultValue={'AllCards'}
           label={'Show packs cards'}
         />
-      </div>
-      <div className={s.buttonsContainer}>
-        <Button onClick={() => setItemsPerPage(20)}>20 items per page</Button>
-        <Button onClick={() => setItemsPerPage(10)}>10 items per page</Button>
       </div>
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
@@ -184,12 +188,36 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
-          <Button key={item} onClick={() => updateCurrentPage(item)}>
-            {item}
-          </Button>
-        ))}
+        {decks && (
+          <div>
+            {/*<Pagination
+              cardPacksTotalCount={decks.pagination.totalItems}
+              pageCount={Number(itemsPerPage)}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
+              page={currentPage}
+              currentPageHandler={updateCurrentPageCallback}
+            />*/}
+            <Pagination
+              onPageChange={updateCurrentPageCallback}
+              totalCount={decks.pagination.totalItems}
+              currentPage={currentPage}
+              pageSize={+itemsPerPage}
+              siblingCount={2}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setItemsPerPageCallback,
+                arr: selectValues,
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+// todo: I`m not using pagination.totalPages, maybe later need to check
