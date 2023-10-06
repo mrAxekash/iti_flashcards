@@ -21,6 +21,10 @@ export const Head: FC<HeadProps> = props => {
   return <thead {...props} />
 }
 
+const Dummy = () => {
+  return <div className={s.dummyDiv} />
+}
+
 export const Header: FC<HeaderType> = ({ columns, sort, onSort, ...restProps }) => {
   const classNames = {
     chevron: sort?.direction === 'asc' ? '' : s.chevronDown,
@@ -44,7 +48,7 @@ export const Header: FC<HeaderType> = ({ columns, sort, onSort, ...restProps }) 
         {columns.map(({ title, key, sortable }) => (
           <HeadCell key={key} onClick={handleSort(key, sortable)} sortable={sortable}>
             {title}
-            {sort?.key === key ? <ChevronUp className={classNames.chevron} /> : ''}
+            {sort?.key === key ? <ChevronUp className={classNames.chevron} /> : <Dummy />}
           </HeadCell>
         ))}
       </Row>

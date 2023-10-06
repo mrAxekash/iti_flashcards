@@ -71,7 +71,6 @@ export const DecksPage = () => {
   useEffect(() => {
     const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
-    console.log(sortString)
     setOrderBy(sortString as OrderByType) // todo: maybe fix this later
   }, [sort])
 
