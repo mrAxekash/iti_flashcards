@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
@@ -24,7 +24,7 @@ type PersonalInformationType = {
   onLogout?: () => void
   //onChange?: (avatar: string, email: string, name: string) => void
   //onChange?: any
-  onChangeUserName?: (newName: string) => void
+  onChangeUserName?: (newName: FormData) => void
   //onChangeAvatar?: (newAvatar: string) => void
 }
 
@@ -65,7 +65,7 @@ export const PersonalInformation = ({
     editModeButton: clsx(s.editModeButton),
   }
 
-  const { handleSubmit, control } = useForm<FormValues>({
+  const { handleSubmit, control, setValue } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       avatar: avatar,
@@ -76,7 +76,19 @@ export const PersonalInformation = ({
 
   const handleFormSubmitted = handleSubmit(data => {
     console.log(data)
-    onChangeUserName && onChangeUserName(data?.name)
+    const formData = new FormData()
+
+    if (data.avatar) {
+      formData.append('avatar', data.avatar)
+    }
+    if (data.name) {
+      formData.append('name', data.name)
+    }
+    if (data.email) {
+      formData.append('email', data.email)
+    }
+
+    onChangeUserName && onChangeUserName(formData)
     setEditMode(!editMode)
   })
 
@@ -84,6 +96,14 @@ export const PersonalInformation = ({
 
   const finalUrlAvatar = avatar ? avatar : defaultAva
 
+  const changeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      console.log('file: ', file)
+      setValue('avatar', file)
+    }
+  }
   // const onChangeEditMode = () => {
   //   // onChangeAvatar && onChangeAvatar('newAvatar')
   //   // onChangeUserName && onChangeUserName('New Name')
@@ -127,7 +147,7 @@ export const PersonalInformation = ({
       </div>
       {editMode ? (
         <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
-          <input name={'avatar'} type={'file'} accept={'image/*'} />
+          <input name={'avatar'} type={'file'} accept={'image/*'} onChange={changeAvatar} />
           <ControlledTextField name={'name'} control={control} label={'Nickname'} type={'text'} />
           <ControlledTextField
             name={'email'}

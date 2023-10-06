@@ -47,7 +47,7 @@ const authService = baseApi.injectEndpoints({
         }
       },
     }),
-    patchMe: builder.mutation<AuthMeResponse, UpdateUserDataArgs>({
+    patchMe: builder.mutation<AuthMeResponse, FormData>({
       query: data => ({
         url: `/v1/auth/me`,
         method: 'PATCH',
