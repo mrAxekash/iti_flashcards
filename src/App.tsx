@@ -1,20 +1,5 @@
-import { Provider } from 'react-redux'
-
-import s from './App.module.scss'
-
-import { Header } from '@/components/ui/Header/header.tsx'
-import { Router } from '@/router.tsx'
-import { store } from '@/services/store.ts'
+import DialogDemo from '@/components/ui/Dialog/Dialog.tsx'
 
 export function App() {
-  return (
-    <div className={s.app}>
-      <Provider store={store}>
-        <Header />
-        <div className={s.container}>
-          <Router />
-        </div>
-      </Provider>
-    </div>
-  )
+  return <DialogDemo />
 }
