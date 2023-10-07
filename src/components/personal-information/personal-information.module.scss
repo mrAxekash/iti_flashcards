@@ -64,3 +64,13 @@
     }
   }
 }
+
+.inputFileWrapper {
+  position: relative;
+
+}
+.inputFile {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}

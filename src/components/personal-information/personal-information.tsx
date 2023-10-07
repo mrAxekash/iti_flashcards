@@ -66,6 +66,11 @@ export const PersonalInformation = ({
     editModeButton: clsx(s.editModeButton),
   }
 
+  const [editMode, setEditMode] = useState(false)
+
+  const finalUrlAvatar = avatar ? avatar : defaultAva
+  const [fileCount, setFileCount] = useState(0)
+
   const { handleSubmit, control, setValue } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -92,15 +97,14 @@ export const PersonalInformation = ({
     // }
     onChangePersonalData && onChangePersonalData(formData)
     setEditMode(!editMode)
+    setFileCount(0)
   })
-
-  const [editMode, setEditMode] = useState(false)
-
-  const finalUrlAvatar = avatar ? avatar : defaultAva
 
   const changeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
+
+      setFileCount(fileCount + 1)
 
       setValue('avatar', file)
     }
@@ -130,7 +134,20 @@ export const PersonalInformation = ({
       </div>
       {editMode ? (
         <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
-          <input name={'avatar'} type={'file'} accept={'image/*'} onChange={changeAvatar} />
+          <div className={s.inputFileWrapper}>
+            <input
+              name={'avatar'}
+              type={'file'}
+              accept={'image/*'}
+              onChange={changeAvatar}
+              id={'input_file'}
+              className={s.inputFile}
+            />
+            <label htmlFor="input_file">
+              <Button as={'span'} fullWidth={true}>{`Выберите файл: ${fileCount}`}</Button>
+            </label>
+          </div>
+
           <ControlledTextField name={'name'} control={control} label={'Nickname'} type={'text'} />
           <Button
             type="submit"

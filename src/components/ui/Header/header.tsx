@@ -50,8 +50,13 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
         {isLoggedIn ? (
           <div className={s.containerNameAva}>
             <div className={s.name}>{me && me.name}</div>
-            <DropDownMenu trigger={<Avatar urlAdress={defaultAva} />} align={'end'}>
-              <DropdownItemWithAvatar trigger={<Avatar urlAdress={defaultAva} />}>
+            <DropDownMenu
+              trigger={<Avatar urlAdress={me.avatar ? me.avatar : defaultAva} />}
+              align={'end'}
+            >
+              <DropdownItemWithAvatar
+                trigger={<Avatar urlAdress={me.avatar ? me.avatar : defaultAva} />}
+              >
                 <Typography variant={'Subtitle_2'} className={s.userName}>
                   {me && me.name}
                 </Typography>
