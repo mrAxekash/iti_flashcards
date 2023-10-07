@@ -140,7 +140,11 @@ export const PersonalInformation = ({
             <Typography variant={'H1'} className={classNames.userName}>
               {userName}
             </Typography>
-            <Button variant={'link'} onClick={() => setEditMode(true)}>
+            <Button
+              variant={'link'}
+              onClick={() => setEditMode(true)}
+              className={classNames.imageButton}
+            >
               <Edit color={'var(--color-light-100)'} className={classNames.iconButton} />
             </Button>
           </div>
