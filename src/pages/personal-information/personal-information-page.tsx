@@ -11,7 +11,7 @@ export const PersonalInformationPage = () => {
   const { data } = useGetMeQuery()
   const [updateData] = usePatchMeMutation()
 
-  const onChangeUserName = (data: FormData) => {
+  const onChangePersonalData = (data: FormData) => {
     updateData(data)
   }
 
@@ -21,7 +21,7 @@ export const PersonalInformationPage = () => {
       userName={data.name}
       userEmail={data.email}
       onLogout={logout}
-      onChangeUserName={onChangeUserName}
+      onChangePersonalData={onChangePersonalData}
     />
   )
 }

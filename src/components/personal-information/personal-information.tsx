@@ -14,7 +14,8 @@ import s from './personal-information.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Logout } from '@/assets/icons/Logout.tsx'
-import { Avatar } from '@/components/ui/Avatar/Avatar.tsx'
+// import { Avatar } from '@/components/ui/Avatar/Avatar.tsx'
+import { AvatarRadix } from '@/components/ui/AvatarRadix/AvatarRadix.tsx'
 import { Button } from '@/components/ui/Button'
 
 type PersonalInformationType = {
@@ -24,7 +25,7 @@ type PersonalInformationType = {
   onLogout?: () => void
   //onChange?: (avatar: string, email: string, name: string) => void
   //onChange?: any
-  onChangeUserName?: (newName: FormData) => void
+  onChangePersonalData?: (newName: FormData) => void
   //onChangeAvatar?: (newAvatar: string) => void
 }
 
@@ -32,7 +33,7 @@ const schema = z.object({
   //avatar: z.string().optional(),
   avatar: z.custom(),
   name: z.string().min(1),
-  email: z.string().email().optional(),
+  // email: z.string().email().optional(),
 })
 
 type FormValues = z.input<typeof schema>
@@ -46,7 +47,7 @@ export const PersonalInformation = ({
   userName = 'Ivan',
   userEmail = 'google-shmoogle.gsh.com',
   avatar = 'https://img.freepik.com/free-vector/cute-cat-gaming-cartoon_138676-2969.jpg?w=826&t=st=1693944282~exp=1693944882~hmac=db975532c35e66aee49662f13349eb1ca1eab57963a6931222633c594a4f5a90',
-  onChangeUserName,
+  onChangePersonalData,
   // onChangeAvatar,
   onLogout,
 }: PersonalInformationType) => {
@@ -70,25 +71,26 @@ export const PersonalInformation = ({
     defaultValues: {
       avatar: avatar,
       name: userName,
-      email: userEmail,
+      // email: userEmail,
     },
   })
 
   const handleFormSubmitted = handleSubmit(data => {
-    console.log(data)
     const formData = new FormData()
 
-    if (data.avatar) {
-      formData.append('avatar', data.avatar)
+    if (data.avatar !== avatar) {
+      if (data.avatar) {
+        formData.append('avatar', data.avatar)
+      }
     }
+
     if (data.name) {
       formData.append('name', data.name)
     }
-    if (data.email) {
-      formData.append('email', data.email)
-    }
-
-    onChangeUserName && onChangeUserName(formData)
+    // if (data.email) {
+    //   formData.append('email', data.email)
+    // }
+    onChangePersonalData && onChangePersonalData(formData)
     setEditMode(!editMode)
   })
 
@@ -100,29 +102,9 @@ export const PersonalInformation = ({
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
-      console.log('file: ', file)
       setValue('avatar', file)
     }
   }
-  // const onChangeEditMode = () => {
-  //   // onChangeAvatar && onChangeAvatar('newAvatar')
-  //   // onChangeUserName && onChangeUserName('New Name')
-  //   // onChange &&
-  //   //   onChange(
-  //   //     'https://img.freepik.com/free-vector/cute-cat-gaming-cartoon_138676-2969.jpg?w=826&t=st=1693944282~exp=1693944882~hmac=db975532c35e66aee49662f13349eb1ca1eab57963a6931222633c594a4f5a90',
-  //   //     userEmail,
-  //   //     'Alex'
-  //   //   )
-  //
-  //   setEditMode(!editMode)
-  // }
-  // const changeAvatarHandler = () => {
-  //   onChangeAvatar && onChangeAvatar('newAvatar')
-  // }
-  //
-  // const changeUserNameHandler = () => {
-  //   onChangeUserName && onChangeUserName('New Name')
-  // }
 
   const logoutHandler = () => {
     onLogout && onLogout()
@@ -134,7 +116,8 @@ export const PersonalInformation = ({
         Personal Information
       </Typography>
       <div className={classNames.imageContainer}>
-        <Avatar urlAdress={finalUrlAvatar} className={classNames.image} />
+        <AvatarRadix urlAdress={finalUrlAvatar} userName={userName} />
+        {/*<Avatar urlAdress={finalUrlAvatar} className={classNames.image} />*/}
         {!editMode && (
           <Button
             variant={'secondary'}
@@ -149,12 +132,6 @@ export const PersonalInformation = ({
         <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
           <input name={'avatar'} type={'file'} accept={'image/*'} onChange={changeAvatar} />
           <ControlledTextField name={'name'} control={control} label={'Nickname'} type={'text'} />
-          <ControlledTextField
-            name={'email'}
-            control={control}
-            label={'New Email'}
-            type={'email'}
-          />
           <Button
             type="submit"
             variant={'primary'}

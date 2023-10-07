@@ -1,4 +1,4 @@
-import { AuthMeResponse, LoginArgs, LoginResponse, UpdateUserDataArgs } from './auth.types.ts'
+import { AuthMeResponse, LoginArgs, LoginResponse } from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 
