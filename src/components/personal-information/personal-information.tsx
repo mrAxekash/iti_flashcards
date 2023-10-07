@@ -14,7 +14,6 @@ import s from './personal-information.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Logout } from '@/assets/icons/Logout.tsx'
-// import { Avatar } from '@/components/ui/Avatar/Avatar.tsx'
 import { AvatarRadix } from '@/components/ui/AvatarRadix/AvatarRadix.tsx'
 import { Button } from '@/components/ui/Button'
 
@@ -23,32 +22,21 @@ type PersonalInformationType = {
   userEmail?: string
   avatar?: string | null
   onLogout?: () => void
-  //onChange?: (avatar: string, email: string, name: string) => void
-  //onChange?: any
   onChangePersonalData?: (newName: FormData) => void
-  //onChangeAvatar?: (newAvatar: string) => void
 }
 
 const schema = z.object({
-  //avatar: z.string().optional(),
   avatar: z.custom(),
   name: z.string().min(1),
-  // email: z.string().email().optional(),
 })
 
 type FormValues = z.input<typeof schema>
 
-// type FormValues = {
-//   avatar: any
-//   name: string
-//   email: string
-// }
 export const PersonalInformation = ({
   userName = 'Ivan',
   userEmail = 'google-shmoogle.gsh.com',
   avatar = 'https://img.freepik.com/free-vector/cute-cat-gaming-cartoon_138676-2969.jpg?w=826&t=st=1693944282~exp=1693944882~hmac=db975532c35e66aee49662f13349eb1ca1eab57963a6931222633c594a4f5a90',
   onChangePersonalData,
-  // onChangeAvatar,
   onLogout,
 }: PersonalInformationType) => {
   const classNames = {
@@ -92,9 +80,6 @@ export const PersonalInformation = ({
     if (data.name) {
       formData.append('name', data.name)
     }
-    // if (data.email) {
-    //   formData.append('email', data.email)
-    // }
     onChangePersonalData && onChangePersonalData(formData)
     setEditMode(!editMode)
     setFileCount(0)
@@ -121,7 +106,6 @@ export const PersonalInformation = ({
       </Typography>
       <div className={classNames.imageContainer}>
         <AvatarRadix urlAdress={finalUrlAvatar} userName={userName} />
-        {/*<Avatar urlAdress={finalUrlAvatar} className={classNames.image} />*/}
         {!editMode && (
           <Button
             variant={'secondary'}
@@ -153,7 +137,6 @@ export const PersonalInformation = ({
             type="submit"
             variant={'primary'}
             fullWidth={true}
-            // onClick={onChangeEditMode}
             className={classNames.editModeButton}
           >
             Save Changes
