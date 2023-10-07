@@ -14,6 +14,9 @@ export const PersonalInformationPage = () => {
   const onChangePersonalData = (data: FormData) => {
     updateData(data)
   }
+  const onChangeAvatar = (data: FormData) => {
+    updateData(data)
+  }
 
   return (
     <PersonalInformation
@@ -22,6 +25,7 @@ export const PersonalInformationPage = () => {
       userEmail={data.email}
       onLogout={logout}
       onChangePersonalData={onChangePersonalData}
+      onChangeAvatar={onChangeAvatar}
     />
   )
 }

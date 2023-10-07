@@ -21,10 +21,17 @@
       border-radius: 100%;
     }
     & .imageButton {
+      width: 24px;
+      height: 24px;
       position: absolute;
       right: 0;
       bottom: 0;
       padding: 4px;
+      background-color: var(--color-dark-300);
+      border-radius: 6px;
+      & :hover {
+        background-color: var(--color-dark-100);
+      }
       & .icon {
         width: 16px;
         height: 16px;

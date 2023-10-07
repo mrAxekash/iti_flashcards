@@ -23,10 +23,10 @@ type PersonalInformationType = {
   avatar?: string | null
   onLogout?: () => void
   onChangePersonalData?: (newName: FormData) => void
+  onChangeAvatar?: (data: FormData) => void
 }
 
 const schema = z.object({
-  avatar: z.custom(),
   name: z.string().min(1),
 })
 
@@ -38,6 +38,7 @@ export const PersonalInformation = ({
   avatar = 'https://img.freepik.com/free-vector/cute-cat-gaming-cartoon_138676-2969.jpg?w=826&t=st=1693944282~exp=1693944882~hmac=db975532c35e66aee49662f13349eb1ca1eab57963a6931222633c594a4f5a90',
   onChangePersonalData,
   onLogout,
+  onChangeAvatar,
 }: PersonalInformationType) => {
   const classNames = {
     imageContainer: clsx(s.imageContainer),
@@ -57,44 +58,36 @@ export const PersonalInformation = ({
   const [editMode, setEditMode] = useState(false)
 
   const finalUrlAvatar = avatar ? avatar : defaultAva
-  const [fileCount, setFileCount] = useState(0)
 
-  const { handleSubmit, control, setValue } = useForm<FormValues>({
+  const { handleSubmit, control } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      avatar: avatar,
       name: userName,
-      // email: userEmail,
     },
   })
 
-  const handleFormSubmitted = handleSubmit(data => {
+  const onChangeAvatarHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData()
 
-    if (data.avatar !== avatar) {
-      if (data.avatar) {
-        formData.append('avatar', data.avatar)
-      }
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      formData.append('avatar', file)
     }
+
+    onChangeAvatar && onChangeAvatar(formData)
+  }
+
+  const handleFormSubmitted = handleSubmit(data => {
+    const formData = new FormData()
 
     if (data.name) {
       formData.append('name', data.name)
     }
     onChangePersonalData && onChangePersonalData(formData)
     setEditMode(!editMode)
-    setFileCount(0)
+    //setFileCount(0)
   })
-
-  const changeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      setFileCount(fileCount + 1)
-
-      setValue('avatar', file)
-    }
-  }
-
   const logoutHandler = () => {
     onLogout && onLogout()
   }
@@ -107,31 +100,30 @@ export const PersonalInformation = ({
       <div className={classNames.imageContainer}>
         <AvatarRadix urlAdress={finalUrlAvatar} userName={userName} />
         {!editMode && (
-          <Button
-            variant={'secondary'}
-            className={classNames.imageButton}
-            onClick={() => setEditMode(true)}
-          >
-            <Edit color={'var(--color-light-100)'} className={classNames.iconButton} />
-          </Button>
-        )}
-      </div>
-      {editMode ? (
-        <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
-          <div className={s.inputFileWrapper}>
+          <div className={classNames.imageButton}>
             <input
               name={'avatar'}
               type={'file'}
               accept={'image/*'}
-              onChange={changeAvatar}
+              onChange={onChangeAvatarHandler}
               id={'input_file'}
               className={s.inputFile}
             />
             <label htmlFor="input_file">
-              <Button as={'span'} fullWidth={true}>{`Выберите файл: ${fileCount}`}</Button>
+              <Button
+                as={'span'}
+                variant={'secondary'}
+                fullWidth={true}
+                className={classNames.imageButton}
+              >
+                <Edit color={'var(--color-light-100)'} className={classNames.iconButton} />
+              </Button>
             </label>
           </div>
-
+        )}
+      </div>
+      {editMode ? (
+        <form onSubmit={handleFormSubmitted} className={classNames.editModeContainer}>
           <ControlledTextField name={'name'} control={control} label={'Nickname'} type={'text'} />
           <Button
             type="submit"
