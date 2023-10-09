@@ -11,3 +11,6 @@ export type LoginResponse = {
 export type RecoverArgs = {
   email: string
 }
+export type CreatPass = {
+  password: string
+}

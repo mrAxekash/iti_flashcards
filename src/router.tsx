@@ -33,7 +33,7 @@ const publicRoutes: RouteObject[] = [
     element: <RecoverPasswordPage />,
   },
   {
-    path: '/create-new-password',
+    path: '/confirm-email/:token',
     element: <CreateNewPasswordPage />,
   },
 ]

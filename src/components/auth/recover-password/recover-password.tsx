@@ -8,7 +8,7 @@ import s from './recover-password.module.scss'
 
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
-import { Textfield } from '@/components/ui/Textfield'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import { Typography } from '@/components/ui/Typography'
 
 const schema = z.object({
@@ -22,12 +22,7 @@ type Props = {
 }
 export const RecoverPassword = (props: Props) => {
   const navigate = useNavigate()
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormType>({
+  const { control, handleSubmit } = useForm<FormType>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -46,10 +41,11 @@ export const RecoverPassword = (props: Props) => {
         </Typography>
         <form onSubmit={handleFormSubmitted}>
           <div className={s.form}>
-            <Textfield
-              {...register('email')}
-              errorMessage={errors.email?.message}
-              label={'email'}
+            <ControlledTextField
+              placeholder={'Email'}
+              name={'email'}
+              control={control}
+              type={'email'}
             />
           </div>
           <Typography variant="Body_2" className={s.instructions}>

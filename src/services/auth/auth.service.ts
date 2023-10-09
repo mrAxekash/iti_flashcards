@@ -1,4 +1,4 @@
-import { LoginArgs, LoginResponse, RecoverArgs } from './auth.types.ts'
+import { CreatPass, LoginArgs, LoginResponse, RecoverArgs } from './auth.types.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 
@@ -55,7 +55,7 @@ const authService = baseApi.injectEndpoints({
           body: {
             ...params,
             html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/confirm-email/##token##">here</a> to recover your password</p>',
-            subject: 'string',
+            subject: 'Password recovery',
           },
         }
       },
@@ -69,10 +69,10 @@ const authService = baseApi.injectEndpoints({
         }
       },
     }),
-    createNewPassword: builder.mutation<any, void>({
+    createNewPassword: builder.mutation<any, CreatPass>({
       query: data => {
         return {
-          url: '/v1/auth/create-new-password',
+          url: '/v1/auth/reset-password/{token}',
           method: 'POST',
           body: data,
         }
