@@ -4,6 +4,7 @@ import s from './deck-page.module.scss'
 
 import { Trash } from '@/assets/icons/Trash.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
+import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Slider } from '@/components/ui/Slider/slider.tsx'
@@ -15,7 +16,6 @@ import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
-import { Deck } from '@/services/decks/deck.types.ts'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -26,6 +26,7 @@ import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice
 export const DecksPage = () => {
   const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
+  const [orderBy, setOrderBy] = useState<OrderByType | undefined>(undefined)
   const { data: me } = useGetMeQuery()
 
   const dispatch = useAppDispatch()
@@ -43,6 +44,7 @@ export const DecksPage = () => {
     name: search,
     currentPage,
     authorId,
+    orderBy,
   })
 
   const [createDeck, { isLoading }] = useCreateDeckMutation()
@@ -50,8 +52,6 @@ export const DecksPage = () => {
 
   // for sorting cells in table
   const [sort, setSort] = useState<Sort>(null)
-  const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
-  const [sortArray, setSortArray] = useState<Deck[]>([])
 
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [
@@ -64,6 +64,8 @@ export const DecksPage = () => {
     } else {
       setAuthorId('')
     }
+
+    dispatch(updateCurrentPage(1))
   }
 
   // for pagination
@@ -71,24 +73,10 @@ export const DecksPage = () => {
   const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
 
   useEffect(() => {
-    if (!sortString) {
-      setSortArray(decks?.items as Deck[])
-    } else {
-      const [key, direction] = sortString.split('-')
+    const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
-      if (decks && decks?.items && key) {
-        const sorted = [...decks?.items].sort((a, b) => {
-          if (direction === 'asc') {
-            return a[key as keyof typeof a] > b[key as keyof typeof b] ? 1 : -1
-          }
-
-          return a[key as keyof typeof a] < b[key as keyof typeof b] ? 1 : -1
-        })
-
-        setSortArray(sorted)
-      }
-    }
-  }, [sortString, decks?.items])
+    setOrderBy(sortString as OrderByType) // todo: maybe fix this later
+  }, [sort])
 
   const columns: Column[] = [
     {
@@ -102,12 +90,12 @@ export const DecksPage = () => {
       sortable: true,
     },
     {
-      key: 'lastUpdated',
+      key: 'updated',
       title: 'Last Updated',
       sortable: true,
     },
     {
-      key: 'createdBy',
+      key: 'created',
       title: 'Created by',
       sortable: true,
     },
@@ -167,8 +155,8 @@ export const DecksPage = () => {
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
-          {sortArray &&
-            sortArray.map(deck => {
+          {decks?.items &&
+            decks.items.map(deck => {
               return (
                 <Table.Row key={deck.id}>
                   <Table.Cell>{deck.name}</Table.Cell>
@@ -187,36 +175,21 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        {decks && (
-          <div>
-            {/*<Pagination
-              cardPacksTotalCount={decks.pagination.totalItems}
-              pageCount={Number(itemsPerPage)}
-              selectSettings={{
-                value: itemsPerPage,
-                onChangeOption: setItemsPerPageCallback,
-                arr: selectValues,
-              }}
-              page={currentPage}
-              currentPageHandler={updateCurrentPageCallback}
-            />*/}
-            <Pagination
-              onPageChange={updateCurrentPageCallback}
-              totalCount={decks.pagination.totalItems}
-              currentPage={currentPage}
-              pageSize={+itemsPerPage}
-              siblingCount={2}
-              selectSettings={{
-                value: itemsPerPage,
-                onChangeOption: setItemsPerPageCallback,
-                arr: selectValues,
-              }}
-            />
-          </div>
-        )}
+        <div>
+          <Pagination
+            onPageChange={updateCurrentPageCallback}
+            totalCount={decks?.pagination.totalItems ?? 0}
+            currentPage={currentPage}
+            pageSize={+itemsPerPage}
+            siblingCount={2}
+            selectSettings={{
+              value: itemsPerPage,
+              onChangeOption: setItemsPerPageCallback,
+              arr: selectValues,
+            }}
+          />
+        </div>
       </div>
     </div>
   )
 }
-
-// todo: I`m not using pagination.totalPages, maybe later need to check
