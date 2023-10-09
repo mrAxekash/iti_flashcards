@@ -5,6 +5,7 @@ import s from './Dialog.module.scss'
 import closeIcon from '@/assets/icons/close.png'
 import { Button } from '@/components/ui/Button'
 
+// renamed branch
 export const Dialog = (props: PropsType) => {
   return (
     <RDialog.Root open={props.open} onOpenChange={props.setOpen}>
