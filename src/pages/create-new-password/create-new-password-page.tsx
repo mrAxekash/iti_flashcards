@@ -1,13 +1,14 @@
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { CreateNewPassword } from '@/components/auth/create-new-password/create-new-password.tsx'
 import { useCreateNewPasswordMutation } from '@/services/auth/auth.service.ts'
 
 export const CreateNewPasswordPage = () => {
-  const [createPassword] = useCreateNewPasswordMutation()
+  const [createPassword, { isSuccess }] = useCreateNewPasswordMutation()
   const { token } = useParams()
 
   console.log(token)
+  if (isSuccess) return <Navigate to="/login" />
 
   return <CreateNewPassword onSubmit={createPassword} />
 }
