@@ -20,7 +20,7 @@ export const Dialog = (props: PropsType) => {
             </RDialog.Close>
           </RDialog.Title>
           <RDialog.Description className={s.DialogDescription}>
-            Do you really want to remove Pack Name?
+            Do you really want to remove <b>{props.packName}</b>?
             <br />
             All cards will be deleted.
           </RDialog.Description>
@@ -28,7 +28,7 @@ export const Dialog = (props: PropsType) => {
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
             </RDialog.Close>
-            <Button>Delete pack</Button>
+            <Button onClick={props.onDelete}>Delete pack</Button>
           </div>
         </RDialog.Content>
       </RDialog.Portal>
@@ -39,4 +39,6 @@ export const Dialog = (props: PropsType) => {
 type PropsType = {
   open: boolean
   setOpen: (open: boolean) => void
+  packName: string
+  onDelete: () => void
 }

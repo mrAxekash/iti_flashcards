@@ -5,6 +5,7 @@ import s from './deck-page.module.scss'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
+import { Dialog } from '@/components/ui/Dialog/Dialog.tsx'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { TabSwitcher } from '@/components/ui/TabSwitcher'
@@ -26,7 +27,10 @@ export const DecksPage = () => {
   const [authorId, setAuthorId] = useState('')
   const [orderBy, setOrderBy] = useState<OrderByType | undefined>(undefined)
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
-  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null) // for delete dialog
+  const [selectedDeck, setSelectedDeck] = useState<SelectedDeckType>({
+    id: '',
+    name: '',
+  }) // for delete dialog
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const { data: me } = useGetMeQuery()
@@ -51,9 +55,19 @@ export const DecksPage = () => {
     orderBy,
   })
 
-  const onDeleteDeck = (id: string) => {
+  const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
-    setSelectedDeckId(id)
+    setSelectedDeck({ id, name })
+  }
+
+  const onDeleteDeck = () => {
+    deleteDeck({ id: selectedDeck.id })
+      .unwrap()
+      .catch(err => {
+        alert(err?.data?.message)
+      })
+    setIsDeleteDialogOpen(false)
+    setSelectedDeck({ id: '', name: '' })
   }
 
   //for tabSwitcher
@@ -114,6 +128,12 @@ export const DecksPage = () => {
 
   return (
     <div className={s.component}>
+      <Dialog
+        open={isDeleteDialogOpen}
+        setOpen={setIsDeleteDialogOpen}
+        packName={selectedDeck.name}
+        onDelete={onDeleteDeck}
+      />
       <div className={s.topContainer}>
         <Typography variant="Large">Packs list</Typography>
         <Button
@@ -158,13 +178,7 @@ export const DecksPage = () => {
                         src={trashIcon}
                         alt=""
                         className={s.trashIcon}
-                        onClick={() =>
-                          deleteDeck({ id: deck.id })
-                            .unwrap()
-                            .catch(err => {
-                              alert(err?.data?.message)
-                            })
-                        }
+                        onClick={() => onSelectDeckForDel(deck.id, deck.name)}
                       />
                     </div>
                   </Table.Cell>
@@ -192,4 +206,9 @@ export const DecksPage = () => {
       </div>
     </div>
   )
+}
+
+type SelectedDeckType = {
+  id: string
+  name: string
 }
