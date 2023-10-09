@@ -25,7 +25,13 @@ export const DecksPage = () => {
   const { selectValues, itemsPerPage, currentPage } = useAppSelector(state => state.decks)
   const [authorId, setAuthorId] = useState('')
   const [orderBy, setOrderBy] = useState<OrderByType | undefined>(undefined)
+  const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
+  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null) // for delete dialog
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
   const { data: me } = useGetMeQuery()
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
 
   const dispatch = useAppDispatch()
 
@@ -45,11 +51,10 @@ export const DecksPage = () => {
     orderBy,
   })
 
-  const [createDeck, { isLoading }] = useCreateDeckMutation()
-  const [deleteDeck] = useDeleteDeckMutation()
-
-  // for sorting cells in table
-  const [sort, setSort] = useState<Sort>(null)
+  const onDeleteDeck = (id: string) => {
+    setIsDeleteDialogOpen(true)
+    setSelectedDeckId(id)
+  }
 
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [

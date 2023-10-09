@@ -23,11 +23,9 @@ input {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    //width: 90vw;
     width: 100%;
     max-width: 542px;
     max-height: 85vh;
-    //padding: 25px;
 
     background-color: var(--color-dark-700);
     border-radius: 2px;
@@ -59,14 +57,19 @@ input {
 }
 
 .DialogDescription {
-    padding: 0 24px;
+    padding: 18px 24px;
     margin: 0;
-
-    //margin: 10px 0 20px;
     font-size: 16px;
     line-height: 1.5;
     color: var(--color-light-100);
+}
 
+.buttonContainer {
+    padding: 0 24px 36px;
+
+    display: flex;
+    margin-top: 25px;
+    justify-content: space-between;
 }
 
 .Button {
@@ -84,6 +87,11 @@ input {
     border-radius: 4px;
 }
 
+.buttonCancel {
+    background-color: var(--color-dark-300) !important;
+    box-shadow: 0 4px 4px 0 rgba(77, 86, 96, 0.13) !important;
+}
+
 .ButtonViolet {
     color: var(--violet-11);
     background-color: white;
@@ -98,24 +106,8 @@ input {
     box-shadow: 0 0 0 2px black;
 }
 
-.ButtonGreen {
-    color: var(--green-11);
-    background-color: var(--green-4);
-}
-
-.ButtonGreen:hover {
-    background-color: var(--green-5);
-}
-
-.ButtonGreen:focus {
-    box-shadow: 0 0 0 2px var(--green-7);
-}
 
 .IconButton {
-    //position: absolute;
-    //top: 10px;
-    //right: 10px;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
