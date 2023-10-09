@@ -13,4 +13,5 @@ export type RecoverArgs = {
 }
 export type CreatPass = {
   password: string
+  token: string
 }

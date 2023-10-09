@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import s from './deck-page.module.scss'
 
-import { Trash } from '@/assets/icons/Trash.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
@@ -142,8 +141,8 @@ export const DecksPage = () => {
           defaultValue={[1]}
           onValueChange={() => {}}
           step={1}
-          min={1}
-          max={10}
+          min={0}
+          max={decks?.maxCardsCount || 52}
           minStepsBetweenThumbs={1}
         />
         <Button variant="secondary">

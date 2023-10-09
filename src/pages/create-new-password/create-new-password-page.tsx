@@ -5,9 +5,7 @@ import { useCreateNewPasswordMutation } from '@/services/auth/auth.service.ts'
 
 export const CreateNewPasswordPage = () => {
   const [createPassword, { isSuccess }] = useCreateNewPasswordMutation()
-  const { token } = useParams()
 
-  console.log(token)
   if (isSuccess) return <Navigate to="/login" />
 
   return <CreateNewPassword onSubmit={createPassword} />

@@ -1,6 +1,7 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './create-new-password.module.scss'
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import { Typography } from '@/components/ui/Typography'
+import { CreatPass } from '@/services/auth/auth.types.ts'
 
 const schema = z.object({
   password: z.string().min(6),
@@ -16,7 +18,7 @@ const schema = z.object({
 
 export type FormeType = z.infer<typeof schema>
 type Props = {
-  onSubmit: (data: FormeType) => void
+  onSubmit: (data: CreatPass) => void
 }
 export const CreateNewPassword = (props: Props) => {
   const { control, handleSubmit } = useForm<FormeType>({
@@ -26,7 +28,10 @@ export const CreateNewPassword = (props: Props) => {
       password: '',
     },
   })
-  const handleFormSubmitted = handleSubmit(props.onSubmit)
+  const { token } = useParams()
+  const handleFormSubmitted = handleSubmit(data =>
+    props.onSubmit({ ...data, token: token || 'not found' })
+  )
 
   return (
     <>

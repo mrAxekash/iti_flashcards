@@ -70,11 +70,11 @@ const authService = baseApi.injectEndpoints({
       },
     }),
     createNewPassword: builder.mutation<any, CreatPass>({
-      query: data => {
+      query: ({ token, password }) => {
         return {
-          url: '/v1/auth/reset-password/{token}',
+          url: `/v1/auth/reset-password/${token}`,
           method: 'POST',
-          body: data,
+          body: { password },
         }
       },
     }),
