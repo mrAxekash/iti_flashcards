@@ -56,6 +56,18 @@ export const DecksPage = () => {
     orderBy,
   })
 
+  //for slider
+  const [value, setValue] = useState<number[]>([0, 0])
+  const sliderChangeHandler = (newValue: number[]) => {
+    setValue(newValue)
+  }
+
+  useEffect(() => {
+    if (decks) {
+      setValue([0, decks.maxCardsCount])
+    }
+  }, [decks])
+
   const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
     setSelectedDeck({ id, name })
@@ -162,9 +174,9 @@ export const DecksPage = () => {
           label={'Show packs cards'}
         />
         <Slider
-          value={[1, 10]}
+          value={value}
           defaultValue={[1]}
-          onValueChange={() => {}}
+          onValueChange={sliderChangeHandler}
           step={1}
           min={0}
           max={decks?.maxCardsCount || 52}
