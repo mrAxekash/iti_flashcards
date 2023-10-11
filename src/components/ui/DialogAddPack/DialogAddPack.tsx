@@ -21,11 +21,13 @@ export const DialogAddPack = (props: PropsType) => {
             </RDialog.Close>
           </RDialog.Title>
           <div className={s.DialogDescription}>
-            <Textfield
-              label={'Name Pack'}
-              onChange={e => props.onChangeNewPackName(e.currentTarget.value)}
-              value={props.newPackName}
-            />
+            <div className={s.textFieldContainer}>
+              <Textfield
+                label={'Name Pack'}
+                onChange={e => props.onChangeNewPackName(e.currentTarget.value)}
+                value={props.newPackName}
+              />
+            </div>
             <Checkbox
               label={'Private pack'}
               checked={props.isPrivate}

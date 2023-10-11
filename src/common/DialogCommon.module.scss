@@ -63,9 +63,9 @@ input {
     line-height: 1.5;
     color: var(--color-light-100);
 
-    .textField {
-        //width: 100%;
-        //border: 1px solid var(--color-dark-500);
+    .textFieldContainer {
+        padding-right: 24px;
+        margin-bottom: 24px;
     }
 }
 
