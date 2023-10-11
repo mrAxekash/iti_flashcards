@@ -81,9 +81,14 @@ export const SignIn = (props: PropsType) => {
           <Typography variant={'Body_2'} className={clsx(sC.center, sC.colorLight)}>
             Don&apos;t have an account?
           </Typography>
-          <Typography variant={'Link_1'} className={clsx(sC.center, sC.signUp)}>
+          <Button
+            type="button"
+            variant="link"
+            className={clsx(sC.center, sC.signUp)}
+            onClick={() => navigate('/sign-up')}
+          >
             Sign Up
-          </Typography>
+          </Button>
         </Card>
       </div>
     </form>

@@ -10,7 +10,6 @@ import { z } from 'zod'
 
 import { Button } from '../../ui/Button/button.tsx'
 import { Card } from '../../ui/Card'
-import { Textfield } from '../../ui/Textfield'
 import { Typography } from '../../ui/Typography'
 
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
@@ -35,7 +34,6 @@ export const SignUpForm = () => {
   const navigate = useNavigate()
 
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -93,11 +91,12 @@ export const SignUpForm = () => {
               />
             </div>
             <div className={sC.element}>
-              <Textfield
-                {...register('confirm')}
-                label={'Confirm password'}
+              <ControlledTextField
+                name={'password'}
+                label={'Password'}
                 type={'password'}
-                errorMessage={errors.confirm?.message}
+                errorMessage={errors.password?.message}
+                control={control}
               />
             </div>
           </div>
