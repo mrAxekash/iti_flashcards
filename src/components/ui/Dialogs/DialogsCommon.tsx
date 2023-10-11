@@ -1,34 +1,31 @@
+import { Dispatch, ReactNode, SetStateAction } from 'react'
+
 import * as RDialog from '@radix-ui/react-dialog'
 
 import closeIcon from '@/assets/icons/close.png'
-import s from '@/common/DialogCommon.module.scss'
 import { Button } from '@/components/ui/Button'
+import s from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 
-// renamed branch
-export const DialogRemovePack = (props: PropsType) => {
+export const DialogsCommon = (props: PropsType) => {
   return (
     <RDialog.Root open={props.open} onOpenChange={props.setOpen}>
       <RDialog.Portal>
         <RDialog.Overlay className={s.DialogOverlay} />
         <RDialog.Content className={s.DialogContent}>
           <RDialog.Title className={s.DialogTitle}>
-            <div>Delete Pack</div>
+            <div>{props.title}</div>
             <RDialog.Close asChild>
               <button className={s.IconButton} aria-label="Close">
                 <img src={closeIcon} alt="closeIcon" />
               </button>
             </RDialog.Close>
           </RDialog.Title>
-          <RDialog.Description className={s.DialogDescription}>
-            Do you really want to remove <b>{props.packName}</b>?
-            <br />
-            All cards will be deleted.
-          </RDialog.Description>
+          {props.children}
           <div className={s.buttonContainer}>
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
             </RDialog.Close>
-            <Button onClick={props.onDelete}>Delete pack</Button>
+            <Button onClick={props.onButtonAction}>{props.actionButtonText}</Button>
           </div>
         </RDialog.Content>
       </RDialog.Portal>
@@ -38,7 +35,9 @@ export const DialogRemovePack = (props: PropsType) => {
 
 type PropsType = {
   open: boolean
-  setOpen: (open: boolean) => void
-  packName: string
-  onDelete: () => void
+  setOpen: Dispatch<SetStateAction<boolean>>
+  onButtonAction: () => void
+  actionButtonText: string
+  children: ReactNode
+  title: string
 }

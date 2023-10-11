@@ -1,9 +1,9 @@
 import * as RDialog from '@radix-ui/react-dialog'
 
 import closeIcon from '@/assets/icons/close.png'
-import s from '@/common/DialogCommon.module.scss'
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
+import s from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { Textfield } from '@/components/ui/Textfield'
 
 export const DialogAddPack = (props: PropsType) => {
@@ -38,7 +38,7 @@ export const DialogAddPack = (props: PropsType) => {
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
             </RDialog.Close>
-            <Button onClick={props.onAction}>Add pack</Button>
+            <Button onClick={props.onAdd}>Add pack</Button>
           </div>
         </RDialog.Content>
       </RDialog.Portal>
@@ -50,7 +50,7 @@ type PropsType = {
   open: boolean
   setOpen: (open: boolean) => void
   newPackName: string
-  onAction: () => void
+  onAdd: () => void
   onChangeNewPackName: (newPackName: string) => void
   isPrivate: boolean
   setIsPrivate: (isPrivate: boolean) => void

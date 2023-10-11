@@ -5,8 +5,8 @@ import s from './deck-page.module.scss'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
-import { DialogAddPack } from '@/components/ui/DialogAddPack/DialogAddPack.tsx'
-import { DialogRemovePack } from '@/components/ui/DialogRemovePack/DialogRemovePack.tsx'
+import { DialogAddPack } from '@/components/ui/Dialogs/DialogAddPack/DialogAddPack.tsx'
+import { DialogRemovePack } from '@/components/ui/Dialogs/DialogRemovePack/DialogRemovePack.tsx'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Slider } from '@/components/ui/Slider/slider.tsx'
 import { Column, Table } from '@/components/ui/Table'
@@ -38,7 +38,7 @@ export const DecksPage = () => {
 
   // for add dialog
   const [newPackName, setNewPackName] = useState('')
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(true)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
   // ===
 
@@ -153,7 +153,7 @@ export const DecksPage = () => {
       <DialogAddPack
         open={isAddDialogOpen}
         setOpen={setIsAddDialogOpen}
-        onAction={onAddDeck}
+        onAdd={onAddDeck}
         onChangeNewPackName={setNewPackName}
         newPackName={newPackName}
         isPrivate={isPrivate}
