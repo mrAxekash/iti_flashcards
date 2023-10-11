@@ -39,6 +39,7 @@ export const DecksPage = () => {
   // for add dialog
   const [newPackName, setNewPackName] = useState('')
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(true)
+  const [isPrivate, setIsPrivate] = useState(false)
   // ===
 
   const { data: me } = useGetMeQuery()
@@ -81,7 +82,7 @@ export const DecksPage = () => {
   const onAddDeck = () => {
     if (!newPackName) return
     dispatch(updateCurrentPage(1))
-    createDeck({ name: newPackName })
+    createDeck({ name: newPackName, isPrivate })
     setIsAddDialogOpen(false)
   }
 
@@ -155,6 +156,8 @@ export const DecksPage = () => {
         onAction={onAddDeck}
         onChangeNewPackName={setNewPackName}
         newPackName={newPackName}
+        isPrivate={isPrivate}
+        setIsPrivate={setIsPrivate}
       />
       <div className={s.topContainer}>
         <Typography variant="Large">Packs list</Typography>

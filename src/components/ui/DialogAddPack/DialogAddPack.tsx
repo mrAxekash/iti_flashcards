@@ -20,18 +20,18 @@ export const DialogAddPack = (props: PropsType) => {
               </button>
             </RDialog.Close>
           </RDialog.Title>
-          {/*<RDialog.Description className={s.DialogDescription}>*/}
           <div className={s.DialogDescription}>
             <Textfield
               label={'Name Pack'}
               onChange={e => props.onChangeNewPackName(e.currentTarget.value)}
               value={props.newPackName}
-              // className={s.textField}
             />
-            <Checkbox label={'Private pack'} />
+            <Checkbox
+              label={'Private pack'}
+              checked={props.isPrivate}
+              onValueChange={props.setIsPrivate}
+            />
           </div>
-
-          {/*</RDialog.Description>*/}
           <div className={s.buttonContainer}>
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
@@ -50,4 +50,6 @@ type PropsType = {
   newPackName: string
   onAction: () => void
   onChangeNewPackName: (newPackName: string) => void
+  isPrivate: boolean
+  setIsPrivate: (isPrivate: boolean) => void
 }
