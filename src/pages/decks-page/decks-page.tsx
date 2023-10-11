@@ -44,6 +44,13 @@ export const DecksPage = () => {
     dispatch(updateCurrentPage(+page))
   }
   const [search, setSearch] = useState('')
+
+  //for slider
+  const [value, setValue] = useState<number[]>([0, 52])
+  const sliderChangeHandler = (newValue: number[]) => {
+    setValue(newValue)
+  }
+  //при изменении параметров сам сделает новый запрос
   const {
     currentData: decks,
     isLoading: decksLoading,
@@ -51,22 +58,12 @@ export const DecksPage = () => {
   } = useGetDecksQuery({
     itemsPerPage: +itemsPerPage,
     name: search,
+    minCardsCount: value[0],
+    maxCardsCount: value[1],
     currentPage,
     authorId,
     orderBy,
   })
-
-  //for slider
-  const [value, setValue] = useState<number[]>([0, 0])
-  const sliderChangeHandler = (newValue: number[]) => {
-    setValue(newValue)
-  }
-
-  useEffect(() => {
-    if (decks) {
-      setValue([0, decks.maxCardsCount])
-    }
-  }, [decks])
 
   const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
