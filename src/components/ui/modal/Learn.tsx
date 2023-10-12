@@ -3,6 +3,8 @@ import { FC, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
+import { RadioGroup } from '../RadioGroup/RadioGroup'
+
 import s from './Learn.module.scss'
 
 import { Button } from '@/components/ui/Button'
@@ -52,6 +54,21 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
             <div>
               <Typography variant={'Subtitle_1'}>{`Answer: ${answer}`}</Typography>
               <Typography variant={'Subtitle_1'}>Rate yourself</Typography>
+              <RadioGroup
+                options={[
+                  { id: '1', value: 'Did not know', label: 'Did not know' },
+                  { id: '2', value: 'Forgot', label: 'Forgot' },
+                  { id: '3', value: 'A lot of thought', label: 'A lot of thought' },
+                  { id: '4', value: 'Сonfused', label: 'Сonfused' },
+                  {
+                    id: '5',
+                    value: 'Knew the answer',
+                    label: 'Knew the answer',
+                  },
+                ]}
+                value={''}
+                onValueChange={() => {}}
+              ></RadioGroup>
             </div>
           )}
 
