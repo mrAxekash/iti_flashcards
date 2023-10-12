@@ -9,7 +9,7 @@ export const TabSwitcher = (props: PropsType) => {
     <div className={s.conteiner}>
       <div className={s.TypBox}>
         {props.label && (
-          <Typography variant={'Body_2'} className={s.Typ}>
+          <Typography variant={'Body_2'} className={s.TabLabel}>
             {props.label}
           </Typography>
         )}
