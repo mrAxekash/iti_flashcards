@@ -50,7 +50,6 @@ export const DecksPage = () => {
   const sliderChangeHandler = (newValue: number[]) => {
     setValue(newValue)
   }
-  //при изменении параметров сам сделает новый запрос
   const {
     currentData: decks,
     isLoading: decksLoading,
