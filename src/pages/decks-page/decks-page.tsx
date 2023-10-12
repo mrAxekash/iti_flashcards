@@ -6,6 +6,7 @@ import trashIcon from '@/assets/icons/trashIcon.png'
 import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
 import { Dialog } from '@/components/ui/Dialog/Dialog.tsx'
+import { LearnModal } from '@/components/ui/modal/Learn.tsx'
 import { Pagination } from '@/components/ui/Pagination/Pagination.tsx'
 import { Slider } from '@/components/ui/Slider/slider.tsx'
 import { Column, Table } from '@/components/ui/Table'
@@ -175,7 +176,12 @@ export const DecksPage = () => {
           Clear Filter
         </Button>
       </div>
-
+      <LearnModal
+        title={'Hello world'}
+        question={`How "This" works in JavaScript?`}
+        answer={'answer1'}
+        shots={10}
+      ></LearnModal>
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
