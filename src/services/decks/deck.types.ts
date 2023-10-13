@@ -34,6 +34,23 @@ export type DecksResponse = {
   pagination: PaginationType
 }
 
+export type DeckByIdResponse = {
+  author: {
+    id: string
+    name: string
+  }
+  id: string
+  userId: string
+  name: string
+  isPrivate: boolean
+  shots: number
+  cover: string
+  rating: number
+  created: string
+  updated: string
+  cardsCount: number
+}
+
 export type DeckParams = {
   name?: string
   authorId?: string
