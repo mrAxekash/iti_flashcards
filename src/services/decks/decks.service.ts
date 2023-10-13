@@ -1,5 +1,12 @@
 import { baseApi } from '@/services/base-api.ts'
-import { Deck, DeckByIdResponse, DeckParams, DecksResponse } from '@/services/decks/deck.types.ts'
+import {
+  Deck,
+  DeckByIdResponse,
+  DeckParams,
+  DecksResponse,
+  GetCardsInDeckParams,
+  GetCardsInDeckResponse,
+} from '@/services/decks/deck.types.ts'
 import { RootState } from '@/services/store.ts'
 
 const decksService = baseApi.injectEndpoints({
@@ -16,6 +23,12 @@ const decksService = baseApi.injectEndpoints({
       query: data => ({
         url: `v1/decks/${data.id}`,
         method: 'GET',
+      }),
+    }),
+    getCardsInDeck: builder.query<GetCardsInDeckResponse, GetCardsInDeckParams>({
+      query: params => ({
+        url: `v1/decks/${params.id}/cards`,
+        method: 'GET', // todo: add params
       }),
     }),
     createDeck: builder.mutation<Deck, { name: string; isPrivate: boolean }>({
@@ -88,4 +101,5 @@ export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDeckByIdQuery,
+  useGetCardsInDeckQuery,
 } = decksService

@@ -61,4 +61,32 @@ export type DeckParams = {
   itemsPerPage?: number
 }
 
-// const orderBy: DeckParams['orderBy'] = 'updated-desc'
+export type GetCardsInDeckParams = {
+  id: string
+  question?: string
+  answer?: string
+  orderBy?: string
+  currentPage?: number
+  itemsPerPage?: number
+}
+
+type CardType = {
+  answer: string
+  answerImg: string | null
+  answerVideo: string | null
+  created: string
+  deckId: string
+  grade: number
+  id: string
+  question: string
+  questionImg: string | null
+  questionVideo: string | null
+  shots: number
+  updated: string
+  userId: string
+}
+
+export type GetCardsInDeckResponse = {
+  items: Array<CardType>
+  pagination: PaginationType
+}
