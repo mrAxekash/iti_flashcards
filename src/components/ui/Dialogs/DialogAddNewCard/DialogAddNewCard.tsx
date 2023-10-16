@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 
+import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import { Textfield } from '@/components/ui/Textfield'
 
 export const DialogAddNewCard = (props: PropsType) => {
   return (
@@ -11,7 +13,22 @@ export const DialogAddNewCard = (props: PropsType) => {
       onButtonAction={props.onAddNewCard}
       actionButtonText={'Add New Card'}
     >
-      DialogAddNewCard
+      <div className={sC.DialogDescription}>
+        <div className={sC.textFieldContainer}>
+          <Textfield
+            label={'Question'}
+            onChange={e => props.onChangeQuestion(e.currentTarget.value)}
+            value={props.question}
+          />
+        </div>
+        <div className={sC.textFieldContainer}>
+          <Textfield
+            label={'Answer'}
+            onChange={e => props.onChangeAnswer(e.currentTarget.value)}
+            value={props.answer}
+          />
+        </div>
+      </div>
     </DialogsCommon>
   )
 }
@@ -19,7 +36,9 @@ export const DialogAddNewCard = (props: PropsType) => {
 type PropsType = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  newCardName: string
-  onChangeNewPackName: (newPackName: string) => void
+  question: string
+  answer: string
+  onChangeQuestion: (value: string) => void
+  onChangeAnswer: (value: string) => void
   onAddNewCard: () => void
 }

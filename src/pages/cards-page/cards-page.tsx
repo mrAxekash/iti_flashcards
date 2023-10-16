@@ -23,7 +23,8 @@ export const CardsPage = () => {
   const { data: cards } = useGetCardsInDeckQuery({ id: id ? id : '' })
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
-  const [newCardName, setNewCardName] = useState('')
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
 
   const [createDeck] = useCreateCardInDeckMutation()
 
@@ -55,14 +56,21 @@ export const CardsPage = () => {
   ]
 
   const onAddNewCard = () => {
+    if (!question || !answer) return
     createDeck({
       deckId: id ? id : '',
       data: {
-        question: 'test question',
-        answer: 'test answer',
+        question,
+        answer,
       },
     })
     setIsAddNewCardDialogOpen(false)
+  }
+
+  const onOpenDialog = () => {
+    setQuestion('') // todo: fix this, not works
+    setAnswer('')
+    setIsAddNewCardDialogOpen(true)
   }
 
   return (
@@ -70,8 +78,10 @@ export const CardsPage = () => {
       <DialogAddNewCard
         open={isAddNewCardDialogOpen}
         setOpen={setIsAddNewCardDialogOpen}
-        newCardName={newCardName}
-        onChangeNewPackName={setNewCardName}
+        question={question}
+        onChangeQuestion={setQuestion}
+        answer={answer}
+        onChangeAnswer={setAnswer}
         onAddNewCard={onAddNewCard}
       />
       <div className={sC.topContainer}>
@@ -85,7 +95,7 @@ export const CardsPage = () => {
           <Typography variant={'Subtitle_1'}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
-          <Button onClick={() => setIsAddNewCardDialogOpen(true)}>Add New Card</Button>
+          <Button onClick={onOpenDialog}>Add New Card</Button>
         </>
       ) : (
         <Table.Root className={sC.tableContainer}>
@@ -118,3 +128,5 @@ export const CardsPage = () => {
     </div>
   )
 }
+
+//todo: add better error handling, maybe pass form inside
