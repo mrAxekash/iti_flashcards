@@ -76,6 +76,9 @@ export const CardsPage = () => {
       />
       <div className={sC.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
+        {data?.cardsCount !== 0 && (
+          <Button onClick={() => setIsAddNewCardDialogOpen(true)}>Add New Card</Button>
+        )}
       </div>
       {data?.cardsCount === 0 ? (
         <>

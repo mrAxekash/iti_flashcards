@@ -32,6 +32,7 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${params.id}/cards`,
         method: 'GET', // todo: add params
       }),
+      providesTags: ['CardsIdDeck'],
     }),
     createDeck: builder.mutation<Deck, { name: string; isPrivate: boolean }>({
       query: data => ({
@@ -104,7 +105,7 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['Decks'],
+      invalidatesTags: ['CardsIdDeck'],
     }),
   }),
 })
