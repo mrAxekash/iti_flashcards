@@ -90,3 +90,28 @@ export type GetCardsInDeckResponse = {
   items: Array<CardType>
   pagination: PaginationType
 }
+
+export type CreateCardInDeckType = {
+  question: string
+  answer: string
+  questionImg?: string
+  answerImg?: string
+  questionVideo?: string
+  answerVideo?: string
+}
+
+export type CreateCardInDeckResponseType = {
+  id: string
+  deckId: string
+  userId: string
+  question: string
+  answer: string
+  shots: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  rating: number
+  created: string
+  updated: string
+}

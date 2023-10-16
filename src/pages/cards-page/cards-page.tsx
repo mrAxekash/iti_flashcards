@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { useParams } from 'react-router-dom'
 
 import sC from '../decks-page/deck-page.module.scss'
@@ -5,21 +7,25 @@ import sC from '../decks-page/deck-page.module.scss'
 import s from './cards-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
+import { Button } from '@/components/ui/Button'
+import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
-import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
+import {
+  useCreateCardInDeckMutation,
+  useGetCardsInDeckQuery,
+  useGetDeckByIdQuery,
+} from '@/services/decks/decks.service.ts'
 
 export const CardsPage = () => {
   let { id } = useParams()
-
   const { data } = useGetDeckByIdQuery({ id: id ? id : '' })
-
-  // console.log('id: ' + id)
-
   const { data: cards } = useGetCardsInDeckQuery({ id: id ? id : '' })
 
-  console.log('cards')
-  console.log(cards)
+  const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
+  const [newCardName, setNewCardName] = useState('')
+
+  const [createDeck] = useCreateCardInDeckMutation()
 
   const columns: Column[] = [
     {
@@ -48,15 +54,36 @@ export const CardsPage = () => {
     },
   ]
 
+  const onAddNewCard = () => {
+    createDeck({
+      deckId: id ? id : '',
+      data: {
+        question: 'test question',
+        answer: 'test answer',
+      },
+    })
+    setIsAddNewCardDialogOpen(false)
+  }
+
   return (
     <div className={sC.component}>
+      <DialogAddNewCard
+        open={isAddNewCardDialogOpen}
+        setOpen={setIsAddNewCardDialogOpen}
+        newCardName={newCardName}
+        onChangeNewPackName={setNewCardName}
+        onAddNewCard={onAddNewCard}
+      />
       <div className={sC.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
       </div>
       {data?.cardsCount === 0 ? (
-        <Typography variant={'Subtitle_1'}>
-          This pack is empty. Click add new card to fill this pack
-        </Typography>
+        <>
+          <Typography variant={'Subtitle_1'}>
+            This pack is empty. Click add new card to fill this pack
+          </Typography>
+          <Button onClick={() => setIsAddNewCardDialogOpen(true)}>Add New Card</Button>
+        </>
       ) : (
         <Table.Root className={sC.tableContainer}>
           <Table.Header columns={columns} />
