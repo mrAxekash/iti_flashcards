@@ -3,6 +3,7 @@ import { FC, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
+import { Play } from '../../../assets/icons/Play.tsx'
 import { RadioGroup } from '../RadioGroup/RadioGroup'
 
 import s from './Learn.module.scss'
@@ -21,16 +22,20 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
     subtitle: clsx(s.subtitle),
     shots: clsx(s.shots),
     questionWrapper: clsx(s.questionWrapper),
+    ansverBlock: s.answerBlock,
   }
 
   const [hidden, setHidden] = useState(false)
 
   return (
-    <Dialog.Root open={true}>
+    <Dialog.Root>
       {/* Для всех частей диалога. defaultOpen - use when you do not need to control its open state; open - the controlled open  state of dialog; onOpenChange - event handler; modal - for visible screen reader */}
       <Dialog.Trigger>
         {/*  The button that opens the dialog. asChild - changed default rendered element.  */}
-        {/*<Button>Hello</Button>*/}
+        <Button variant={'secondary'}>
+          {' '}
+          <Play color={'white'} />{' '}
+        </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
@@ -52,27 +57,38 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
           </div>
           {hidden && (
             <div>
-              <Typography variant={'Subtitle_1'}>{`Answer: ${answer}`}</Typography>
-              <Typography variant={'Subtitle_1'}>Rate yourself</Typography>
-              <RadioGroup
-                options={[
-                  { id: '1', value: 'Did not know', label: 'Did not know' },
-                  { id: '2', value: 'Forgot', label: 'Forgot' },
-                  { id: '3', value: 'A lot of thought', label: 'A lot of thought' },
-                  { id: '4', value: 'Сonfused', label: 'Сonfused' },
-                  {
-                    id: '5',
-                    value: 'Knew the answer',
-                    label: 'Knew the answer',
-                  },
-                ]}
-                value={''}
-                onValueChange={() => {}}
-              ></RadioGroup>
+              <Typography
+                variant={'Subtitle_1'}
+                className={classNames.ansverBlock}
+              >{`Answer: ${answer}`}</Typography>
+              <div>
+                <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
+                  Rate yourself
+                </Typography>
+                <RadioGroup
+                  options={[
+                    { id: '1', value: 'Did not know', label: 'Did not know' },
+                    { id: '2', value: 'Forgot', label: 'Forgot' },
+                    { id: '3', value: 'A lot of thought', label: 'A lot of thought' },
+                    { id: '4', value: 'Сonfused', label: 'Сonfused' },
+                    {
+                      id: '5',
+                      value: 'Knew the answer',
+                      label: 'Knew the answer',
+                    },
+                  ]}
+                  value={''}
+                  onValueChange={() => {}}
+                ></RadioGroup>
+              </div>
             </div>
           )}
+          {hidden ? (
+            <Button onClick={() => setHidden(false)}> {'Next question'}</Button>
+          ) : (
+            <Button onClick={() => setHidden(true)}> Show Answer</Button>
+          )}
 
-          <Button onClick={() => setHidden(true)}> Show Answer</Button>
           {/*<Dialog.Description className={s.description}>Hello!</Dialog.Description>*/}
         </Dialog.Content>
       </Dialog.Portal>
