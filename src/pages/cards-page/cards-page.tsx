@@ -101,12 +101,12 @@ export const CardsPage = () => {
         )}
       </div>
       {data?.cardsCount === 0 ? (
-        <>
-          <Typography variant={'Subtitle_1'}>
+        <div className={s.emptyPackContainer}>
+          <Typography variant={'Subtitle_2'} className={s.Subtitle_2}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
           <Button onClick={onOpenDialog}>Add New Card</Button>
-        </>
+        </div>
       ) : (
         <Table.Root className={sC.tableContainer}>
           <Table.Header columns={columns} />
