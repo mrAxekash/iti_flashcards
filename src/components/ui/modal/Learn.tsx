@@ -3,11 +3,12 @@ import { FC, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
-import { Play } from '../../../assets/icons/Play.tsx'
 import { RadioGroup } from '../RadioGroup/RadioGroup'
 
 import s from './Learn.module.scss'
 
+import { ArrowBack } from '@/assets/icons/ArrowBack.tsx'
+import { Play } from '@/assets/icons/Play.tsx'
 import { Button } from '@/components/ui/Button'
 import { Typography } from '@/components/ui/Typography'
 
@@ -23,6 +24,8 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
     shots: clsx(s.shots),
     questionWrapper: clsx(s.questionWrapper),
     ansverBlock: s.answerBlock,
+    iconSettings: s.openIcon,
+    // closeButton:
   }
 
   const [hidden, setHidden] = useState(false)
@@ -30,11 +33,10 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
   return (
     <Dialog.Root>
       {/* Для всех частей диалога. defaultOpen - use when you do not need to control its open state; open - the controlled open  state of dialog; onOpenChange - event handler; modal - for visible screen reader */}
-      <Dialog.Trigger>
+      <Dialog.Trigger asChild>
         {/*  The button that opens the dialog. asChild - changed default rendered element.  */}
-        <Button variant={'secondary'}>
-          {' '}
-          <Play color={'white'} />{' '}
+        <Button variant={'link'}>
+          <Play color={'white'} className={classNames.iconSettings} />
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -43,6 +45,10 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
           {/*  A layer that covers the inert portion of the view when the dialog is open. asChild - change the default rendered for the one passed as a child. forceMount - ...;  */}
         </Dialog.Overlay>
         <Dialog.Content className={s.content}>
+          <Dialog.Close>
+            <ArrowBack color={'white'} className={classNames.iconSettings} />
+            Back to Pack List
+          </Dialog.Close>
           <Dialog.Title className={s.title}>
             <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
           </Dialog.Title>

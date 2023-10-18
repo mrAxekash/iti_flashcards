@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-// import { PlayIcon } from '../../assets/icons/Play.tsx'
-
 import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
@@ -178,12 +176,7 @@ export const DecksPage = () => {
           Clear Filter
         </Button>
       </div>
-      <LearnModal
-        title={'Hello world'}
-        question={`How "This" works in JavaScript?`}
-        answer={'answer1'}
-        shots={10}
-      ></LearnModal>
+
       <Table.Root className={s.tableContainer}>
         <Table.Header columns={columns} onSort={setSort} sort={sort} />
         <Table.Body>
@@ -197,12 +190,20 @@ export const DecksPage = () => {
                   <Table.Cell>{deck.author.name}</Table.Cell>
                   <Table.Cell>
                     <div className={s.iconContainer}>
-                      <img
-                        src={trashIcon}
-                        alt=""
-                        className={s.trashIcon}
-                        onClick={() => onSelectDeckForDel(deck.id, deck.name)}
-                      />
+                      <LearnModal
+                        title={'Hello world'}
+                        question={`How "This" works in JavaScript?`}
+                        answer={'answer1'}
+                        shots={10}
+                      ></LearnModal>
+                      <Button variant={'link'}>
+                        <img
+                          src={trashIcon}
+                          alt=""
+                          className={s.trashIcon}
+                          onClick={() => onSelectDeckForDel(deck.id, deck.name)}
+                        />
+                      </Button>
                     </div>
                   </Table.Cell>
                 </Table.Row>
