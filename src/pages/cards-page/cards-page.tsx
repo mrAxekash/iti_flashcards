@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import sC from '../decks-page/deck-page.module.scss'
 
 import s from './cards-page.module.scss'
 
+import arrowLeft from '@/assets/icons/ArrowLeft.svg'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
@@ -25,6 +26,7 @@ export const CardsPage = () => {
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
+  const navigate = useNavigate()
 
   const [createDeck] = useCreateCardInDeckMutation()
 
@@ -73,6 +75,10 @@ export const CardsPage = () => {
     setIsAddNewCardDialogOpen(true)
   }
 
+  const onArrowLeft = () => {
+    navigate(`/`)
+  }
+
   return (
     <div className={sC.component}>
       <DialogAddNewCard
@@ -84,6 +90,10 @@ export const CardsPage = () => {
         onChangeAnswer={setAnswer}
         onAddNewCard={onAddNewCard}
       />
+      <div className={s.arrowContainer} onClick={onArrowLeft}>
+        <img src={arrowLeft} alt="arrowLeft" />
+        <span className={s.text}>Back to Packs List</span>
+      </div>
       <div className={sC.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
         {data?.cardsCount !== 0 && (

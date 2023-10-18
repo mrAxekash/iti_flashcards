@@ -4,3 +4,12 @@
     overflow: hidden;
     max-width: 300px;
 }
+
+.arrowContainer {
+    display: flex;
+    cursor: pointer;
+
+    .text {
+        margin-left: 5px;
+    }
+}
