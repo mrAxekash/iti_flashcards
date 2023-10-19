@@ -25,7 +25,8 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
     questionWrapper: clsx(s.questionWrapper),
     ansverBlock: s.answerBlock,
     iconSettings: s.openIcon,
-    // closeButton:
+    closeButtonContainer: s.closeButtonContainer,
+    closeButton: s.closeButtonIcon,
   }
 
   const [hidden, setHidden] = useState(false)
@@ -41,14 +42,16 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
       </Dialog.Trigger>
       <Dialog.Portal>
         {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
-        <Dialog.Overlay className={s.overlay}>
+        <Dialog.Overlay asChild className={s.overlay}>
+          <Dialog.Close className={classNames.closeButtonContainer}>
+            <div className={classNames.closeButton}>
+              <ArrowBack color={'white'} className={classNames.iconSettings} />
+              Back to Pack List
+            </div>
+          </Dialog.Close>
           {/*  A layer that covers the inert portion of the view when the dialog is open. asChild - change the default rendered for the one passed as a child. forceMount - ...;  */}
         </Dialog.Overlay>
         <Dialog.Content className={s.content}>
-          <Dialog.Close>
-            <ArrowBack color={'white'} className={classNames.iconSettings} />
-            Back to Pack List
-          </Dialog.Close>
           <Dialog.Title className={s.title}>
             <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
           </Dialog.Title>

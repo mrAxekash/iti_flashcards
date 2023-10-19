@@ -190,6 +190,26 @@
   height: 16px;
 
 }
+.closeButtonContainer {
+  //position: relative;
+}
+.closeButtonIcon {
+  position: fixed;
+  top: 10%;
+  left: 23%;
+  z-index: 100;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.closeButtonContainer:hover {
+  //cursor: pointer;
+  //color: red;
+}
+//.closeButtonIcon:hover {
+//  color: #1ea7fd;
+//}
+
 
 .questionWrapper {
   margin-bottom: 41px;
@@ -201,7 +221,8 @@
   border-radius: 6px;
   box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   position: fixed;
-  top: 30%;
+  //top: 30%;
+  top: 25vh;
   left: 50%;
   transform: translate(-50%, -30%);
   width: 90vw;
