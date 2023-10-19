@@ -40,4 +40,5 @@ type PropsType = {
   actionButtonText: string
   children: ReactNode
   title: string
+  buttonType?: 'button' | 'submit'
 }

@@ -23,11 +23,10 @@ export const CardsPage = () => {
   const { data } = useGetDeckByIdQuery({ id: id ? id : '' })
   const { data: cards } = useGetCardsInDeckQuery({ id: id ? id : '' })
 
-  const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
+  const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(true) // change for developing
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const navigate = useNavigate()
-
   const [createDeck] = useCreateCardInDeckMutation()
 
   const columns: Column[] = [
