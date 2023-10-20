@@ -39,7 +39,7 @@ export const DialogsCommon = (props: PropsType) => {
 
 type PropsType = {
   open: boolean
-  setOpen: () => void
+  setOpen: (value: boolean) => void
   onButtonAction: () => void
   actionButtonText: string
   children: ReactNode

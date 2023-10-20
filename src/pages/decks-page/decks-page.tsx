@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import s from './deck-page.module.scss'
 
 import trashIcon from '@/assets/icons/trashIcon.png'
-import { OrderByType } from '@/common/types.ts'
+import { OrderByType, SelectedDeckType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
 import { DialogAddPack } from '@/components/ui/Dialogs/DialogAddPack.tsx'
 import { DialogRemovePack } from '@/components/ui/Dialogs/DialogRemovePack.tsx'
@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.ts'
+import { useGetDecksQuery } from '@/services/decks/decks.service.ts'
 import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
@@ -41,7 +41,6 @@ export const DecksPage = () => {
   // ===
 
   const { data: me } = useGetMeQuery()
-  const [deleteDeck] = useDeleteDeckMutation()
 
   const dispatch = useAppDispatch()
 
@@ -72,16 +71,6 @@ export const DecksPage = () => {
   const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
     setSelectedDeck({ id, name })
-  }
-
-  const onDeleteDeck = () => {
-    deleteDeck({ id: selectedDeck.id })
-      .unwrap()
-      .catch(err => {
-        alert(err?.data?.message)
-      })
-    setIsDeleteDialogOpen(false)
-    setSelectedDeck({ id: '', name: '' })
   }
 
   //for tabSwitcher
@@ -157,8 +146,8 @@ export const DecksPage = () => {
       <DialogRemovePack
         open={isDeleteDialogOpen}
         setOpen={setIsDeleteDialogOpen}
-        packName={selectedDeck.name}
-        onDelete={onDeleteDeck}
+        selectedDeck={selectedDeck}
+        setSelectedDeck={setSelectedDeck}
       />
       <DialogAddPack open={isAddDialogOpen} setOpen={setIsAddDialogOpen} />
       <div className={s.topContainer}>
@@ -239,9 +228,4 @@ export const DecksPage = () => {
       </div>
     </div>
   )
-}
-
-type SelectedDeckType = {
-  id: string
-  name: string
 }
