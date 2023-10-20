@@ -6,11 +6,15 @@ import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
 import { Textfield } from '@/components/ui/Textfield'
 
 export const DialogAddPack = (props: PropsType) => {
+  const onClose = () => {
+    props.setOpen(false)
+  }
+
   return (
     <DialogsCommon
       title={'Add New Pack'}
       open={props.open}
-      setOpen={props.setOpen}
+      setOpen={onClose}
       onButtonAction={props.onAdd}
       actionButtonText={'Add New Pack'}
     >

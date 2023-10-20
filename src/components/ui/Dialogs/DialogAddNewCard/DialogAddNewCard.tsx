@@ -48,7 +48,6 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
 
   const onAddNewCard = (question: string, answer: string) => {
-    debugger
     if (!question || !answer || !props.deckId) return
     createDeck({
       deckId: props.deckId,
@@ -60,11 +59,16 @@ export const DialogAddNewCard = (props: PropsType) => {
     props.setOpen(false)
   }
 
+  const onClose = () => {
+    reset()
+    props.setOpen(false)
+  }
+
   return (
     <DialogsCommon
       title={'Add New Card'}
       open={props.open}
-      setOpen={props.setOpen}
+      setOpen={onClose}
       onButtonAction={onSubmitEmulation}
       actionButtonText={'Add New Card'}
       isButtonDisable={Object.keys(errors).length > 0}

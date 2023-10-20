@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react'
+import { ReactNode } from 'react'
 
 import * as RDialog from '@radix-ui/react-dialog'
 
@@ -39,7 +39,7 @@ export const DialogsCommon = (props: PropsType) => {
 
 type PropsType = {
   open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setOpen: () => void
   onButtonAction: () => void
   actionButtonText: string
   children: ReactNode
