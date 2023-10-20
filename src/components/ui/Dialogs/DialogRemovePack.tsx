@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import * as RDialog from '@radix-ui/react-dialog'
 
 import s from '@/components/ui/Dialogs/DialogsCommon.module.scss'
@@ -25,7 +23,7 @@ export const DialogRemovePack = (props: PropsType) => {
 
 type PropsType = {
   open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setOpen: () => void
   packName: string
   onDelete: () => void
 }
