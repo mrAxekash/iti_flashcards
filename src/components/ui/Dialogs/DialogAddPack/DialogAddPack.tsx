@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Checkbox } from '@/components/ui/Checkbox'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
-import { Textfield } from '@/components/ui/Textfield'
 import { useAppDispatch } from '@/hooks.ts'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.ts'
 import { updateCurrentPage } from '@/services/decks/decks.slice.ts'
@@ -34,15 +34,13 @@ export const DialogAddPack = (props: PropsType) => {
 
   const formRef = useRef<HTMLFormElement | null>(null)
   // this is temporary here
-  const [newPackName, setNewPackName] = useState('')
   const [isPrivate, setIsPrivate] = useState(false)
 
   const dispatch = useAppDispatch()
   const [createDeck] = useCreateDeckMutation()
 
-  //in progress ....
-  /*const handleFormSubmitted = handleSubmit(values => {
-    onAddNewCard(values.question, values.answer)
+  const handleFormSubmitted = handleSubmit(values => {
+    onAddDeck(values.packName)
     reset()
     props.setOpen(false)
   })
@@ -52,16 +50,17 @@ export const DialogAddPack = (props: PropsType) => {
     if (!formRef.current) return
     formRef.current.submit = handleFormSubmitted
     formRef.current.submit()
-  }*/
+  }
 
-  const onAddDeck = () => {
-    if (!newPackName) return
+  const onAddDeck = (packName: string) => {
+    if (!packName) return
     dispatch(updateCurrentPage(1))
-    createDeck({ name: newPackName, isPrivate })
+    createDeck({ name: packName, isPrivate })
     props.setOpen(false)
   }
 
   const onClose = () => {
+    reset()
     props.setOpen(false)
   }
 
@@ -70,17 +69,21 @@ export const DialogAddPack = (props: PropsType) => {
       title={'Add New Pack'}
       open={props.open}
       setOpen={onClose}
-      onButtonAction={onAddDeck}
+      onButtonAction={onSubmitEmulation}
       actionButtonText={'Add New Pack'}
+      isButtonDisable={Object.keys(errors).length > 0}
     >
       <form ref={formRef}>
         <div className={sC.DialogDescription}>
           <div className={sC.textFieldContainer}>
-            <Textfield
-              label={'Name Pack'}
-              onChange={e => setNewPackName(e.currentTarget.value)}
-              value={newPackName}
-            />
+            <div className={sC.element}>
+              <ControlledTextField
+                name={'packName'}
+                placeholder={'type a pack name'}
+                label={'Name Pack'}
+                control={control}
+              />
+            </div>
           </div>
           <Checkbox label={'Private pack'} checked={isPrivate} onValueChange={setIsPrivate} />
         </div>
