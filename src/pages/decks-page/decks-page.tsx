@@ -20,11 +20,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-} from '@/services/decks/decks.service.ts'
+import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service.ts'
 import { setItemsPerPage, updateCurrentPage } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
@@ -41,13 +37,10 @@ export const DecksPage = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
 
   // for add dialog
-  const [newPackName, setNewPackName] = useState('')
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-  const [isPrivate, setIsPrivate] = useState(false)
   // ===
 
   const { data: me } = useGetMeQuery()
-  const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
   const dispatch = useAppDispatch()
@@ -89,13 +82,6 @@ export const DecksPage = () => {
       })
     setIsDeleteDialogOpen(false)
     setSelectedDeck({ id: '', name: '' })
-  }
-
-  const onAddDeck = () => {
-    if (!newPackName) return
-    dispatch(updateCurrentPage(1))
-    createDeck({ name: newPackName, isPrivate })
-    setIsAddDialogOpen(false)
   }
 
   //for tabSwitcher
@@ -174,20 +160,10 @@ export const DecksPage = () => {
         packName={selectedDeck.name}
         onDelete={onDeleteDeck}
       />
-      <DialogAddPack
-        open={isAddDialogOpen}
-        setOpen={setIsAddDialogOpen}
-        onAdd={onAddDeck}
-        onChangeNewPackName={setNewPackName}
-        newPackName={newPackName}
-        isPrivate={isPrivate}
-        setIsPrivate={setIsPrivate}
-      />
+      <DialogAddPack open={isAddDialogOpen} setOpen={setIsAddDialogOpen} />
       <div className={s.topContainer}>
         <Typography variant="Large">Packs list</Typography>
-        <Button onClick={() => setIsAddDialogOpen(true)} disabled={isLoading}>
-          Add New Pack
-        </Button>
+        <Button onClick={() => setIsAddDialogOpen(true)}>Add New Pack</Button>
       </div>
       <div className={s.middleContainer}>
         <div className={s.searchContainer}>

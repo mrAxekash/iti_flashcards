@@ -42,7 +42,7 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   // on submit form emulation
   const onSubmitEmulation = () => {
-    if (!formRef.current || Object.keys(errors).length > 0) return
+    if (!formRef.current) return
     formRef.current.submit = handleFormSubmitted
     formRef.current.submit()
   }
@@ -106,3 +106,5 @@ type PropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>
   deckId: string
 }
+
+//todo: maybe reduce code duplication with DialogAddPack
