@@ -76,20 +76,24 @@ export const DialogAddNewCard = (props: PropsType) => {
       <form ref={formRef}>
         <div className={sC.DialogDescription}>
           <div className={sC.textFieldContainer}>
-            <ControlledTextField
-              name={'question'}
-              placeholder={'type a question'}
-              label={'Question'}
-              control={control}
-            />
+            <div className={sC.element}>
+              <ControlledTextField
+                name={'question'}
+                placeholder={'type a question'}
+                label={'Question'}
+                control={control}
+              />
+            </div>
           </div>
           <div className={sC.textFieldContainer}>
-            <ControlledTextField
-              name={'answer'}
-              placeholder={'type an answer'}
-              label={'Answer'}
-              control={control}
-            />
+            <div className={sC.element}>
+              <ControlledTextField
+                name={'answer'}
+                placeholder={'type an answer'}
+                label={'Answer'}
+                control={control}
+              />
+            </div>
           </div>
         </div>
       </form>
