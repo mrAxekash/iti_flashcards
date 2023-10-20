@@ -19,7 +19,7 @@ export const CardsPage = () => {
   const { data } = useGetDeckByIdQuery({ id: id ? id : '' })
   const { data: cards } = useGetCardsInDeckQuery({ id: id ? id : '' })
 
-  const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(true) // change for developing
+  const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false) // change for developing
   const navigate = useNavigate()
 
   const columns: Column[] = [
@@ -112,5 +112,3 @@ export const CardsPage = () => {
     </div>
   )
 }
-
-//todo: add better error handling, maybe pass form inside

@@ -35,23 +35,20 @@ export const DialogAddNewCard = (props: PropsType) => {
   const formRef = useRef<HTMLFormElement | null>(null)
 
   const handleFormSubmitted = handleSubmit(values => {
-    console.log(values)
-    alert('handleFormSubmitted DialogAddNewCard')
     onAddNewCard(values.question, values.answer)
-
-    return false
+    reset()
+    props.setOpen(false)
   })
 
   // on submit form emulation
   const onSubmitEmulation = () => {
-    if (!formRef.current) return
+    if (!formRef.current || Object.keys(errors).length > 0) return
     formRef.current.submit = handleFormSubmitted
     formRef.current.submit()
-    reset()
-    props.setOpen(false)
   }
 
   const onAddNewCard = (question: string, answer: string) => {
+    debugger
     if (!question || !answer || !props.deckId) return
     createDeck({
       deckId: props.deckId,
@@ -70,6 +67,7 @@ export const DialogAddNewCard = (props: PropsType) => {
       setOpen={props.setOpen}
       onButtonAction={onSubmitEmulation}
       actionButtonText={'Add New Card'}
+      isButtonDisable={Object.keys(errors).length > 0}
     >
       <form ref={formRef}>
         <div className={sC.DialogDescription}>

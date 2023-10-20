@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/Button'
 import s from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 
 export const DialogsCommon = (props: PropsType) => {
+  const { isButtonDisable = false } = props
+
   return (
     <RDialog.Root open={props.open} onOpenChange={props.setOpen}>
       <RDialog.Portal>
@@ -25,7 +27,9 @@ export const DialogsCommon = (props: PropsType) => {
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
             </RDialog.Close>
-            <Button onClick={props.onButtonAction}>{props.actionButtonText}</Button>
+            <Button onClick={props.onButtonAction} disabled={isButtonDisable}>
+              {props.actionButtonText}
+            </Button>
           </div>
         </RDialog.Content>
       </RDialog.Portal>
@@ -40,5 +44,5 @@ type PropsType = {
   actionButtonText: string
   children: ReactNode
   title: string
-  buttonType?: 'button' | 'submit'
+  isButtonDisable?: boolean
 }
