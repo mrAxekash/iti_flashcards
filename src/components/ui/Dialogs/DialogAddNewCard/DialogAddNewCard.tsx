@@ -4,15 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/ui/Button'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
-import { Textfield } from '@/components/ui/Textfield'
+import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
   const schema = z.object({
-    answer: z.string(),
-    question: z.string(),
+    answer: z.string().min(3),
+    question: z.string().min(3),
   })
 
   type FormValues = z.input<typeof schema>
@@ -20,6 +20,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     mode: 'onSubmit',
@@ -29,51 +30,63 @@ export const DialogAddNewCard = (props: PropsType) => {
       question: '',
     },
   })
+  const [createDeck] = useCreateCardInDeckMutation()
 
-  // const onSubmitHandler: SubmitHandler<FormValues> = data => console.log(data)
+  const formRef = useRef<HTMLFormElement | null>(null)
+
   const handleFormSubmitted = handleSubmit(values => {
     console.log(values)
     alert('handleFormSubmitted DialogAddNewCard')
+    onAddNewCard(values.question, values.answer)
 
     return false
   })
 
-  const formRef = useRef<HTMLFormElement | null>(null)
+  // on submit form emulation
+  const onSubmitEmulation = () => {
+    if (!formRef.current) return
+    formRef.current.submit = handleFormSubmitted
+    formRef.current.submit()
+    reset()
+    props.setOpen(false)
+  }
+
+  const onAddNewCard = (question: string, answer: string) => {
+    if (!question || !answer || !props.deckId) return
+    createDeck({
+      deckId: props.deckId,
+      data: {
+        question,
+        answer,
+      },
+    })
+    props.setOpen(false)
+  }
 
   return (
     <DialogsCommon
       title={'Add New Card'}
       open={props.open}
       setOpen={props.setOpen}
-      onButtonAction={() => {
-        if (!formRef.current) return
-        formRef.current.submit = handleFormSubmitted
-        formRef.current.submit()
-      }}
+      onButtonAction={onSubmitEmulation}
       actionButtonText={'Add New Card'}
     >
       <form ref={formRef}>
-        {/*<Button*/}
-        {/*  onClick={() => {*/}
-        {/*    alert('self button alert')*/}
-        {/*  }}*/}
-        {/*  type={'submit'}*/}
-        {/*>*/}
-        {/*  test submit*/}
-        {/*</Button>*/}
         <div className={sC.DialogDescription}>
           <div className={sC.textFieldContainer}>
-            <Textfield
+            <ControlledTextField
+              name={'question'}
+              placeholder={'type a question'}
               label={'Question'}
-              onChange={e => props.onChangeQuestion(e.currentTarget.value)}
-              value={props.question}
+              control={control}
             />
           </div>
           <div className={sC.textFieldContainer}>
-            <Textfield
+            <ControlledTextField
+              name={'answer'}
+              placeholder={'type an answer'}
               label={'Answer'}
-              onChange={e => props.onChangeAnswer(e.currentTarget.value)}
-              value={props.answer}
+              control={control}
             />
           </div>
         </div>
@@ -85,9 +98,5 @@ export const DialogAddNewCard = (props: PropsType) => {
 type PropsType = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  question: string
-  answer: string
-  onChangeQuestion: (value: string) => void
-  onChangeAnswer: (value: string) => void
-  onAddNewCard: () => void
+  deckId: string
 }

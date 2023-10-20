@@ -12,11 +12,7 @@ import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
-import {
-  useCreateCardInDeckMutation,
-  useGetCardsInDeckQuery,
-  useGetDeckByIdQuery,
-} from '@/services/decks/decks.service.ts'
+import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 
 export const CardsPage = () => {
   let { id } = useParams()
@@ -24,10 +20,7 @@ export const CardsPage = () => {
   const { data: cards } = useGetCardsInDeckQuery({ id: id ? id : '' })
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(true) // change for developing
-  const [question, setQuestion] = useState('')
-  const [answer, setAnswer] = useState('')
   const navigate = useNavigate()
-  const [createDeck] = useCreateCardInDeckMutation()
 
   const columns: Column[] = [
     {
@@ -56,21 +49,7 @@ export const CardsPage = () => {
     },
   ]
 
-  const onAddNewCard = () => {
-    if (!question || !answer) return
-    createDeck({
-      deckId: id ? id : '',
-      data: {
-        question,
-        answer,
-      },
-    })
-    setIsAddNewCardDialogOpen(false)
-  }
-
   const onOpenDialog = () => {
-    setQuestion('') // todo: fix this, not works
-    setAnswer('')
     setIsAddNewCardDialogOpen(true)
   }
 
@@ -83,11 +62,7 @@ export const CardsPage = () => {
       <DialogAddNewCard
         open={isAddNewCardDialogOpen}
         setOpen={setIsAddNewCardDialogOpen}
-        question={question}
-        onChangeQuestion={setQuestion}
-        answer={answer}
-        onChangeAnswer={setAnswer}
-        onAddNewCard={onAddNewCard}
+        deckId={id ? id : ''}
       />
       <div className={s.arrowContainer} onClick={onArrowLeft}>
         <img src={arrowLeft} alt="arrowLeft" />
