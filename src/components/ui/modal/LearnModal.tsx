@@ -22,8 +22,8 @@ type LearnModalType = {
   open: boolean
   setOpen: (isOpen: boolean) => void
   onChange: ({ grade, cardId }: DeckLearnArgType) => void
-  imgAnswer: string
-  imgQuestion: string
+  imgAnswer: string | null
+  imgQuestion: string | null
 }
 
 export const answerRaiting = {
@@ -98,7 +98,9 @@ export const LearnModal: FC<LearnModalType> = ({
               variant={'Subtitle_1'}
               className={classNames.subtitle}
             >{`Question: ${question}`}</Typography>
-            <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
+            {imgQuestion && (
+              <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
+            )}
             <Typography variant={'Body_2'} className={classNames.shots}>
               Количество попыток ответов на вопрос: {shots}
             </Typography>
@@ -109,7 +111,9 @@ export const LearnModal: FC<LearnModalType> = ({
                 variant={'Subtitle_1'}
                 className={classNames.ansverBlock}
               >{`Answer: ${answer}`}</Typography>
-              <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
+              {imgAnswer && (
+                <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
+              )}
               <div>
                 <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
                   Rate yourself
