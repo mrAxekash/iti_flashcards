@@ -1,5 +1,11 @@
 import { baseApi } from '@/services/base-api.ts'
-import { Deck, DeckParams, DecksResponse } from '@/services/decks/deck.types.ts'
+import {
+  Deck,
+  DeckLearnArgType,
+  DeckParams,
+  DecksResponse,
+  LearnCardType,
+} from '@/services/decks/deck.types.ts'
 import { RootState } from '@/services/store.ts'
 
 const decksService = baseApi.injectEndpoints({
@@ -74,7 +80,28 @@ const decksService = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Decks'],
     }),
+    getCard: builder.query<LearnCardType, { deckId: string }>({
+      query: params => ({
+        url: `v1/decks/${params.deckId}/learn`,
+        method: 'GET',
+      }),
+      providesTags: ['Card'],
+    }),
+    postCard: builder.mutation<LearnCardType, DeckLearnArgType>({
+      query: body => ({
+        url: `v1/decks/${body.cardId}/learn`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Card'],
+    }),
   }),
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation } = decksService
+export const {
+  useGetDecksQuery,
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetCardQuery,
+  usePostCardMutation,
+} = decksService

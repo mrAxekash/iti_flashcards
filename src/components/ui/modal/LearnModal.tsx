@@ -5,20 +5,47 @@ import { clsx } from 'clsx'
 
 import { RadioGroup } from '../RadioGroup/RadioGroup'
 
-import s from './Learn.module.scss'
+import s from './LearnModal.module.scss'
 
 import { ArrowBack } from '@/assets/icons/ArrowBack.tsx'
-import { Play } from '@/assets/icons/Play.tsx'
+// import { Play } from '@/assets/icons/Play.tsx'
 import { Button } from '@/components/ui/Button'
 import { Typography } from '@/components/ui/Typography'
+import { DeckLearnArgType } from '@/services/decks/deck.types.ts'
 
 type LearnModalType = {
+  id: string
   title: string
   question: string
   answer: string
   shots: number
+  open: boolean
+  setOpen: (isOpen: boolean) => void
+  onChange: ({ grade, cardId }: DeckLearnArgType) => void
+  imgAnswer: string
+  imgQuestion: string
 }
-export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots }) => {
+
+export const answerRaiting = {
+  1: 'Did not know',
+  2: 'Forgot',
+  3: 'A lot of thought',
+  4: 'Сonfused',
+  5: 'Knew the answer',
+}
+
+export const LearnModal: FC<LearnModalType> = ({
+  title,
+  answer,
+  question,
+  shots,
+  open,
+  setOpen,
+  onChange,
+  id,
+  imgAnswer,
+  imgQuestion,
+}) => {
   const classNames = {
     subtitle: clsx(s.subtitle),
     shots: clsx(s.shots),
@@ -29,21 +56,32 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
     closeButton: s.closeButtonIcon,
   }
 
-  const [hidden, setHidden] = useState(false)
+  const [hiddenRaiting, setHiddenRaiting] = useState(false)
+
+  const [value, setValue] = useState(answerRaiting['1'])
+
+  const sendMessageHandler = () => {
+    onChange && onChange({ cardId: id, grade: 1 })
+    setHiddenRaiting(false)
+  }
+
+  const showAnswerHandler = () => {
+    setHiddenRaiting(true)
+  }
 
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open}>
       {/* Для всех частей диалога. defaultOpen - use when you do not need to control its open state; open - the controlled open  state of dialog; onOpenChange - event handler; modal - for visible screen reader */}
-      <Dialog.Trigger asChild>
-        {/*  The button that opens the dialog. asChild - changed default rendered element.  */}
-        <Button variant={'link'}>
-          <Play color={'white'} className={classNames.iconSettings} />
-        </Button>
-      </Dialog.Trigger>
+      {/*<Dialog.Trigger asChild>*/}
+      {/*  /!*  The button that opens the dialog. asChild - changed default rendered element.  *!/*/}
+      {/*  <Button variant={'link'}>*/}
+      {/*    <Play color={'white'} className={classNames.iconSettings} />*/}
+      {/*  </Button>*/}
+      {/*</Dialog.Trigger>*/}
       <Dialog.Portal>
         {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
-        <Dialog.Overlay asChild className={s.overlay}>
-          <Dialog.Close className={classNames.closeButtonContainer}>
+        <Dialog.Overlay className={s.overlay}>
+          <Dialog.Close className={classNames.closeButtonContainer} onClick={() => setOpen(false)}>
             <div className={classNames.closeButton}>
               <ArrowBack color={'white'} className={classNames.iconSettings} />
               Back to Pack List
@@ -60,42 +98,42 @@ export const LearnModal: FC<LearnModalType> = ({ title, answer, question, shots 
               variant={'Subtitle_1'}
               className={classNames.subtitle}
             >{`Question: ${question}`}</Typography>
+            <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
             <Typography variant={'Body_2'} className={classNames.shots}>
               Количество попыток ответов на вопрос: {shots}
             </Typography>
           </div>
-          {hidden && (
+          {hiddenRaiting && (
             <div>
               <Typography
                 variant={'Subtitle_1'}
                 className={classNames.ansverBlock}
               >{`Answer: ${answer}`}</Typography>
+              <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
               <div>
                 <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
                   Rate yourself
                 </Typography>
                 <RadioGroup
                   options={[
-                    { id: '1', value: 'Did not know', label: 'Did not know' },
-                    { id: '2', value: 'Forgot', label: 'Forgot' },
-                    { id: '3', value: 'A lot of thought', label: 'A lot of thought' },
-                    { id: '4', value: 'Сonfused', label: 'Сonfused' },
-                    {
-                      id: '5',
-                      value: 'Knew the answer',
-                      label: 'Knew the answer',
-                    },
+                    { id: '1', value: answerRaiting['1'], label: answerRaiting['1'] },
+                    { id: '2', value: answerRaiting['2'], label: answerRaiting['2'] },
+                    { id: '3', value: answerRaiting['3'], label: answerRaiting['3'] },
+                    { id: '4', value: answerRaiting['4'], label: answerRaiting['4'] },
+                    { id: '5', value: answerRaiting['5'], label: answerRaiting['5'] },
                   ]}
-                  value={''}
-                  onValueChange={() => {}}
+                  value={value}
+                  onValueChange={e => {
+                    setValue(e)
+                  }}
                 ></RadioGroup>
               </div>
             </div>
           )}
-          {hidden ? (
-            <Button onClick={() => setHidden(false)}> {'Next question'}</Button>
+          {hiddenRaiting ? (
+            <Button onClick={sendMessageHandler}> Next question </Button>
           ) : (
-            <Button onClick={() => setHidden(true)}> Show Answer</Button>
+            <Button onClick={showAnswerHandler}> Show Answer</Button>
           )}
 
           {/*<Dialog.Description className={s.description}>Hello!</Dialog.Description>*/}
