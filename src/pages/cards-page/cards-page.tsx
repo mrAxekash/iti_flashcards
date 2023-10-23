@@ -9,6 +9,7 @@ import s from './cards-page.module.scss'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
+import { Grade } from '@/components/ui/Rating/rating.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
 import {
@@ -108,7 +109,9 @@ export const CardsPage = () => {
                     <Table.Cell className={s.cell}>{data.question}</Table.Cell>
                     <Table.Cell className={s.cell}>{data.answer}</Table.Cell>
                     <Table.Cell>{data.updated}</Table.Cell>
-                    <Table.Cell>{data.grade}</Table.Cell>
+                    <Table.Cell>
+                      <Grade onClick={data.grade} />
+                    </Table.Cell>
                     <Table.Cell>
                       <div className={sC.iconContainer}>
                         <img
