@@ -1,23 +1,32 @@
 import * as RDialog from '@radix-ui/react-dialog'
 
 import { SelectedCardType } from '@/common/types.ts'
-import s from '@/components/ui/Dialogs/DialogsCommon.module.scss'
+import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import { useDeleteCardMutation } from '@/services/cards/cards.service.ts'
 
 export const DialogRemoveCard = (props: PropsType) => {
+  const [deleteCard] = useDeleteCardMutation()
+
   const onDeleteCard = () => {
-    window.alert(`delete card with id: ${props.selectedCard.id}`)
+    deleteCard({ id: props.selectedCard.id })
+      .unwrap()
+      .catch(err => {
+        alert(err?.data?.message)
+      })
+    props.setSelectedCard({ id: '', question: '' })
+    props.setOpen(false)
   }
 
   return (
     <DialogsCommon
-      title={'Delete Pack'}
+      title={'Delete Card'}
       open={props.open}
       setOpen={props.setOpen}
       onButtonAction={onDeleteCard}
-      actionButtonText={'Delete pack'}
+      actionButtonText={'Delete Card'}
     >
-      <RDialog.Description className={s.DialogDescription}>
+      <RDialog.Description className={sC.DialogDescription}>
         Do you really want to remove <b>{props.selectedCard.question}</b>?
         <br />
         All cards will be deleted.
@@ -30,5 +39,5 @@ type PropsType = {
   open: boolean
   setOpen: (value: boolean) => void
   selectedCard: SelectedCardType
-  setSelectedDeck: (value: SelectedCardType) => void
+  setSelectedCard: (value: SelectedCardType) => void
 }
