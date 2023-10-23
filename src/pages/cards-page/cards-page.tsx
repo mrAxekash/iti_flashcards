@@ -76,7 +76,7 @@ export const CardsPage = () => {
         open={isDeleteDialogOpen}
         setOpen={setIsDeleteDialogOpen}
         selectedCard={selectedCard}
-        setSelectedDeck={setSelectedCard}
+        setSelectedCard={setSelectedCard}
       />
       <DialogAddNewCard
         open={isAddNewCardDialogOpen}
