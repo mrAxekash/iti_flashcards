@@ -1,5 +1,3 @@
-import { current } from '@reduxjs/toolkit'
-
 import { baseApi } from '@/services/base-api.ts'
 import {
   CreateCardInDeckResponseType,
@@ -67,27 +65,28 @@ const decksService = baseApi.injectEndpoints({
         const state = getState() as RootState
         const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =
           state.decks
+        const patchResult = dispatch(
+          decksService.util.updateQueryData(
+            'getDecks',
+            {
+              itemsPerPage: +itemsPerPage,
+              name: searchByName,
+              minCardsCount: cardsCounts[0],
+              maxCardsCount: cardsCounts[1],
+              currentPage,
+              authorId,
+              orderBy,
+            },
+            draft => {
+              draft?.items?.splice(draft?.items?.findIndex(deck => deck.id === id), 1)
+            }
+          )
+        )
 
         try {
-          const patchResult = dispatch(
-            decksService.util.updateQueryData(
-              'getDecks',
-              {
-                itemsPerPage: +itemsPerPage,
-                name: searchByName,
-                minCardsCount: cardsCounts[0],
-                maxCardsCount: cardsCounts[1],
-                currentPage,
-                authorId,
-                orderBy,
-              },
-              draft => {
-                console.log(current(draft))
-              }
-            )
-          )
+          await queryFulfilled
         } catch (e) {
-          console.log(e)
+          patchResult.undo()
         }
       },
       invalidatesTags: ['Decks'],
