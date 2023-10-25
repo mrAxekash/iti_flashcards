@@ -11,6 +11,8 @@ import { Layout } from './layout'
 import { CheckEmailPage } from '@/pages/check-email-page/check-email-page.tsx'
 import { CreateNewPasswordPage } from '@/pages/create-new-password/create-new-password-page.tsx'
 import { DecksPage } from '@/pages/decks-page/decks-page.tsx'
+// import { LearnModalPage } from '@/pages/learnModalPage.tsx'
+import { LearnModalPage } from '@/pages/learnModalPage.tsx'
 import { PersonalInformationPage } from '@/pages/personal-information/personal-information-page.tsx'
 import { RecoverPasswordPage } from '@/pages/recover-password-page/recover-password-page.tsx'
 import { SignInPage } from '@/pages/sign-in-page/sign-in-page.tsx'
@@ -48,6 +50,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/personal-information',
     element: <PersonalInformationPage />,
+  },
+  {
+    path: '/learn/:deckId',
+    element: <LearnModalPage />,
   },
 ]
 

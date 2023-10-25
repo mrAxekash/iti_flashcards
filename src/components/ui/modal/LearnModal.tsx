@@ -26,13 +26,13 @@ type LearnModalType = {
   imgQuestion: string | null
 }
 
-export const answerRaiting = {
-  1: 'Did not know',
-  2: 'Forgot',
-  3: 'A lot of thought',
-  4: 'Сonfused',
-  5: 'Knew the answer',
-}
+export const answerRaiting = [
+  { id: '1', value: '1', label: 'Did not know' },
+  { id: '2', value: '2', label: 'Forgot' },
+  { id: '3', value: '3', label: 'A lot of thought' },
+  { id: '4', value: '4', label: 'Сonfused' },
+  { id: '5', value: '5', label: 'Knew the answer' },
+]
 
 export const LearnModal: FC<LearnModalType> = ({
   title,
@@ -58,10 +58,10 @@ export const LearnModal: FC<LearnModalType> = ({
 
   const [hiddenRaiting, setHiddenRaiting] = useState(false)
 
-  const [value, setValue] = useState(answerRaiting['1'])
+  const [value, setValue] = useState(answerRaiting[0].value)
 
   const sendMessageHandler = () => {
-    onChange && onChange({ cardId: id, grade: 1 })
+    onChange && onChange({ cardId: id, grade: +value })
     setHiddenRaiting(false)
   }
 
@@ -119,13 +119,7 @@ export const LearnModal: FC<LearnModalType> = ({
                   Rate yourself
                 </Typography>
                 <RadioGroup
-                  options={[
-                    { id: '1', value: answerRaiting['1'], label: answerRaiting['1'] },
-                    { id: '2', value: answerRaiting['2'], label: answerRaiting['2'] },
-                    { id: '3', value: answerRaiting['3'], label: answerRaiting['3'] },
-                    { id: '4', value: answerRaiting['4'], label: answerRaiting['4'] },
-                    { id: '5', value: answerRaiting['5'], label: answerRaiting['5'] },
-                  ]}
+                  options={answerRaiting}
                   value={value}
                   onValueChange={e => {
                     setValue(e)

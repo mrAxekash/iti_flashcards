@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 
+// import { Navigate } from 'react-router-dom'
+
+import { useNavigate } from 'react-router-dom'
+
 import s from './deck-page.module.scss'
 
+import { Play } from '@/assets/icons/Play.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { OrderByType } from '@/common/types.ts'
 import { Button } from '@/components/ui/Button'
@@ -14,7 +19,7 @@ import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.t
 import { Textfield } from '@/components/ui/Textfield'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
-import { LearnModalPage } from '@/pages/learnModalPage.tsx'
+// import { LearnModalPage } from '@/pages/learnModalPage.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
 import {
@@ -38,6 +43,7 @@ export const DecksPage = () => {
   const { data: me } = useGetMeQuery()
   const [createDeck, { isLoading }] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
+  const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
 
@@ -190,7 +196,19 @@ export const DecksPage = () => {
                   <Table.Cell>{deck.author.name}</Table.Cell>
                   <Table.Cell>
                     <div className={s.iconContainer}>
-                      <LearnModalPage deckId={deck.id} deckName={deck.name} />
+                      {/*{!!deck.cardsCount && (*/}
+                      {/*  <LearnModalPage deckId={deck.id} deckName={deck.name}>*/}
+                      {/*    {open => (*/}
+                      {/*      <div onClick={open}>*/}
+                      {/*        <Play color={'white'} />*/}
+                      {/*      </div>*/}
+                      {/*    )}*/}
+                      {/*  </LearnModalPage>*/}
+                      {/*)}*/}
+                      {/*<Navigate to={'/learn'} />*/}
+                      <Button variant={'link'} onClick={() => navigate(`learn/${deck.id}`)}>
+                        <Play color={'white'} />
+                      </Button>
                       <Button variant={'link'}>
                         <img
                           src={trashIcon}
