@@ -22,18 +22,17 @@ import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetDecksQuery } from '@/services/decks/decks.service.ts'
 import {
+  setAuthorId,
   setCardsCounts,
   setItemsPerPage,
+  setOrderBy,
   setSearchByName,
   updateCurrentPage,
 } from '@/services/decks/decks.slice.ts'
 
 export const DecksPage = () => {
-  const { itemsPerPage, searchByName, cardsCounts, currentPage, selectValues } = useAppSelector(
-    state => state.decks
-  )
-  const [authorId, setAuthorId] = useState('')
-  const [orderBy, setOrderBy] = useState<OrderByType | undefined>(undefined)
+  const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =
+    useAppSelector(state => state.decks)
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeckType>({
     id: '',
@@ -50,11 +49,9 @@ export const DecksPage = () => {
   const { data: me } = useGetMeQuery()
 
   const dispatch = useAppDispatch()
-  const SetSearchByName = (name: string) => dispatch(setSearchByName(name))
-  const setCurrentPage = (page: number) => dispatch(updateCurrentPage(page))
 
   const updateCurrentPageCallback = (page: number | string) => {
-    dispatch(setCurrentPage(+page))
+    dispatch(updateCurrentPage(+page))
   }
 
   //for slider
@@ -88,29 +85,30 @@ export const DecksPage = () => {
   ]
   const onTabChange = (value: string) => {
     if (value === 'MyCards') {
-      setAuthorId(me.id)
+      dispatch(setAuthorId(me.id))
     } else {
-      setAuthorId('')
+      dispatch(setAuthorId(''))
     }
 
-    dispatch(setCurrentPage(1))
+    dispatch(updateCurrentPage(1))
   }
 
   //Filtered Button
   const filterHandler = () => {
-    SetSearchByName('')
-    setAuthorId('')
+    dispatch(updateCurrentPage(1))
+    dispatch(setAuthorId(''))
     dispatch(setCardsCounts([0, maxCardsCountHard]))
   }
 
   // for pagination
   //// select inside pagination
   const setItemsPerPageCallback = (value: string) => dispatch(setItemsPerPage(value))
+  const selectValues = ['5', '9', '20', '50', '100']
 
   useEffect(() => {
     const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
-    setOrderBy(sortString as OrderByType) // todo: maybe fix this later
+    dispatch(setOrderBy(sortString as OrderByType)) // todo: maybe fix this later
   }, [sort])
 
   const onViewDeck = (packId: string) => {
@@ -166,7 +164,7 @@ export const DecksPage = () => {
         <div className={s.searchContainer}>
           <Textfield
             value={searchByName}
-            onChange={e => SetSearchByName(e.currentTarget.value)}
+            onChange={e => dispatch(setSearchByName(e.currentTarget.value))}
             placeholder={'Input search'}
           />
         </div>

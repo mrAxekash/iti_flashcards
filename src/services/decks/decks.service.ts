@@ -65,17 +65,21 @@ const decksService = baseApi.injectEndpoints({
 
       onQueryStarted: async ({ id }, { getState, queryFulfilled, dispatch }) => {
         const state = getState() as RootState
-        const { itemsPerPage, searchByName, currentPage } = state.decks
+        const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =
+          state.decks
 
         try {
-          debugger
           const patchResult = dispatch(
             decksService.util.updateQueryData(
               'getDecks',
               {
                 itemsPerPage: +itemsPerPage,
                 name: searchByName,
+                minCardsCount: cardsCounts[0],
+                maxCardsCount: cardsCounts[1],
                 currentPage,
+                authorId,
+                orderBy,
               },
               draft => {
                 console.log(current(draft))
