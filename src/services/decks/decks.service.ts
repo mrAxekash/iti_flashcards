@@ -40,19 +40,35 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      /*async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
+      onQueryStarted: async (_, { getState, queryFulfilled, dispatch }) => {
+        const state = getState() as RootState
+        const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =
+          state.decks
+
+        const result = await queryFulfilled
+
         try {
-          const patchResult = dispatch(
-            decksService.util.updateQueryData('getDecks',undefined,draft) => {
-
-            }
-        }
+          dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              {
+                itemsPerPage: +itemsPerPage,
+                name: searchByName,
+                minCardsCount: cardsCounts[0],
+                maxCardsCount: cardsCounts[1],
+                currentPage,
+                authorId,
+                orderBy,
+              },
+              draft => {
+                draft?.items?.unshift(result.data)
+              }
+            )
           )
+        } catch (e) {
+          console.error(e)
         }
-        catch() {
-
-        }
-    ),*/
+      },
       invalidatesTags: ['Decks'],
     }),
     deleteDeck: builder.mutation<Deck, { id: string }>({
