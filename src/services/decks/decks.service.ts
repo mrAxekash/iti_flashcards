@@ -1,3 +1,5 @@
+import { current } from '@reduxjs/toolkit'
+
 import { baseApi } from '@/services/base-api.ts'
 import {
   CreateCardInDeckResponseType,
@@ -40,32 +42,19 @@ const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
-        // pessimistic update (not works)
-        const state = getState() as RootState
-
+      /*async onQueryStarted(_, { dispatch, queryFulfilled, getState }) {
         try {
-          const response = await queryFulfilled
+          const patchResult = dispatch(
+            decksService.util.updateQueryData('getDecks',undefined,draft) => {
 
-          dispatch(
-            decksService.util.updateQueryData(
-              'getDecks',
-              { authorId: '1', currentPage: state.decks.currentPage },
-              draft => {
-                draft.items.unshift(response.data)
-              }
-            )
-          )
-        } catch (error) {
-          console.log(error)
+            }
         }
+          )
+        }
+        catch() {
 
-        /**
-         * Alternatively, on failure you can invalidate the corresponding cache tags
-         * to trigger a re-fetch:
-         * dispatch(api.util.invalidateTags(['Post']))
-         */
-      },
+        }
+    ),*/
       invalidatesTags: ['Decks'],
     }),
     deleteDeck: builder.mutation<Deck, { id: string }>({
@@ -73,25 +62,28 @@ const decksService = baseApi.injectEndpoints({
         url: `v1/decks/${data.id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
-        // optimistic update (not works)
 
+      onQueryStarted: async ({ id }, { getState, queryFulfilled, dispatch }) => {
         const state = getState() as RootState
-
-        const patchResult = dispatch(
-          decksService.util.updateQueryData(
-            'getDecks',
-            { authorId: '1', currentPage: state.decks.currentPage },
-            draft => {
-              draft.items = draft.items.filter(item => item.id !== id)
-            }
-          )
-        )
+        const { itemsPerPage, searchByName, currentPage } = state.decks
 
         try {
-          await queryFulfilled
-        } catch (error) {
-          patchResult.undo()
+          debugger
+          const patchResult = dispatch(
+            decksService.util.updateQueryData(
+              'getDecks',
+              {
+                itemsPerPage: +itemsPerPage,
+                name: searchByName,
+                currentPage,
+              },
+              draft => {
+                console.log(current(draft))
+              }
+            )
+          )
+        } catch (e) {
+          console.log(e)
         }
       },
       invalidatesTags: ['Decks'],
