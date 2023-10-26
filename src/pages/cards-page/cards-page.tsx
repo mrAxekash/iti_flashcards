@@ -14,15 +14,14 @@ import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
-import { useAppDispatch, useAppSelector } from '@/hooks.ts'
+import { useAppDispatch } from '@/hooks.ts'
 import { setCardId } from '@/services/cards/cards.slice.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 
 export const CardsPage = () => {
   let { deckId } = useParams()
-  const { id } = useAppSelector(state => state.cards)
-  const { data } = useGetDeckByIdQuery({ id })
-  const { data: cards } = useGetCardsInDeckQuery({ id })
+  const { data } = useGetDeckByIdQuery({ id: deckId ? deckId : '' })
+  const { data: cards } = useGetCardsInDeckQuery({ id: deckId ? deckId : '' })
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
@@ -91,7 +90,7 @@ export const CardsPage = () => {
       <DialogAddNewCard
         open={isAddNewCardDialogOpen}
         setOpen={setIsAddNewCardDialogOpen}
-        deckId={id}
+        deckId={deckId ? deckId : ''}
       />
       <div className={s.arrowContainer} onClick={onArrowLeft}>
         <img src={arrowLeft} alt="arrowLeft" />

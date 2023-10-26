@@ -1,5 +1,8 @@
+import { omit } from 'remeda'
+
 import { baseApi } from '@/services/base-api.ts'
 import {
+  CardType,
   CreateCardInDeckResponseType,
   CreateCardInDeckType,
   Deck,
@@ -125,17 +128,17 @@ export const decksService = baseApi.injectEndpoints({
         const { id } = state.cards
 
         try {
-          debugger
           dispatch(
             decksService.util.updateQueryData('getCardsInDeck', { id }, draft => {
-              draft?.items?.unshift(result.data)
+              draft?.items?.unshift(resultConvert(result.data))
             })
           )
         } catch (e) {
           console.error(e)
         }
       },
-      invalidatesTags: ['CardsIdDeck'],
+      // invalidatesTags: ['CardsIdDeck'], // now works together with onQueryStarted
+      //todo: understand why it not works together
     }),
   }),
 })
@@ -148,5 +151,9 @@ export const {
   useGetCardsInDeckQuery,
   useCreateCardInDeckMutation,
 } = decksService
+
+const resultConvert = (card: CreateCardInDeckResponseType): CardType => {
+  return omit({ ...card, grade: 0 }, ['type', 'moreId', 'comments', 'rating'])
+}
 
 //todo: maybe separate to function onQueryStarted
