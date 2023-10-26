@@ -21,6 +21,7 @@ type LearnModalType = {
   shots: number
   open: boolean
   setOpen: (isOpen: boolean) => void
+  navigate: (to: string) => void
   onChange: ({ grade, cardId }: DeckLearnArgType) => void
   imgAnswer: string | null
   imgQuestion: string | null
@@ -40,7 +41,8 @@ export const LearnModal: FC<LearnModalType> = ({
   question,
   shots,
   open,
-  setOpen,
+  // setOpen,
+  navigate,
   onChange,
   id,
   imgAnswer,
@@ -63,6 +65,7 @@ export const LearnModal: FC<LearnModalType> = ({
   const sendMessageHandler = () => {
     onChange && onChange({ cardId: id, grade: +value })
     setHiddenRaiting(false)
+    // setOpen(false)
   }
 
   const showAnswerHandler = () => {
@@ -81,7 +84,7 @@ export const LearnModal: FC<LearnModalType> = ({
       <Dialog.Portal>
         {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
         <Dialog.Overlay className={s.overlay}>
-          <Dialog.Close className={classNames.closeButtonContainer} onClick={() => setOpen(false)}>
+          <Dialog.Close className={classNames.closeButtonContainer} onClick={() => navigate('/')}>
             <div className={classNames.closeButton}>
               <ArrowBack color={'white'} className={classNames.iconSettings} />
               Back to Pack List

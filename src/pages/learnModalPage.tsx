@@ -1,6 +1,6 @@
-import { FC, ReactNode, useState } from 'react'
+import { useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { LearnModal } from '@/components/ui/modal/LearnModal.tsx'
 import { useGetCardQuery, usePostCardMutation } from '@/services/decks/decks.service.ts'
@@ -47,16 +47,23 @@ import { useGetCardQuery, usePostCardMutation } from '@/services/decks/decks.ser
 export const LearnModalPage = () => {
   const [open, setOpen] = useState(true)
   const params = useParams()
+  const navigate = useNavigate()
 
-  const [sendGrade, {}] = usePostCardMutation()
+  const [sendGrade, { isLoading: isPostCardLoading }] = usePostCardMutation()
 
-  const { data } = useGetCardQuery({ deckId: params.deckId ? params.deckId : '' })
+  const { data, isLoading, isFetching } = useGetCardQuery({
+    deckId: params.deckId ? params.deckId : '',
+  })
 
-  console.log(data)
+  if (isLoading || isFetching || isPostCardLoading) {
+    // setOpen(true)
+
+    return <div>................... LOADING MAKAKA ........................</div>
+  }
 
   return (
     <>
-      {data && open && (
+      {data && (
         <LearnModal
           id={data.id}
           title={'Title'}
@@ -65,6 +72,7 @@ export const LearnModalPage = () => {
           shots={data.shots}
           open={open}
           setOpen={setOpen}
+          navigate={navigate}
           onChange={sendGrade}
           imgAnswer={data.answerImg}
           imgQuestion={data.question}
