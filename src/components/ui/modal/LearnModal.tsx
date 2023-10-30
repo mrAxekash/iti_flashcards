@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import * as Dialog from '@radix-ui/react-dialog'
+// import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
 import { RadioGroup } from '../RadioGroup/RadioGroup'
@@ -8,8 +8,8 @@ import { RadioGroup } from '../RadioGroup/RadioGroup'
 import s from './LearnModal.module.scss'
 
 import { ArrowBack } from '@/assets/icons/ArrowBack.tsx'
-// import { Play } from '@/assets/icons/Play.tsx'
 import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
 import { Typography } from '@/components/ui/Typography'
 import { DeckLearnArgType } from '@/services/decks/deck.types.ts'
 
@@ -19,8 +19,6 @@ type LearnModalType = {
   question: string
   answer: string
   shots: number
-  open: boolean
-  setOpen: (isOpen: boolean) => void
   navigate: (to: string) => void
   onChange: ({ grade, cardId }: DeckLearnArgType) => void
   imgAnswer: string | null
@@ -40,8 +38,6 @@ export const LearnModal: FC<LearnModalType> = ({
   answer,
   question,
   shots,
-  open,
-  // setOpen,
   navigate,
   onChange,
   id,
@@ -49,6 +45,8 @@ export const LearnModal: FC<LearnModalType> = ({
   imgQuestion,
 }) => {
   const classNames = {
+    content: clsx(s.content),
+    overlay: clsx(s.overlay, s.wrapper),
     subtitle: clsx(s.subtitle),
     shots: clsx(s.shots),
     questionWrapper: clsx(s.questionWrapper),
@@ -73,74 +71,125 @@ export const LearnModal: FC<LearnModalType> = ({
   }
 
   return (
-    <Dialog.Root open={open}>
-      {/* Для всех частей диалога. defaultOpen - use when you do not need to control its open state; open - the controlled open  state of dialog; onOpenChange - event handler; modal - for visible screen reader */}
-      {/*<Dialog.Trigger asChild>*/}
-      {/*  /!*  The button that opens the dialog. asChild - changed default rendered element.  *!/*/}
-      {/*  <Button variant={'link'}>*/}
-      {/*    <Play color={'white'} className={classNames.iconSettings} />*/}
-      {/*  </Button>*/}
-      {/*</Dialog.Trigger>*/}
-      <Dialog.Portal>
-        {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
-        <Dialog.Overlay className={s.overlay}>
-          <Dialog.Close className={classNames.closeButtonContainer} onClick={() => navigate('/')}>
-            <div className={classNames.closeButton}>
-              <ArrowBack color={'white'} className={classNames.iconSettings} />
-              Back to Pack List
-            </div>
-          </Dialog.Close>
-          {/*  A layer that covers the inert portion of the view when the dialog is open. asChild - change the default rendered for the one passed as a child. forceMount - ...;  */}
-        </Dialog.Overlay>
-        <Dialog.Content className={s.content}>
-          <Dialog.Title className={s.title}>
-            <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
-          </Dialog.Title>
-          <div className={classNames.questionWrapper}>
+    <div>
+      <div className={classNames.closeButton} onClick={() => navigate('/')}>
+        <ArrowBack color={'white'} className={classNames.iconSettings} />
+        Back to Pack List
+      </div>
+
+      <Card>
+        <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
+        <div className={classNames.questionWrapper}>
+          <Typography
+            variant={'Subtitle_1'}
+            className={classNames.subtitle}
+          >{`Question: ${question}`}</Typography>
+          {imgQuestion && (
+            <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
+          )}
+          <Typography variant={'Body_2'} className={classNames.shots}>
+            Количество попыток ответов на вопрос: {shots}
+          </Typography>
+        </div>
+        {hiddenRaiting && (
+          <div>
             <Typography
               variant={'Subtitle_1'}
-              className={classNames.subtitle}
-            >{`Question: ${question}`}</Typography>
-            {imgQuestion && (
-              <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
+              className={classNames.ansverBlock}
+            >{`Answer: ${answer}`}</Typography>
+            {imgAnswer && (
+              <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
             )}
-            <Typography variant={'Body_2'} className={classNames.shots}>
-              Количество попыток ответов на вопрос: {shots}
-            </Typography>
-          </div>
-          {hiddenRaiting && (
             <div>
-              <Typography
-                variant={'Subtitle_1'}
-                className={classNames.ansverBlock}
-              >{`Answer: ${answer}`}</Typography>
-              {imgAnswer && (
-                <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
-              )}
-              <div>
-                <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
-                  Rate yourself
-                </Typography>
-                <RadioGroup
-                  options={answerRaiting}
-                  value={value}
-                  onValueChange={e => {
-                    setValue(e)
-                  }}
-                ></RadioGroup>
-              </div>
+              <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
+                Rate yourself
+              </Typography>
+              <RadioGroup
+                options={answerRaiting}
+                value={value}
+                onValueChange={e => {
+                  setValue(e)
+                }}
+              ></RadioGroup>
             </div>
-          )}
-          {hiddenRaiting ? (
-            <Button onClick={sendMessageHandler}> Next question </Button>
-          ) : (
-            <Button onClick={showAnswerHandler}> Show Answer</Button>
-          )}
+          </div>
+        )}
+        {hiddenRaiting ? (
+          <Button onClick={sendMessageHandler}> Next question </Button>
+        ) : (
+          <Button onClick={showAnswerHandler}> Show Answer</Button>
+        )}
+      </Card>
+    </div>
 
-          {/*<Dialog.Description className={s.description}>Hello!</Dialog.Description>*/}
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+    // <Dialog.Root open={open}>
+    //   {/* Для всех частей диалога. defaultOpen - use when you do not need to control its open state; open - the controlled open  state of dialog; onOpenChange - event handler; modal - for visible screen reader */}
+    //   {/*<Dialog.Trigger asChild>*/}
+    //   {/*  /!*  The button that opens the dialog. asChild - changed default rendered element.  *!/*/}
+    //   {/*  <Button variant={'link'}>*/}
+    //   {/*    <Play color={'white'} className={classNames.iconSettings} />*/}
+    //   {/*  </Button>*/}
+    //   {/*</Dialog.Trigger>*/}
+    //   <Dialog.Portal>
+    //     {/* portals overlay and content parts into the body. forceMount - add more controls, and when needed useful controlling animation with React and others animation libraries. container - ?*/}
+    //     <Dialog.Overlay className={classNames.overlay}>
+    //       {/*<Dialog.Close className={classNames.closeButtonContainer} onClick={() => navigate('/')}>*/}
+    //       <div className={classNames.closeButton} onClick={() => navigate('/')}>
+    //         <ArrowBack color={'white'} className={classNames.iconSettings} />
+    //         Back to Pack List
+    //       </div>
+    //       {/*</Dialog.Close>*/}
+    //       {/*  A layer that covers the inert portion of the view when the dialog is open. asChild - change the default rendered for the one passed as a child. forceMount - ...;  */}
+    //     </Dialog.Overlay>
+    //     <Dialog.Content className={classNames.content}>
+    //       <Dialog.Title className={s.title}>
+    //         <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
+    //       </Dialog.Title>
+    //       <div className={classNames.questionWrapper}>
+    //         <Typography
+    //           variant={'Subtitle_1'}
+    //           className={classNames.subtitle}
+    //         >{`Question: ${question}`}</Typography>
+    //         {imgQuestion && (
+    //           <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
+    //         )}
+    //         <Typography variant={'Body_2'} className={classNames.shots}>
+    //           Количество попыток ответов на вопрос: {shots}
+    //         </Typography>
+    //       </div>
+    //       {hiddenRaiting && (
+    //         <div>
+    //           <Typography
+    //             variant={'Subtitle_1'}
+    //             className={classNames.ansverBlock}
+    //           >{`Answer: ${answer}`}</Typography>
+    //           {imgAnswer && (
+    //             <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
+    //           )}
+    //           <div>
+    //             <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
+    //               Rate yourself
+    //             </Typography>
+    //             <RadioGroup
+    //               options={answerRaiting}
+    //               value={value}
+    //               onValueChange={e => {
+    //                 setValue(e)
+    //               }}
+    //             ></RadioGroup>
+    //           </div>
+    //         </div>
+    //       )}
+    //       {hiddenRaiting ? (
+    //         <Button onClick={sendMessageHandler}> Next question </Button>
+    //       ) : (
+    //         <Button onClick={showAnswerHandler}> Show Answer</Button>
+    //       )}
+    //
+    //       {/*<Dialog.Description className={s.description}>Hello!</Dialog.Description>*/}
+    //     </Dialog.Content>
+    //   </Dialog.Portal>
+    // </Dialog.Root>
   )
 }
 
