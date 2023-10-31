@@ -47,13 +47,15 @@ export const LearnModal: FC<LearnModalType> = ({
   const classNames = {
     content: clsx(s.content),
     overlay: clsx(s.overlay, s.wrapper),
-    subtitle: clsx(s.subtitle),
     shots: clsx(s.shots),
     questionWrapper: clsx(s.questionWrapper),
     ansverBlock: s.answerBlock,
     iconSettings: s.openIcon,
     closeButtonContainer: s.closeButtonContainer,
     closeButton: s.closeButtonIcon,
+    cardWrapper: s.cardWrapper,
+    cardTitle: s.title,
+    questionSubtitle: s.questionSubtitle,
   }
 
   const [hiddenRaiting, setHiddenRaiting] = useState(false)
@@ -72,18 +74,22 @@ export const LearnModal: FC<LearnModalType> = ({
 
   return (
     <div>
-      <div className={classNames.closeButton} onClick={() => navigate('/')}>
+      <Button variant={'link'} className={classNames.closeButton} onClick={() => navigate('/')}>
         <ArrowBack color={'white'} className={classNames.iconSettings} />
         Back to Pack List
-      </div>
+      </Button>
 
-      <Card>
-        <Typography variant={'Large'}>{`Learn "${title}"`} </Typography>
+      <Card className={classNames.cardWrapper}>
+        <Typography variant={'Large'} className={classNames.cardTitle}>
+          {`Learn "${title}"`}{' '}
+        </Typography>
         <div className={classNames.questionWrapper}>
-          <Typography
-            variant={'Subtitle_1'}
-            className={classNames.subtitle}
-          >{`Question: ${question}`}</Typography>
+          <Typography variant={'Subtitle_1'}>
+            Question:{' '}
+            <Typography variant={'Body_1'} className={classNames.questionSubtitle}>
+              {question}
+            </Typography>
+          </Typography>
           {imgQuestion && (
             <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
           )}
@@ -115,9 +121,15 @@ export const LearnModal: FC<LearnModalType> = ({
           </div>
         )}
         {hiddenRaiting ? (
-          <Button onClick={sendMessageHandler}> Next question </Button>
+          <Button onClick={sendMessageHandler} fullWidth={true}>
+            {' '}
+            Next question{' '}
+          </Button>
         ) : (
-          <Button onClick={showAnswerHandler}> Show Answer</Button>
+          <Button onClick={showAnswerHandler} fullWidth={true}>
+            {' '}
+            Show Answer
+          </Button>
         )}
       </Card>
     </div>

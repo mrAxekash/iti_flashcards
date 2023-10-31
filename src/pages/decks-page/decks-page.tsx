@@ -206,7 +206,10 @@ export const DecksPage = () => {
                       {/*  </LearnModalPage>*/}
                       {/*)}*/}
                       {/*<Navigate to={'/learn'} />*/}
-                      <Button variant={'link'} onClick={() => navigate(`learn/${deck.id}`)}>
+                      <Button
+                        variant={'link'}
+                        onClick={() => navigate(`learn/${deck.name}/${deck.id}`)}
+                      >
                         <Play color={'white'} />
                       </Button>
                       <Button variant={'link'}>
