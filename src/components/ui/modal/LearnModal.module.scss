@@ -222,12 +222,20 @@
 //.content:focus {
 //  outline: none;
 //}
+.learnModalContainer {
+
+}
+.closeButtonContainer {
+  margin-bottom: 36px;
+}
 .cardWrapper {
+  margin: 0 auto;
   max-width: 420px;
   width: 420px;
   padding: 33px 36px 48px 33px ;
   border-radius: 6px;
   box-shadow: hsl(206 22% 7% / 35%) 0 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .title {
   color: var(--color-light-100);
@@ -244,6 +252,7 @@
 }
 .questionSubtitle {
   font-weight: var(--font-weight-regular);
+  display: inline-block;
 }
 
 
@@ -253,8 +262,15 @@
   margin-bottom: 12px;
 }
 .shots {
-  color: var(--color-dark-100)
+  color: var(--color-dark-100);
+  display: inline-block;
+
 }
+.gradeWrapper {
+  margin-top: 13px;
+  margin-bottom: 26px;
+}
+
 
 //.openIcon {
 //  width: 16px;

@@ -53,9 +53,11 @@ export const LearnModal: FC<LearnModalType> = ({
     iconSettings: s.openIcon,
     closeButtonContainer: s.closeButtonContainer,
     closeButton: s.closeButtonIcon,
+    learnModalContainer: s.learnModalContainer,
     cardWrapper: s.cardWrapper,
     cardTitle: s.title,
     questionSubtitle: s.questionSubtitle,
+    gradeWrapper: s.gradeWrapper,
   }
 
   const [hiddenRaiting, setHiddenRaiting] = useState(false)
@@ -73,18 +75,20 @@ export const LearnModal: FC<LearnModalType> = ({
   }
 
   return (
-    <div>
-      <Button variant={'link'} className={classNames.closeButton} onClick={() => navigate('/')}>
-        <ArrowBack color={'white'} className={classNames.iconSettings} />
-        Back to Pack List
-      </Button>
+    <div className={classNames.learnModalContainer}>
+      <div className={classNames.closeButtonContainer}>
+        <Button variant={'link'} className={classNames.closeButton} onClick={() => navigate('/')}>
+          <ArrowBack color={'white'} className={classNames.iconSettings} />
+          Back to Pack List
+        </Button>
+      </div>
 
       <Card className={classNames.cardWrapper}>
         <Typography variant={'Large'} className={classNames.cardTitle}>
           {`Learn "${title}"`}{' '}
         </Typography>
         <div className={classNames.questionWrapper}>
-          <Typography variant={'Subtitle_1'}>
+          <Typography variant={'Subtitle_1'} style={{ display: 'inline-block' }}>
             Question:{' '}
             <Typography variant={'Body_1'} className={classNames.questionSubtitle}>
               {question}
@@ -94,7 +98,10 @@ export const LearnModal: FC<LearnModalType> = ({
             <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
           )}
           <Typography variant={'Body_2'} className={classNames.shots}>
-            Количество попыток ответов на вопрос: {shots}
+            Количество попыток ответов на вопрос:{' '}
+            <Typography variant={'Subtitle_2'} className={classNames.shots}>
+              {shots}
+            </Typography>
           </Typography>
         </div>
         {hiddenRaiting && (
@@ -106,10 +113,10 @@ export const LearnModal: FC<LearnModalType> = ({
             {imgAnswer && (
               <img src={imgAnswer} alt="imgAnswer" style={{ width: '100px', height: '100px' }} />
             )}
-            <div>
-              <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
-                Rate yourself
-              </Typography>
+            <Typography variant={'Subtitle_1'} className={classNames.ansverBlock}>
+              Rate yourself:
+            </Typography>
+            <div className={classNames.gradeWrapper}>
               <RadioGroup
                 options={answerRaiting}
                 value={value}
