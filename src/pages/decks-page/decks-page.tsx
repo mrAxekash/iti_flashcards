@@ -48,8 +48,6 @@ export const DecksPage = () => {
   // ===
 
   const { data: me } = useGetMeQuery()
-  const [createDeck, { isLoading }] = useCreateDeckMutation()
-  const [deleteDeck] = useDeleteDeckMutation()
 
   const dispatch = useAppDispatch()
 
@@ -206,12 +204,12 @@ export const DecksPage = () => {
                   <Table.Cell>{deck.author.name}</Table.Cell>
                   <Table.Cell>
                     <div className={s.iconContainer}>
-                      <img
+                      {/*  <img
                         src={trashIcon}
                         alt=""
                         className={s.trashIcon}
                         onClick={() => onSelectDeckForDel(deck.id, deck.name)}
-                      />
+                      />*/}
                       <Button
                         variant={'link'}
                         onClick={() => navigate(`learn/${deck.name}/${deck.id}`)}
