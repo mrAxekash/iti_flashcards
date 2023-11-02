@@ -48,7 +48,6 @@ export const LearnModal: FC<LearnModalType> = ({
     content: clsx(s.content),
     overlay: clsx(s.overlay, s.wrapper),
     shots: clsx(s.shots),
-    questionWrapper: clsx(s.questionWrapper),
     ansverBlock: s.answerBlock,
     iconSettings: s.openIcon,
     closeButtonContainer: s.closeButtonContainer,
@@ -56,7 +55,6 @@ export const LearnModal: FC<LearnModalType> = ({
     learnModalContainer: s.learnModalContainer,
     cardWrapper: s.cardWrapper,
     cardTitle: s.title,
-    questionSubtitle: s.questionSubtitle,
     gradeWrapper: s.gradeWrapper,
   }
 
@@ -87,25 +85,25 @@ export const LearnModal: FC<LearnModalType> = ({
         <Typography variant={'Large'} className={classNames.cardTitle}>
           {`Learn "${title}"`}{' '}
         </Typography>
-        <div className={classNames.questionWrapper}>
-          <Typography variant={'Subtitle_1'} style={{ display: 'inline-block' }}>
+        <div className={s.questionWrapper}>
+          <Typography variant={'Subtitle_1'} className={s.questionTitle}>
             Question:{' '}
-            <Typography variant={'Body_1'} className={classNames.questionSubtitle}>
+            <Typography variant={'Body_1'} className={s.questionSubtitle}>
               {question}
             </Typography>
           </Typography>
-          {imgQuestion && (
-            <img src={imgQuestion} alt="imgQuestion" style={{ width: '100', height: '100px' }} />
-          )}
-          <Typography variant={'Body_2'} className={classNames.shots}>
+          {imgQuestion && <img src={imgQuestion} alt="imgQuestion" className={s.questionImg} />}
+        </div>
+        <div className={s.countWrapper}>
+          <Typography variant={'Body_2'} className={s.shotsText}>
             Количество попыток ответов на вопрос:{' '}
-            <Typography variant={'Subtitle_2'} className={classNames.shots}>
+            <Typography variant={'Subtitle_2'} className={s.shotsCount}>
               {shots}
             </Typography>
           </Typography>
         </div>
         {hiddenRaiting && (
-          <div>
+          <div className={s.answerWrapper}>
             <Typography
               variant={'Subtitle_1'}
               className={classNames.ansverBlock}
