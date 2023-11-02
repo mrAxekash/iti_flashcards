@@ -104,8 +104,6 @@ export const CardsPage = () => {
           <Table.Body>
             {cards &&
               cards.items.map(data => {
-                console.log(data.grade)
-
                 return (
                   <Table.Row key={data.id}>
                     <Table.Cell className={s.cell}>{data.question}</Table.Cell>
