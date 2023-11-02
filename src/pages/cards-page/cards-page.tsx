@@ -104,13 +104,15 @@ export const CardsPage = () => {
           <Table.Body>
             {cards &&
               cards.items.map(data => {
+                console.log(data.grade)
+
                 return (
                   <Table.Row key={data.id}>
                     <Table.Cell className={s.cell}>{data.question}</Table.Cell>
                     <Table.Cell className={s.cell}>{data.answer}</Table.Cell>
                     <Table.Cell>{data.updated}</Table.Cell>
                     <Table.Cell>
-                      <Grade onClick={data.grade} />
+                      <Grade value={data.grade} />
                     </Table.Cell>
                     <Table.Cell>
                       <div className={sC.iconContainer}>
