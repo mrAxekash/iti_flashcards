@@ -59,11 +59,8 @@ export const LearnModal: FC<LearnModalType> = ({
   }
 
   const classNames = {
-    // content: clsx(s.content),
-    // shots: clsx(s.shots),
-    // iconSettings: s.openIcon,
     closeButtonContainer: s.closeButtonContainer,
-    closeButton: s.closeButtonIcon,
+    closeButton: s.closeButtonText,
     learnModalContainer: s.learnModalContainer,
     cardWrapper: s.cardWrapper,
     cardTitle: s.title,
@@ -79,8 +76,8 @@ export const LearnModal: FC<LearnModalType> = ({
     <div className={classNames.learnModalContainer}>
       <div className={classNames.closeButtonContainer}>
         <Button variant={'link'} className={classNames.closeButton} onClick={() => navigate('/')}>
-          <ArrowBack color={'white'} />
-          Back to Pack List
+          <ArrowBack color={'white'} className={s.closeButtonIcon} />
+          <Typography variant={'Body_2'}>Back to Pack List</Typography>
         </Button>
       </div>
 
