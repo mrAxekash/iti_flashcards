@@ -8,7 +8,6 @@ import { ControlledTextField } from '@/components/ui/controlled/controlled-text-
 import { ControlledSelect } from '@/components/ui/controlled/controlledSelect/controlledSelect.tsx'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
-import { Select } from '@/components/ui/Select'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
@@ -22,6 +21,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const schema = z.object({
     answer: z.string().min(3),
     question: z.string().min(3),
+    dialogSelect: z.string().min(3),
   })
 
   type FormValues = z.input<typeof schema>
@@ -37,6 +37,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     defaultValues: {
       answer: '',
       question: '',
+      dialogSelect: '',
     },
   })
   const [createDeck] = useCreateCardInDeckMutation()
@@ -90,7 +91,6 @@ export const DialogAddNewCard = (props: PropsType) => {
         <div className={sC.DialogDescription}>
           <ControlledSelect
             options={arr}
-            value={value}
             onChangeOption={setItemsPerPageCallback}
             label={'Choose a question format'}
             isGreyColor={true}
