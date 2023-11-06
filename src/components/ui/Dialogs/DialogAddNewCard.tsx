@@ -1,15 +1,24 @@
-import { Dispatch, SetStateAction, useRef } from 'react'
+import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
+import { ControlledSelect } from '@/components/ui/controlled/controlledSelect/controlledSelect.tsx'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import { Select } from '@/components/ui/Select'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
+  // for select
+  const [value, setValue] = useState('Text')
+  const arr: Array<string> = ['Text', 'Image']
+  // ==
+
+  console.log('value: ', value)
+
   const schema = z.object({
     answer: z.string().min(3),
     question: z.string().min(3),
@@ -64,6 +73,10 @@ export const DialogAddNewCard = (props: PropsType) => {
     props.setOpen(false)
   }
 
+  const setItemsPerPageCallback = (value: string) => {
+    setValue(value)
+  }
+
   return (
     <DialogsCommon
       title={'Add New Card'}
@@ -75,6 +88,15 @@ export const DialogAddNewCard = (props: PropsType) => {
     >
       <form ref={formRef}>
         <div className={sC.DialogDescription}>
+          <ControlledSelect
+            options={arr}
+            value={value}
+            onChangeOption={setItemsPerPageCallback}
+            label={'Choose a question format'}
+            isGreyColor={true}
+            name={'dialogSelect'}
+            control={control}
+          />
           <div className={sC.textFieldContainer}>
             <div className={sC.element}>
               <ControlledTextField

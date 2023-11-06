@@ -27,7 +27,6 @@ export const Select: React.FC<SelectPropsType> = (props: SelectPropsType) => {
         value={props.value}
         onValueChange={e => {
           props.onChangeOption(e)
-          // props.onClick && props.onClick(e)
         }}
         disabled={props.isDisabled ? props.isDisabled : false}
       >
