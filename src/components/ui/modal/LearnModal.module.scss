@@ -239,7 +239,12 @@
     fill: var(--color-accent-300);
   }
 }
-
+.closeButtonText:active {
+  color: var(--color-accent-500);
+  .closeButtonIcon {
+    fill: var(--color-accent-500);
+  }
+}
 
 .closeButtonIcon {
     width: 16px;
