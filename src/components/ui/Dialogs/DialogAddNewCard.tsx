@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
-import { ControlledSelect } from '@/components/ui/controlled/controlledSelect/controlledSelect.tsx'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import { Select } from '@/components/ui/Select'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
@@ -16,12 +16,9 @@ export const DialogAddNewCard = (props: PropsType) => {
   const arr: Array<string> = ['Text', 'Image']
   // ==
 
-  console.log('value: ', value)
-
   const schema = z.object({
     answer: z.string().min(3),
     question: z.string().min(3),
-    dialogSelect: z.string().min(3),
   })
 
   type FormValues = z.input<typeof schema>
@@ -37,7 +34,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     defaultValues: {
       answer: '',
       question: '',
-      dialogSelect: '',
     },
   })
   const [createDeck] = useCreateCardInDeckMutation()
@@ -74,7 +70,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     props.setOpen(false)
   }
 
-  const setItemsPerPageCallback = (value: string) => {
+  const setDialogVariantCallback = (value: string) => {
     setValue(value)
   }
 
@@ -87,16 +83,18 @@ export const DialogAddNewCard = (props: PropsType) => {
       actionButtonText={'Add New Card'}
       isButtonDisable={Object.keys(errors).length > 0}
     >
-      <form ref={formRef}>
-        <div className={sC.DialogDescription}>
-          <ControlledSelect
+      <div className={sC.DialogDescription}>
+        <div className={sC.dialogElement}>
+          <Select
             options={arr}
-            onChangeOption={setItemsPerPageCallback}
+            onChangeOption={setDialogVariantCallback}
             label={'Choose a question format'}
             isGreyColor={true}
             name={'dialogSelect'}
-            control={control}
+            value={value}
           />
+        </div>
+        <form ref={formRef}>
           <div className={sC.textFieldContainer}>
             <div className={sC.element}>
               <ControlledTextField
@@ -117,8 +115,8 @@ export const DialogAddNewCard = (props: PropsType) => {
               />
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </DialogsCommon>
   )
 }
