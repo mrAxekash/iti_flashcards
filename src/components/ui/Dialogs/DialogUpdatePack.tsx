@@ -58,9 +58,8 @@ export const DialogUpdatePack = (props: PropsType) => {
   }
 
   const onUpdateDeck = (cover: string, name: string, isPrivate: boolean) => {
-    console.log(props.deckId)
-    if (/*!cover ||*/ !name /*|| !isPrivate*/ || !props.deckId) return
-    console.log('hello')
+    if (!name || !props.deckId) return
+
     dispatch(updateCurrentPage(1))
     updateDeck({
       deckId: props.deckId,
