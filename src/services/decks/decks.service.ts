@@ -1,3 +1,4 @@
+import { isDraft } from '@reduxjs/toolkit'
 import { omit } from 'remeda'
 
 import { baseApi } from '@/services/base-api.ts'
@@ -155,6 +156,18 @@ export const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      onQueryStarted: async ({ cardId }, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          decksService.util.updateQueryData('getCard', { deckId: cardId }, draft => {})
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          console.log(e)
+          patchResult.undo()
+        }
+      },
       invalidatesTags: ['Card'],
     }),
   }),
