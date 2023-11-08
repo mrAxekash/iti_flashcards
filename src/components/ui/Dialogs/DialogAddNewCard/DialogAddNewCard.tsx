@@ -12,7 +12,7 @@ import { ControlledTextField } from '@/components/ui/controlled/controlled-text-
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
 import { Select } from '@/components/ui/Select'
-import { Slider } from '@/components/ui/Slider/slider.tsx'
+import { SliderSingle } from '@/components/ui/SliderSingle/SliderSingle.tsx'
 import { Typography } from '@/components/ui/Typography'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
@@ -25,6 +25,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
   const [imgName, setImgName] = useState('')
   const [cropImg, setCropImg] = useState<string | null>(null)
+  const [sliderValue, setSliderValue] = useState<number>(1)
 
   const schema = z.object({
     answer: z.string().min(3),
@@ -230,14 +231,15 @@ export const DialogAddNewCard = (props: PropsType) => {
                 )}
               </div>
               {inputImg && (
-                <Slider
-                  value={[zoom, zoom]}
-                  defaultValue={[1]}
-                  onValueChange={sliderChangeHandler}
-                  step={0.1}
-                  min={1}
-                  max={10}
-                />
+                <>
+                  <SliderSingle
+                    defaultValue={1}
+                    max={10}
+                    step={0.1}
+                    value={sliderValue}
+                    onValueChange={setSliderValue}
+                  />
+                </>
               )}
               <Button onClick={onCropImg}>Change Cover</Button>
             </div>
