@@ -1,7 +1,7 @@
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import Cropper, { Area } from 'react-easy-crop'
+import Cropper, { Area, Point } from 'react-easy-crop'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -26,7 +26,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const [value, setValue] = useState('Text') // for select
   const [inputImg, setInputImg] = useState<null | string>(null)
   const arr: Array<string> = ['Text', 'Picture'] // for select
-  const [crop, setCrop] = useState({ x: 0, y: 0 }) // for img upload
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 }) // for img upload
   const [zoom, setZoom] = useState(minSliderValue) // for img upload
   const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
   const [imgName, setImgName] = useState('')
@@ -138,14 +138,14 @@ export const DialogAddNewCard = (props: PropsType) => {
     }
   }
 
-  const onCropComplete = useCallback((croppedAreaPixels: Area) => {
+  const onCropComplete = (croppedAreaPixels: Area) => {
     setCropArea({
       x: croppedAreaPixels.x,
       y: croppedAreaPixels.y,
       width: croppedAreaPixels.width,
       height: croppedAreaPixels.height,
     })
-  }, [])
+  }
 
   const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -170,6 +170,18 @@ export const DialogAddNewCard = (props: PropsType) => {
   const sliderChangeHandler = (newValue: number[]) => {
     setZoom(newValue[0])
     setSliderValue(newValue)
+  }
+
+  const onCropChange = (location: Point) => {
+    // debugger
+    // sliderChangeHandler([zoom])
+    setCrop(location)
+  }
+
+  function onZoomChange(value: number) {
+    // debugger
+    setZoom(value)
+    setSliderValue([value])
   }
 
   return (
@@ -229,9 +241,9 @@ export const DialogAddNewCard = (props: PropsType) => {
                     crop={crop}
                     zoom={zoom}
                     cropSize={cropSizeSelector()}
-                    onCropChange={() => sliderChangeHandler([zoom])}
+                    onCropChange={onCropChange}
                     onCropComplete={onCropComplete}
-                    onZoomChange={setZoom}
+                    onZoomChange={onZoomChange}
                     minZoom={minSliderValue}
                     maxZoom={maxSliderValue}
                     zoomSpeed={sliderStep * 2}
