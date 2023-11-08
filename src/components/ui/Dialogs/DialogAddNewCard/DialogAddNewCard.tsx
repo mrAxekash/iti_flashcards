@@ -17,15 +17,21 @@ import { Typography } from '@/components/ui/Typography'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
+  const minSliderValue = 1
+  const maxSliderValue = 10
+  const sliderStep = 1
+  const canvaWidth = 484
+  const canvaHeight = 119
+
   const [value, setValue] = useState('Text') // for select
   const [inputImg, setInputImg] = useState<null | string>(null)
   const arr: Array<string> = ['Text', 'Picture'] // for select
   const [crop, setCrop] = useState({ x: 0, y: 0 }) // for img upload
-  const [zoom, setZoom] = useState(1) // for img upload
+  const [zoom, setZoom] = useState(minSliderValue) // for img upload
   const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
   const [imgName, setImgName] = useState('')
   const [cropImg, setCropImg] = useState<string | null>(null)
-  const [sliderValue, setSliderValue] = useState<number[]>([1])
+  const [sliderValue, setSliderValue] = useState<number[]>([minSliderValue])
 
   const schema = z.object({
     answer: z.string().min(3),
@@ -86,7 +92,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
 
   const cropSizeSelector = () => {
-    return { width: 484, height: 119 }
+    return { width: canvaWidth, height: canvaHeight }
   }
 
   // create the image with a src of the base64 string
@@ -105,8 +111,8 @@ export const DialogAddNewCard = (props: PropsType) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
-    canvas.width = 484
-    canvas.height = 119
+    canvas.width = canvaWidth
+    canvas.height = canvaHeight
 
     ctx &&
       ctx.drawImage(
@@ -226,8 +232,9 @@ export const DialogAddNewCard = (props: PropsType) => {
                     onCropChange={() => sliderChangeHandler([zoom])}
                     onCropComplete={onCropComplete}
                     onZoomChange={setZoom}
-                    minZoom={1}
-                    maxZoom={10}
+                    minZoom={minSliderValue}
+                    maxZoom={maxSliderValue}
+                    zoomSpeed={sliderStep * 2}
                   />
                 ) : (
                   <div className={s.dummyImg}>Select question picture</div>
@@ -236,10 +243,10 @@ export const DialogAddNewCard = (props: PropsType) => {
               {inputImg && (
                 <>
                   <SliderSingle
-                    defaultValue={0}
-                    min={1}
-                    max={10}
-                    step={0.1}
+                    defaultValue={minSliderValue}
+                    min={minSliderValue}
+                    max={maxSliderValue}
+                    step={sliderStep}
                     value={sliderValue[0]}
                     onValueChange={sliderChangeHandler}
                   />
