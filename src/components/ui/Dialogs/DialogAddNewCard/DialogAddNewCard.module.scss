@@ -17,4 +17,10 @@
         @include mixins.flex($justifyContent: center, $alignItems: center);
         @include mixins.imgUploadSize;
     }
+
+    .croppedImg {
+        margin: 10px auto 0;
+        @include mixins.imgUploadSize;
+    }
+
 }

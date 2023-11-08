@@ -7,6 +7,7 @@ import { z } from 'zod'
 
 import s from './DialogAddNewCard.module.scss'
 
+import { Button } from '@/components/ui/Button'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
@@ -23,6 +24,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const [zoom, setZoom] = useState(1) // for img upload
   const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
   const [imgName, setImgName] = useState('')
+  const [cropImg, setCropImg] = useState<string | null>(null)
 
   const schema = z.object({
     answer: z.string().min(3),
@@ -84,6 +86,49 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   const cropSizeSelector = () => {
     return { width: 484, height: 119 }
+  }
+
+  // create the image with a src of the base64 string
+  const createImage = (url: string): Promise<CanvasImageSource> =>
+    new Promise((resolve, reject) => {
+      const image = new Image()
+
+      image.addEventListener('load', () => resolve(image))
+      image.addEventListener('error', error => reject(error))
+      image.setAttribute('crossOrigin', 'anonymous')
+      image.src = url
+    })
+
+  const getCroppedImg = async (imageSrc: string, crop: CropType): Promise<string> => {
+    const image = await createImage(imageSrc)
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
+    canvas.width = 484
+    canvas.height = 119
+
+    ctx &&
+      ctx.drawImage(
+        image,
+        crop.x,
+        crop.y,
+        crop.width,
+        crop.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      )
+
+    return canvas.toDataURL('image/jpeg')
+  }
+
+  const onCropImg = async () => {
+    if (cropArea && inputImg) {
+      const img = await getCroppedImg(inputImg, cropArea)
+
+      setCropImg(img)
+    }
   }
 
   const onCropComplete = useCallback((croppedAreaPixels: Area) => {
@@ -194,6 +239,16 @@ export const DialogAddNewCard = (props: PropsType) => {
                   max={10}
                 />
               )}
+              <Button onClick={onCropImg}>Change Cover</Button>
+            </div>
+            <div className={s.uploadContainer}>
+              <div className={s.imgContainer}>
+                {cropImg ? (
+                  <img className={s.croppedImg} src={cropImg} alt="cropImg" />
+                ) : (
+                  <div className={s.dummyImg}>cropped dummy</div>
+                )}
+              </div>
             </div>
             <Typography variant={'Body_2'}>Answer:</Typography>
           </>
