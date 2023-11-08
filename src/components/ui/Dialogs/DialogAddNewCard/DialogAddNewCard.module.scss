@@ -12,14 +12,14 @@
     @include mixins.imgUploadSize;
 
     .dummyImg {
-        margin-top: 5px;
+        //margin-top: 5px;
         border: 1px solid white;
         @include mixins.flex($justifyContent: center, $alignItems: center);
         @include mixins.imgUploadSize;
     }
 
     .croppedImg {
-        margin: 10px auto 0;
+        //margin-top: 5px;
         @include mixins.imgUploadSize;
     }
 

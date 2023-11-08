@@ -11,6 +11,7 @@ export const SliderSingle = (props: PropsType) => {
       <SliderPrimitive.Root
         className={s.root}
         defaultValue={[props.defaultValue]}
+        min={props.min}
         max={props.max}
         step={props.step}
         onValueChange={props.onValueChange}
@@ -27,8 +28,9 @@ export const SliderSingle = (props: PropsType) => {
 
 type PropsType = {
   defaultValue: number
+  min: number
   max: number
   step: number
   value: number
-  onValueChange: Dispatch<SetStateAction<Array<number>>>
+  onValueChange: (newValue: number[]) => void
 }

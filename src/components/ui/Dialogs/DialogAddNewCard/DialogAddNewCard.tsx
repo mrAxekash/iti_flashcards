@@ -162,7 +162,8 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
 
   const sliderChangeHandler = (newValue: number[]) => {
-    setZoom(newValue[1])
+    setZoom(newValue[0])
+    setSliderValue(newValue)
   }
 
   return (
@@ -222,9 +223,11 @@ export const DialogAddNewCard = (props: PropsType) => {
                     crop={crop}
                     zoom={zoom}
                     cropSize={cropSizeSelector()}
-                    onCropChange={setCrop}
+                    onCropChange={() => sliderChangeHandler([zoom])}
                     onCropComplete={onCropComplete}
                     onZoomChange={setZoom}
+                    minZoom={1}
+                    maxZoom={10}
                   />
                 ) : (
                   <div className={s.dummyImg}>Select question picture</div>
@@ -233,15 +236,15 @@ export const DialogAddNewCard = (props: PropsType) => {
               {inputImg && (
                 <>
                   <SliderSingle
-                    defaultValue={1}
+                    defaultValue={0}
+                    min={1}
                     max={10}
                     step={0.1}
                     value={sliderValue[0]}
-                    onValueChange={setSliderValue}
+                    onValueChange={sliderChangeHandler}
                   />
                 </>
               )}
-              <Button onClick={onCropImg}>Change Cover</Button>
             </div>
             <div className={s.uploadContainer}>
               <div className={s.imgContainer}>
@@ -251,8 +254,9 @@ export const DialogAddNewCard = (props: PropsType) => {
                   <div className={s.dummyImg}>cropped dummy</div>
                 )}
               </div>
+              <Button onClick={onCropImg}>Change Cover</Button>
             </div>
-            <Typography variant={'Body_2'}>Answer:</Typography>
+            {/*<Typography variant={'Body_2'}>Answer:</Typography>*/}
           </>
         )}
       </div>
