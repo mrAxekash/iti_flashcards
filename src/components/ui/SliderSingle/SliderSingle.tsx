@@ -8,7 +8,14 @@ export const SliderSingle = (props: PropsType) => {
   return (
     <div className={s.container}>
       <span className={s.value}>{props.value}</span>
-      <SliderPrimitive.Root className={s.root} defaultValue={[50]} max={100} step={1}>
+      <SliderPrimitive.Root
+        className={s.root}
+        defaultValue={[props.defaultValue]}
+        max={props.max}
+        step={props.step}
+        onValueChange={props.onValueChange}
+        value={[props.value]}
+      >
         <SliderPrimitive.Track className={s.track}>
           <SliderPrimitive.Range className={s.range} />
         </SliderPrimitive.Track>
@@ -23,5 +30,5 @@ type PropsType = {
   max: number
   step: number
   value: number
-  onValueChange: Dispatch<SetStateAction<number>>
+  onValueChange: Dispatch<SetStateAction<Array<number>>>
 }

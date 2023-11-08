@@ -25,7 +25,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
   const [imgName, setImgName] = useState('')
   const [cropImg, setCropImg] = useState<string | null>(null)
-  const [sliderValue, setSliderValue] = useState<number>(1)
+  const [sliderValue, setSliderValue] = useState<number[]>([1])
 
   const schema = z.object({
     answer: z.string().min(3),
@@ -236,7 +236,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                     defaultValue={1}
                     max={10}
                     step={0.1}
-                    value={sliderValue}
+                    value={sliderValue[0]}
                     onValueChange={setSliderValue}
                   />
                 </>
