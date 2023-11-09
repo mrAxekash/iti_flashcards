@@ -1,8 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import s from './learnModalPage.module.scss'
 
 import { LearnModal } from '@/components/ui/modal/LearnModal.tsx'
+import { ErrorPage } from '@/pages/error-page/errorPage.tsx'
 import { useGetCardQuery, usePostCardMutation } from '@/services/decks/decks.service.ts'
 
 export const LearnModalPage = () => {
@@ -15,14 +16,19 @@ export const LearnModalPage = () => {
     data: dataGet,
     isLoading,
     isFetching,
+    error,
+    isError,
   } = useGetCardQuery({
     deckId: params.deckId ? params.deckId : '',
   })
 
   if (isLoading || isFetching || isPostCardLoading) {
-    // setOpen(true)
-
     return <div>Loading...</div>
+  }
+  console.log(error)
+
+  if (isError) {
+    return <ErrorPage errorMessage={error?.data?.message} />
   }
 
   const cardData = data || dataGet
