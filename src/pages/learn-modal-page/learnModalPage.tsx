@@ -9,9 +9,13 @@ export const LearnModalPage = () => {
   const params = useParams<'deckTitle' | 'deckId'>()
   const navigate = useNavigate()
 
-  const [sendGrade, { isLoading: isPostCardLoading }] = usePostCardMutation()
+  const [sendGrade, { isLoading: isPostCardLoading, data }] = usePostCardMutation()
 
-  const { data, isLoading, isFetching } = useGetCardQuery({
+  const {
+    data: dataGet,
+    isLoading,
+    isFetching,
+  } = useGetCardQuery({
     deckId: params.deckId ? params.deckId : '',
   })
 
@@ -21,19 +25,21 @@ export const LearnModalPage = () => {
     return <div>Loading...</div>
   }
 
+  const cardData = data || dataGet
+
   return (
     <div className={s.wrapper}>
-      {data && (
+      {cardData && (
         <LearnModal
-          id={data.id}
+          id={cardData.id}
           title={params.deckTitle ? params.deckTitle : 'Title'}
-          question={data.question}
-          answer={data.answer}
-          shots={data.shots}
+          question={cardData.question}
+          answer={cardData.answer}
+          shots={cardData.shots}
           navigate={navigate}
           onChange={sendGrade}
-          imgAnswer={data.answerImg}
-          imgQuestion={data.questionImg}
+          imgAnswer={cardData.answerImg}
+          imgQuestion={cardData.questionImg}
         />
       )}
     </div>

@@ -155,26 +155,6 @@ export const decksService = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
-      onQueryStarted: async ({ cardId }, { dispatch, queryFulfilled }) => {
-        // const patchResult = dispatch(
-        //   decksService.util.updateQueryData('getCard', { deckId: cardId }, draft => {})
-        // )
-
-        try {
-          const result = await queryFulfilled
-
-          dispatch(
-            decksService.util.updateQueryData('getCard', { deckId: cardId }, draft => {
-              console.log(draft)
-              console.log(result)
-            })
-          )
-        } catch (e) {
-          console.log(e)
-          // patchResult.undo()
-        }
-      },
-      invalidatesTags: ['Card'],
     }),
   }),
 })
