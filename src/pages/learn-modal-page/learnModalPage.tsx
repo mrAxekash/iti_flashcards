@@ -3,7 +3,6 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import s from './learnModalPage.module.scss'
 
 import { LearnModal } from '@/components/ui/modal/LearnModal.tsx'
-import { ErrorPage } from '@/pages/error-page/errorPage.tsx'
 import { useGetCardQuery, usePostCardMutation } from '@/services/decks/decks.service.ts'
 
 export const LearnModalPage = () => {
@@ -28,7 +27,8 @@ export const LearnModalPage = () => {
   console.log(error)
 
   if (isError) {
-    return <ErrorPage errorMessage={error?.data?.message} />
+    // return <ErrorPage errorMessage={error?.data?.message} />
+    return <Navigate to={'/error'} />
   }
 
   const cardData = data || dataGet
