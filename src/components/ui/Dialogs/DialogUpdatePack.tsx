@@ -39,13 +39,13 @@ export const DialogUpdatePack = (props: PropsType) => {
 
   const formRef = useRef<HTMLFormElement | null>(null)
 
-  const [isPrivate, setIsPrivate] = useState(false)
+  const [isPrivate, setIsPrivate] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
   const [updateDeck] = useUpdateDeckMutation()
 
   const handleFormSubmitted = handleSubmit(values => {
-    onUpdateDeck(values.cover, values.name, values.isPrivate)
+    onUpdateDeck(values.cover, values.name, isPrivate)
     reset()
     props.setOpen(false)
   })
@@ -69,6 +69,7 @@ export const DialogUpdatePack = (props: PropsType) => {
         isPrivate,
       },
     })
+
     props.setOpen(false)
   }
   const onClose = () => {
@@ -91,7 +92,7 @@ export const DialogUpdatePack = (props: PropsType) => {
             <div className={sC.element}>
               <ControlledTextField
                 name={'name'}
-                placeholder={'type a pack name'}
+                placeholder={props.name}
                 label={'Name Pack'}
                 control={control}
               />
@@ -106,6 +107,9 @@ export const DialogUpdatePack = (props: PropsType) => {
 
 type PropsType = {
   open: boolean
+  name: string
+  isPrivate?: boolean
+  setIsPrivate: (test: any) => void
   setOpen: (value: boolean) => void
   selectedDeck: SelectedDeckType
   setSelectedDeck: (value: SelectedDeckType) => void

@@ -82,7 +82,7 @@ export type CreateCardInDeckType = {
 export type UpdateDeckType = {
   cover: string
   name: string
-  isPrivate: boolean
+  isPrivate?: boolean
 }
 export type CardType = {
   answer: string

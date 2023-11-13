@@ -28,6 +28,7 @@ export const CardsPage = () => {
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
+  //const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
   const [selectedCard, setSelectedCard] = useState<SelectedCardType>({
     id: '',
     question: '',
@@ -105,6 +106,8 @@ export const CardsPage = () => {
         selectedCard={selectedForUpdateCard}
         setSelectedCard={setSelectedForUpdateCard}
         id={selectedForUpdateCard.id ?? ''}
+        answer={selectedForUpdateCard.answer}
+        question={selectedForUpdateCard.question}
       />
       <DialogAddNewCard
         open={isAddNewCardDialogOpen}

@@ -88,7 +88,7 @@ export const DialogUpdateCard = (props: PropsType) => {
             <div className={sC.element}>
               <ControlledTextField
                 name={'question'}
-                placeholder={'type a question'}
+                placeholder={props.question}
                 label={'Question'}
                 control={control}
               />
@@ -98,7 +98,7 @@ export const DialogUpdateCard = (props: PropsType) => {
             <div className={sC.element}>
               <ControlledTextField
                 name={'answer'}
-                placeholder={'type an answer'}
+                placeholder={props.answer}
                 label={'Answer'}
                 control={control}
               />
@@ -112,6 +112,8 @@ export const DialogUpdateCard = (props: PropsType) => {
 
 type PropsType = {
   id: string
+  question: string
+  answer: string
   open: boolean
   setOpen: (value: boolean) => void
   selectedCard: SelectedCardUpdateType
