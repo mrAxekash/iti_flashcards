@@ -91,10 +91,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     setValue(value)
   }
 
-  const cropSizeSelector = () => {
-    return { width: canvaWidth, height: canvaHeight }
-  }
-
   // create the image with a src of the base64 string
   const createImage = (url: string): Promise<CanvasImageSource> =>
     new Promise((resolve, reject) => {
@@ -173,13 +169,10 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
 
   const onCropChange = (location: Point) => {
-    // debugger
-    // sliderChangeHandler([zoom])
     setCrop(location)
   }
 
   function onZoomChange(value: number) {
-    // debugger
     setZoom(value)
     setSliderValue([value])
   }
@@ -240,7 +233,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                     image={inputImg}
                     crop={crop}
                     zoom={zoom}
-                    cropSize={cropSizeSelector()}
+                    cropSize={{ width: canvaWidth, height: canvaHeight }}
                     onCropChange={onCropChange}
                     onCropComplete={onCropComplete}
                     onZoomChange={onZoomChange}
