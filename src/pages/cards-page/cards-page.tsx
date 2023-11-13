@@ -27,16 +27,18 @@ export const CardsPage = () => {
   const { data: cards } = useGetCardsInDeckQuery({ id: deckId ? deckId : '' })
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
+  const [selectedForUpdateCard, setSelectedForUpdateCard] = useState<SelectedCardUpdateType>({
+    id: '',
+    question: '',
+    answer: '',
+  })
+
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
   //const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
   const [selectedCard, setSelectedCard] = useState<SelectedCardType>({
     id: '',
     question: '',
-  })
-  const [selectedForUpdateCard, setSelectedForUpdateCard] = useState<SelectedCardUpdateType>({
-    id: '',
-    question: '',
-    answer: '',
   })
 
   const navigate = useNavigate()
@@ -88,7 +90,7 @@ export const CardsPage = () => {
     setSelectedCard({ id, question })
   }
   const onSelectCardForUpdate = (id: string, question: string, answer: string) => {
-    setIsDeleteDialogOpen(true)
+    setIsUpdateDialogOpen(true)
     setSelectedForUpdateCard({ id, question, answer })
   }
 
@@ -101,8 +103,8 @@ export const CardsPage = () => {
         setSelectedCard={setSelectedCard}
       />
       <DialogUpdateCard
-        open={isDeleteDialogOpen}
-        setOpen={setIsDeleteDialogOpen}
+        open={isUpdateDialogOpen}
+        setOpen={setIsUpdateDialogOpen}
         selectedCard={selectedForUpdateCard}
         setSelectedCard={setSelectedForUpdateCard}
         id={selectedForUpdateCard.id ?? ''}
