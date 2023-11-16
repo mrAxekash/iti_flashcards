@@ -25,8 +25,6 @@ import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/de
 export const CardsPage = () => {
   const [orderBy, setOrderBy] = useState<undefined | CardsSortType>(undefined)
 
-  console.log('orderBy ', orderBy)
-
   let { deckId } = useParams()
   const { data } = useGetDeckByIdQuery({ id: deckId ? deckId : '' })
   const { data: cards } = useGetCardsInDeckQuery({ id: deckId ? deckId : '', orderBy })
@@ -62,13 +60,13 @@ export const CardsPage = () => {
 
   const columns: Column[] = [
     {
-      key: 'Question',
-      title: 'question',
+      key: 'question',
+      title: 'Question',
       sortable: true,
     },
     {
-      key: 'Answer',
-      title: 'answer',
+      key: 'answer',
+      title: 'Answer',
       sortable: true,
     },
     {
