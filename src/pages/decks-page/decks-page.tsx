@@ -256,22 +256,19 @@ export const DecksPage = () => {
       </Table.Root>
 
       <div className={s.paginationContainer}>
-        <div>
-          <Pagination
-            onPageChange={updateCurrentPageCallback}
-            totalCount={decks?.pagination.totalItems ?? 0}
-            currentPage={currentPage}
-            pageSize={+itemsPerPage}
-            siblingCount={2}
-            selectSettings={{
-              value: itemsPerPage,
-              onChangeOption: setItemsPerPageCallback,
-              arr: selectValues,
-            }}
-          />
-        </div>
+        <Pagination
+          onPageChange={updateCurrentPageCallback}
+          totalCount={decks?.pagination.totalItems ?? 0}
+          currentPage={currentPage}
+          pageSize={+itemsPerPage}
+          siblingCount={2}
+          selectSettings={{
+            value: itemsPerPage,
+            onChangeOption: setItemsPerPageCallback,
+            arr: selectValues,
+          }}
+        />
       </div>
-      <div></div>
     </div>
   )
 }
