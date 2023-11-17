@@ -169,7 +169,7 @@ export const CardsPage = () => {
                         <Grade value={data.grade} />
                       </Table.Cell>
                       <Table.Cell>
-                        <div className={sC.iconContainer}>
+                        <div className={sT.iconContainer}>
                           <Button
                             variant={'link'}
                             onClick={() =>
@@ -182,7 +182,7 @@ export const CardsPage = () => {
                             <img
                               src={trashIcon}
                               alt=""
-                              className={sC.trashIcon}
+                              className={sT.trashIcon}
                               onClick={() => onSelectCardForDel(data.id, data.question)}
                             />
                           </Button>
