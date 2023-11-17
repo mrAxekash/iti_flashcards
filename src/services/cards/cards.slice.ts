@@ -14,7 +14,10 @@ export const cardsSlice = createSlice({
     updateCardsCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload
     },
+    setCardsItemsPerPage: (state, action: PayloadAction<string>) => {
+      state.itemsPerPage = action.payload
+    },
   },
 })
 
-export const { setCardId, updateCardsCurrentPage } = cardsSlice.actions
+export const { setCardId, updateCardsCurrentPage, setCardsItemsPerPage } = cardsSlice.actions

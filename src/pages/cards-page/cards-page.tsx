@@ -20,10 +20,13 @@ import { Grade } from '@/components/ui/Rating/rating.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
-import { setCardId, updateCardsCurrentPage } from '@/services/cards/cards.slice.ts'
+import {
+  setCardId,
+  setCardsItemsPerPage,
+  updateCardsCurrentPage,
+} from '@/services/cards/cards.slice.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
-import { setDecksItemsPerPage } from '@/services/decks/decks.slice.ts'
 
 export const CardsPage = () => {
   const { currentPage, itemsPerPage } = useAppSelector(state => state.cards)
@@ -32,7 +35,12 @@ export const CardsPage = () => {
 
   let { deckId } = useParams()
   const { data } = useGetDeckByIdQuery({ id: deckId ? deckId : '' })
-  const { data: cards } = useGetCardsInDeckQuery({ id: deckId ? deckId : '', orderBy })
+  const { data: cards } = useGetCardsInDeckQuery({
+    itemsPerPage: +itemsPerPage,
+    id: deckId ? deckId : '',
+    currentPage,
+    orderBy,
+  })
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
@@ -112,7 +120,7 @@ export const CardsPage = () => {
 
   // for pagination
   //// select inside pagination
-  const setCardsItemsPerPageCallback = (value: string) => dispatch(setDecksItemsPerPage(value))
+  const setCardsItemsPerPageCallback = (value: string) => dispatch(setCardsItemsPerPage(value))
 
   return (
     <div className={sT.component}>
@@ -140,7 +148,7 @@ export const CardsPage = () => {
         <img src={arrowLeft} alt="arrowLeft" />
         <span className={s.text}>Back to Packs List</span>
       </div>
-      <div className={sC.topContainer}>
+      <div className={sT.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
         {data?.cardsCount !== 0 && (
           <Button onClick={() => setIsAddNewCardDialogOpen(true)}>Add New Card</Button>
