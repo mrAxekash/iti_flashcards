@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import s from './deck-page.module.scss'
+import s from '../../common/commonStyles/tables.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Play } from '@/assets/icons/Play.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
+import sC from '@/common/commonStyles/common.module.scss'
 import { OrderByType, SelectedDeckType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -33,7 +34,6 @@ import {
   setSearchByName,
   updateDecksCurrentPage,
 } from '@/services/decks/decks.slice.ts'
-import sC from '@/styles/common.module.scss'
 
 export const DecksPage = () => {
   const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =

@@ -7,6 +7,8 @@ import s from './cards-page.module.scss'
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
 import { Edit } from '@/assets/icons/Edit.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
+import sC from '@/common/commonStyles/common.module.scss'
+import sT from '@/common/commonStyles/tables.module.scss'
 import { CardsSortType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -22,7 +24,6 @@ import { setCardId, updateCardsCurrentPage } from '@/services/cards/cards.slice.
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 import { setDecksItemsPerPage } from '@/services/decks/decks.slice.ts'
-import sC from '@/styles/common.module.scss'
 
 export const CardsPage = () => {
   const { currentPage, itemsPerPage } = useAppSelector(state => state.cards)
@@ -114,7 +115,7 @@ export const CardsPage = () => {
   const setCardsItemsPerPageCallback = (value: string) => dispatch(setDecksItemsPerPage(value))
 
   return (
-    <div className={sC.component}>
+    <div className={sT.component}>
       <DialogRemoveCard
         open={isDeleteDialogOpen}
         setOpen={setIsDeleteDialogOpen}
@@ -154,7 +155,7 @@ export const CardsPage = () => {
         </div>
       ) : (
         <>
-          <Table.Root className={sC.tableContainer}>
+          <Table.Root className={sT.tableContainer}>
             <Table.Header columns={columns} onSort={setSort} sort={sort} />
             <Table.Body>
               {cards &&
