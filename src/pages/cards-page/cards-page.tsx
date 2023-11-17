@@ -9,7 +9,7 @@ import { Edit } from '@/assets/icons/Edit.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
-import { CardsSortType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
+import { CardsOrderByType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
@@ -23,15 +23,14 @@ import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import {
   setCardId,
   setCardsItemsPerPage,
+  setCardsOrderBy,
   updateCardsCurrentPage,
 } from '@/services/cards/cards.slice.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 
 export const CardsPage = () => {
-  const { currentPage, itemsPerPage } = useAppSelector(state => state.cards)
-
-  const [orderBy, setOrderBy] = useState<undefined | CardsSortType>(undefined)
+  const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
 
   let { deckId } = useParams()
   const { data } = useGetDeckByIdQuery({ id: deckId ? deckId : '' })
@@ -68,7 +67,7 @@ export const CardsPage = () => {
   useEffect(() => {
     const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined // todo: remove duplicate with deck-page
 
-    setOrderBy(sortString as CardsSortType)
+    dispatch(setCardsOrderBy(sortString as CardsOrderByType)) // todo: maybe fix this later also
   }, [sort]) //todo: maybe refactor, to avoid useEffect
 
   const columns: Column[] = [

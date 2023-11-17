@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { OrderByType } from '@/common/types.ts'
+import { DecksOrderByType } from '@/common/types.ts'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 
 export const decksSlice = createSlice({
@@ -11,7 +11,7 @@ export const decksSlice = createSlice({
     cardsCounts: [0, maxCardsCountHard],
     currentPage: 1,
     authorId: '',
-    orderBy: undefined as undefined | OrderByType,
+    orderBy: undefined as undefined | DecksOrderByType,
   },
   reducers: {
     setSearchByName: (state, action: PayloadAction<string>) => {
@@ -29,7 +29,7 @@ export const decksSlice = createSlice({
     setAuthorId: (state, action: PayloadAction<string>) => {
       state.authorId = action.payload
     },
-    setOrderBy: (state, action: PayloadAction<OrderByType | undefined>) => {
+    setDecksOrderBy: (state, action: PayloadAction<DecksOrderByType | undefined>) => {
       state.orderBy = action.payload
     },
   },
@@ -41,5 +41,5 @@ export const {
   setSearchByName,
   setCardsCounts,
   setAuthorId,
-  setOrderBy,
+  setDecksOrderBy,
 } = decksSlice.actions

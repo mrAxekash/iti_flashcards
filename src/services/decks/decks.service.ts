@@ -139,13 +139,17 @@ export const decksService = baseApi.injectEndpoints({
       onQueryStarted: async (_, { getState, queryFulfilled, dispatch }) => {
         const result = await queryFulfilled
         const state = getState() as RootState
-        const { id } = state.cards
+        const { itemsPerPage, id, currentPage, orderBy } = state.cards
 
         try {
           dispatch(
-            decksService.util.updateQueryData('getCardsInDeck', { id }, draft => {
-              draft?.items?.unshift(resultConvert(result.data))
-            })
+            decksService.util.updateQueryData(
+              'getCardsInDeck',
+              { itemsPerPage: +itemsPerPage, id, currentPage, orderBy },
+              draft => {
+                draft?.items?.unshift(resultConvert(result.data))
+              }
+            )
           )
         } catch (e) {
           console.error(e)
