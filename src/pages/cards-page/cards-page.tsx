@@ -2,27 +2,31 @@ import { useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
-import sC from '../decks-page/deck-page.module.scss'
-
 import s from './cards-page.module.scss'
 
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
 import { Edit } from '@/assets/icons/Edit.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import { CardsSortType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
+import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
+import { Pagination } from '@/components/ui/Pagination'
 import { Grade } from '@/components/ui/Rating/rating.tsx'
 import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
-import { useAppDispatch } from '@/hooks.ts'
-import { setCardId } from '@/services/cards/cards.slice.ts'
+import { useAppDispatch, useAppSelector } from '@/hooks.ts'
+import { setCardId, updateCardsCurrentPage } from '@/services/cards/cards.slice.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
+import { setDecksItemsPerPage } from '@/services/decks/decks.slice.ts'
+import sC from '@/styles/common.module.scss'
 
 export const CardsPage = () => {
+  const { currentPage, itemsPerPage } = useAppSelector(state => state.cards)
+
   const [orderBy, setOrderBy] = useState<undefined | CardsSortType>(undefined)
 
   let { deckId } = useParams()
@@ -101,6 +105,13 @@ export const CardsPage = () => {
     setIsUpdateDialogOpen(true)
     setSelectedForUpdateCard({ id, question, answer })
   }
+  const updateCardsCurrentPageCallback = (page: number | string) => {
+    dispatch(updateCardsCurrentPage(+page))
+  }
+
+  // for pagination
+  //// select inside pagination
+  const setCardsItemsPerPageCallback = (value: string) => dispatch(setDecksItemsPerPage(value))
 
   return (
     <div className={sC.component}>
@@ -142,42 +153,61 @@ export const CardsPage = () => {
           <Button onClick={onOpenDialog}>Add New Card</Button>
         </div>
       ) : (
-        <Table.Root className={sC.tableContainer}>
-          <Table.Header columns={columns} onSort={setSort} sort={sort} />
-          <Table.Body>
-            {cards &&
-              cards.items.map(data => {
-                return (
-                  <Table.Row key={data.id}>
-                    <Table.Cell className={s.cell}>{data.question}</Table.Cell>
-                    <Table.Cell className={s.cell}>{data.answer}</Table.Cell>
-                    <Table.Cell>{data.updated}</Table.Cell>
-                    <Table.Cell>
-                      <Grade value={data.grade} />
-                    </Table.Cell>
-                    <Table.Cell>
-                      <div className={sC.iconContainer}>
-                        <Button
-                          variant={'link'}
-                          onClick={() => onSelectCardForUpdate(data.id, data.question, data.answer)}
-                        >
-                          <Edit color={'white'} />
-                        </Button>
-                        <Button variant={'link'}>
-                          <img
-                            src={trashIcon}
-                            alt=""
-                            className={sC.trashIcon}
-                            onClick={() => onSelectCardForDel(data.id, data.question)}
-                          />
-                        </Button>
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
-                )
-              })}
-          </Table.Body>
-        </Table.Root>
+        <>
+          <Table.Root className={sC.tableContainer}>
+            <Table.Header columns={columns} onSort={setSort} sort={sort} />
+            <Table.Body>
+              {cards &&
+                cards.items.map(data => {
+                  return (
+                    <Table.Row key={data.id}>
+                      <Table.Cell className={s.cell}>{data.question}</Table.Cell>
+                      <Table.Cell className={s.cell}>{data.answer}</Table.Cell>
+                      <Table.Cell>{data.updated}</Table.Cell>
+                      <Table.Cell>
+                        <Grade value={data.grade} />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <div className={sC.iconContainer}>
+                          <Button
+                            variant={'link'}
+                            onClick={() =>
+                              onSelectCardForUpdate(data.id, data.question, data.answer)
+                            }
+                          >
+                            <Edit color={'white'} />
+                          </Button>
+                          <Button variant={'link'}>
+                            <img
+                              src={trashIcon}
+                              alt=""
+                              className={sC.trashIcon}
+                              onClick={() => onSelectCardForDel(data.id, data.question)}
+                            />
+                          </Button>
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+                })}
+            </Table.Body>
+          </Table.Root>
+
+          <div className={sC.paginationContainer}>
+            <Pagination
+              onPageChange={updateCardsCurrentPageCallback}
+              totalCount={cards?.pagination.totalItems ?? 0}
+              currentPage={currentPage}
+              pageSize={+itemsPerPage}
+              siblingCount={2}
+              selectSettings={{
+                value: itemsPerPage,
+                onChangeOption: setCardsItemsPerPageCallback,
+                arr: paginationSelectValues,
+              }}
+            />
+          </div>
+        </>
       )}
     </div>
   )

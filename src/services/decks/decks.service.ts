@@ -151,7 +151,7 @@ export const decksService = baseApi.injectEndpoints({
           console.error(e)
         }
       },
-      // invalidatesTags: ['CardsIdDeck'], // now works together with onQueryStarted
+      // invalidatesTags: ['CardsIdDeck'], // not works together with onQueryStarted
       //todo: understand why it not works together
     }),
     getCard: builder.query<LearnCardType, { deckId: string }>({

@@ -17,10 +17,10 @@ export const decksSlice = createSlice({
     setSearchByName: (state, action: PayloadAction<string>) => {
       state.searchByName = action.payload
     },
-    updateCurrentPage: (state, action: PayloadAction<number>) => {
+    updateDecksCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload
     },
-    setItemsPerPage: (state, action: PayloadAction<string>) => {
+    setDecksItemsPerPage: (state, action: PayloadAction<string>) => {
       state.itemsPerPage = action.payload
     },
     setCardsCounts: (state, action: PayloadAction<number[]>) => {
@@ -36,8 +36,8 @@ export const decksSlice = createSlice({
 })
 
 export const {
-  updateCurrentPage,
-  setItemsPerPage,
+  updateDecksCurrentPage,
+  setDecksItemsPerPage,
   setSearchByName,
   setCardsCounts,
   setAuthorId,
