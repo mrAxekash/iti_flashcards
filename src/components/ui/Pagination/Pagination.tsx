@@ -12,16 +12,12 @@ import { Select } from '@/components/ui/Select'
 export const Pagination = (props: PropsType) => {
   const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props
 
-  const [paginationIsBlocked, setPaginationIsBlocked] = useState(false)
-
   const paginationRange = usePagination({
     currentPage,
     totalCount,
     siblingCount,
     pageSize,
   })
-
-  // console.log('paginationIsBlocked: ', paginationIsBlocked)
 
   const onNext = () => {
     onPageChange(currentPage + 1)
@@ -33,13 +29,9 @@ export const Pagination = (props: PropsType) => {
 
   let lastPage = paginationRange && paginationRange[paginationRange.length - 1]
 
-  // vars for state and styles
   const [isChevronLeftDisabled, setIsChevronLeftDisabled] = useState(false)
-  // const [isSelected, setIsSelected] = useState(false)
-
-  useEffect(() => {
-    // setIsSelected(pageNumber === currentPage)
-  }, [currentPage])
+  const [isChevronRightDisabled, setIsChevronRightDisabled] = useState(false)
+  const [paginationIsBlocked, setPaginationIsBlocked] = useState(false)
 
   useEffect(() => {
     setIsChevronLeftDisabled(currentPage == 1)
@@ -49,7 +41,9 @@ export const Pagination = (props: PropsType) => {
     } else {
       setPaginationIsBlocked(false)
     }
-  }, [currentPage, paginationRange])
+
+    setIsChevronRightDisabled(currentPage === lastPage)
+  }, [currentPage, paginationRange, lastPage])
 
   const isSelected = (pageNumber: number) => {
     return pageNumber === currentPage
@@ -59,7 +53,7 @@ export const Pagination = (props: PropsType) => {
     <div className={clsx(s.paginationContainer, className)}>
       <div
         className={clsx(s.paginationItem, isChevronLeftDisabled && s.disabled)}
-        onClick={!isChevronLeftDisabled || !paginationIsBlocked ? onPrevious : () => {}}
+        onClick={!isChevronLeftDisabled && !paginationIsBlocked ? onPrevious : () => {}}
       >
         <ChevronLeftIcon
           className={isChevronLeftDisabled || paginationIsBlocked ? s.disabled : ''}
@@ -88,11 +82,10 @@ export const Pagination = (props: PropsType) => {
           )
         })}
       <div
-        className={clsx(
-          s.paginationItem,
-          (currentPage === lastPage || paginationIsBlocked) && s.disabled
-        )}
-        onClick={currentPage !== lastPage || !paginationIsBlocked ? onNext : () => {}}
+        className={clsx(s.paginationItem, {
+          [s.disabled]: isChevronRightDisabled || paginationIsBlocked,
+        })}
+        onClick={!isChevronRightDisabled && !paginationIsBlocked ? onNext : () => {}}
       >
         <ChevronRightIcon />
       </div>
@@ -124,5 +117,3 @@ type PropsType = {
     arr: Array<string>
   }
 }
-
-//todo add disabled maybe later and if totalItems === 0 than disable
