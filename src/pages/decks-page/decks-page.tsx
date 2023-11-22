@@ -120,8 +120,6 @@ export const DecksPage = () => {
   const setDecksItemsPerPageCallback = (value: string) => dispatch(setDecksItemsPerPage(value))
 
   useEffect(() => {
-    // const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined //todo: remove duplicate with cards-page
-
     const sortString: string | undefined = sortStringCallback(sort)
 
     dispatch(setDecksOrderBy(sortString as DecksOrderByType)) // todo: maybe fix this later
