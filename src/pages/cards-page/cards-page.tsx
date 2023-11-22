@@ -29,6 +29,9 @@ import {
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 
+export const sortStringCallback = (sort: Sort) => {
+  return sort ? `${sort?.key}-${sort?.direction}` : undefined
+}
 export const CardsPage = () => {
   const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
 
@@ -65,7 +68,7 @@ export const CardsPage = () => {
   }, [deckId]) // for optimistic and pessimistic updates
 
   useEffect(() => {
-    const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined // todo: remove duplicate with deck-page
+    const sortString: string | undefined = sortStringCallback(sort)
 
     dispatch(setCardsOrderBy(sortString as CardsOrderByType)) // todo: maybe fix this later also
   }, [sort]) //todo: maybe refactor, to avoid useEffect

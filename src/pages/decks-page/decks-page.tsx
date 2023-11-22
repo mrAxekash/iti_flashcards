@@ -22,6 +22,7 @@ import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.t
 import { Textfield } from '@/components/ui/Textfield'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
+import { sortStringCallback } from '@/pages/cards-page/cards-page.tsx'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
@@ -119,7 +120,9 @@ export const DecksPage = () => {
   const setDecksItemsPerPageCallback = (value: string) => dispatch(setDecksItemsPerPage(value))
 
   useEffect(() => {
-    const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined //todo: remove duplicate with cards-page
+    // const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined //todo: remove duplicate with cards-page
+
+    const sortString: string | undefined = sortStringCallback(sort)
 
     dispatch(setDecksOrderBy(sortString as DecksOrderByType)) // todo: maybe fix this later
   }, [sort])
