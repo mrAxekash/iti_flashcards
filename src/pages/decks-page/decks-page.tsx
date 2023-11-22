@@ -6,9 +6,10 @@ import s from '../../common/commonStyles/tables.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Play } from '@/assets/icons/Play.tsx'
-import { Trash } from '@/assets/icons/Trash.tsx'
+import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
+import { colorByAuthorId, cursorByAuthorId, isEqualToMeId } from '@/common/helpers.ts'
 import { DecksOrderByType, SelectedDeckType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -157,8 +158,6 @@ export const DecksPage = () => {
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
-  const isEqualToMeId = (deckAauthorId: string): boolean => deckAauthorId === me.id
-
   return (
     <div className={s.component}>
       <DialogRemovePack
@@ -238,25 +237,25 @@ export const DecksPage = () => {
                       </Button>
                       <Button
                         variant={'link'}
-                        className={isEqualToMeId(deck.author.id) ? '' : s.cursorAuto}
+                        className={cursorByAuthorId(deck.author.id, me.id)}
                         onClick={
-                          isEqualToMeId(deck.author.id)
+                          isEqualToMeId(deck.author.id, me.id)
                             ? () => onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
                             : () => {}
                         }
                       >
-                        <Edit color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'} />
+                        <Edit color={colorByAuthorId(deck.author.id, me.id)} />
                       </Button>
                       <Button
                         variant={'link'}
                         onClick={
-                          isEqualToMeId(deck.author.id)
+                          isEqualToMeId(deck.author.id, me.id)
                             ? () => onSelectDeckForDel(deck.id, deck.name)
                             : () => {}
                         }
-                        className={isEqualToMeId(deck.author.id) ? '' : s.cursorAuto}
+                        className={cursorByAuthorId(deck.author.id, me.id)}
                       >
-                        <Trash color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'} />
+                        <TrashHollow color={colorByAuthorId(deck.author.id, me.id)} />
                       </Button>
                     </div>
                   </Table.Cell>
