@@ -6,6 +6,7 @@ import s from '../../common/commonStyles/tables.module.scss'
 
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { Play } from '@/assets/icons/Play.tsx'
+import { Trash } from '@/assets/icons/Trash.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
 import { DecksOrderByType, SelectedDeckType } from '@/common/types.ts'
@@ -47,14 +48,10 @@ export const DecksPage = () => {
     isPrivate: false,
   })
   const navigate = useNavigate()
+
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for update dialog
-
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
-
-  // for add dialog
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-
-  // ===
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false) // for add dialog
 
   const { data: me } = useGetMeQuery()
 
@@ -160,6 +157,11 @@ export const DecksPage = () => {
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
+  console.log('decks?.items: ', decks?.items)
+  console.log('me.id ', me.id)
+
+  const isEqualToMeId = (deckAauthorId: string): boolean => deckAauthorId === me.id
+
   return (
     <div className={s.component}>
       <DialogRemovePack
@@ -234,17 +236,26 @@ export const DecksPage = () => {
                       </Button>
                       <Button
                         variant={'link'}
-                        onClick={() => onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)}
+                        onClick={
+                          isEqualToMeId(deck.author.id)
+                            ? () => onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
+                            : () => {}
+                        }
                       >
-                        <Edit color={'white'} />
-                      </Button>
-                      <Button variant={'link'}>
-                        <img
-                          src={trashIcon}
-                          alt=""
-                          className={s.trashIcon}
-                          onClick={() => onSelectDeckForDel(deck.id, deck.name)}
+                        <Edit
+                          color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'}
+                          className={isEqualToMeId(deck.author.id) ? sC.cursorAuto : ''}
                         />
+                      </Button>
+                      <Button
+                        variant={'link'}
+                        onClick={
+                          isEqualToMeId(deck.author.id)
+                            ? () => onSelectDeckForDel(deck.id, deck.name)
+                            : () => {}
+                        }
+                      >
+                        <Trash color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'} />
                       </Button>
                     </div>
                   </Table.Cell>
