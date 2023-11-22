@@ -157,9 +157,6 @@ export const DecksPage = () => {
   if (decksLoading) return <div>Loading...</div>
   if (decksIsError) return <div>Error</div>
 
-  console.log('decks?.items: ', decks?.items)
-  console.log('me.id ', me.id)
-
   const isEqualToMeId = (deckAauthorId: string): boolean => deckAauthorId === me.id
 
   return (
@@ -230,22 +227,25 @@ export const DecksPage = () => {
                     <div className={s.iconContainer}>
                       <Button
                         variant={'link'}
-                        onClick={() => navigate(`learn/${deck.name}/${deck.id}`)}
+                        onClick={
+                          deck.cardsCount > 0
+                            ? () => navigate(`learn/${deck.name}/${deck.id}`)
+                            : () => {}
+                        }
+                        className={deck.cardsCount > 0 ? '' : s.cursorAuto}
                       >
-                        <Play color={'white'} />
+                        <Play color={deck.cardsCount > 0 ? 'white' : 'grey'} />
                       </Button>
                       <Button
                         variant={'link'}
+                        className={isEqualToMeId(deck.author.id) ? '' : s.cursorAuto}
                         onClick={
                           isEqualToMeId(deck.author.id)
                             ? () => onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
                             : () => {}
                         }
                       >
-                        <Edit
-                          color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'}
-                          className={isEqualToMeId(deck.author.id) ? sC.cursorAuto : ''}
-                        />
+                        <Edit color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'} />
                       </Button>
                       <Button
                         variant={'link'}
@@ -254,6 +254,7 @@ export const DecksPage = () => {
                             ? () => onSelectDeckForDel(deck.id, deck.name)
                             : () => {}
                         }
+                        className={isEqualToMeId(deck.author.id) ? '' : s.cursorAuto}
                       >
                         <Trash color={isEqualToMeId(deck.author.id) ? 'white' : 'grey'} />
                       </Button>
