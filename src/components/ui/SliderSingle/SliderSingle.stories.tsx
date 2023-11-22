@@ -4,16 +4,16 @@ import { Meta, StoryObj } from '@storybook/react'
 
 import sC from '../../../common/commonStyles/common.module.scss'
 
-import { Slider } from '@/components/ui/Slider/slider.tsx'
+// import { Slider } from '@/components/ui/Slider/slider.tsx'
 import { SliderSingle } from '@/components/ui/SliderSingle/SliderSingle.tsx'
 
 export default {
   title: 'Components/SliderSingle',
-  component: <SliderSingle />,
+  component: SliderSingle,
   tags: ['autodocs'],
-} satisfies Meta<typeof Slider>
+} satisfies Meta<typeof SliderSingle>
 
-type Story = StoryObj<typeof Slider>
+type Story = StoryObj<typeof SliderSingle>
 
 export const SliderExample: Story = {
   render: args => {
