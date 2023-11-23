@@ -31,7 +31,7 @@ import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/de
 
 export const sortStringCallback = (sort: Sort) => {
   return sort ? `${sort?.key}-${sort?.direction}` : undefined
-}
+} //todo add helpers ts in common directory
 export const CardsPage = () => {
   const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
 

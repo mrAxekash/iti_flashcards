@@ -34,5 +34,5 @@ type PropsType = {
   step: number
   value: number[]
   onValueChange: (newValue: number[]) => void
-  minStepsBetweenThumbs: number
+  minStepsBetweenThumbs?: number
 }
