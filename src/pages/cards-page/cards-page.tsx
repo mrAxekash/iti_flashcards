@@ -9,7 +9,6 @@ import { Edit } from '@/assets/icons/Edit.tsx'
 import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
-import { colorByAuthorId, cursorByAuthorId, isEqualToMeId } from '@/common/helpers.ts'
 import { CardsOrderByType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -57,6 +56,7 @@ export const CardsPage = () => {
     question: '',
   })
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
+  const [isEditBlocked, setIsEditBlocked] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -72,6 +72,10 @@ export const CardsPage = () => {
 
     dispatch(setCardsOrderBy(sortString as CardsOrderByType)) // todo: maybe fix this later also
   }, [sort]) //todo: maybe refactor, to avoid useEffect
+
+  useEffect(() => {
+    setIsEditBlocked(data?.userId !== me.id)
+  }, [data?.userId, me.id])
 
   const columns: Column[] = [
     {
@@ -120,9 +124,11 @@ export const CardsPage = () => {
     dispatch(updateCardsCurrentPage(+page))
   }
 
-  // for pagination
-  //// select inside pagination
-  const setCardsItemsPerPageCallback = (value: string) => dispatch(setCardsItemsPerPage(value))
+  const setCardsItemsPerPageCallback = (value: string) => dispatch(setCardsItemsPerPage(value)) // for pagination
+
+  // for elements blocking if alien deck
+  const cursorByEdit = () => (!isEditBlocked ? '' : sT.cursorAuto)
+  const colorByEdit = (): 'white' | 'grey' => (!isEditBlocked ? 'white' : 'grey')
 
   return (
     <div className={sT.component}>
@@ -153,15 +159,24 @@ export const CardsPage = () => {
       <div className={sT.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
         {data?.cardsCount !== 0 && (
-          <Button onClick={() => setIsAddNewCardDialogOpen(true)}>Add New Card</Button>
+          <Button disabled={isEditBlocked} onClick={() => setIsAddNewCardDialogOpen(true)}>
+            Add New Card
+          </Button>
         )}
       </div>
       {cards && cards.items.length === 0 ? (
         <div className={s.emptyPackContainer}>
           <Typography variant={'Subtitle_2'} className={s.Subtitle_2}>
-            This pack is empty. Click add new card to fill this pack
+            This pack is empty.
+            {!isEditBlocked ? (
+              <span> Click add new card to fill this pack</span>
+            ) : (
+              <span> You can&apos;t create cards in a deck that you don&apos;t own.</span>
+            )}
           </Typography>
-          <Button onClick={onOpenDialog}>Add New Card</Button>
+          <Button onClick={onOpenDialog} disabled={isEditBlocked}>
+            Add New Card
+          </Button>
         </div>
       ) : (
         <>
@@ -183,24 +198,24 @@ export const CardsPage = () => {
                           <Button
                             variant={'link'}
                             onClick={
-                              isEqualToMeId(data.userId, me.id)
+                              !isEditBlocked
                                 ? () => onSelectCardForUpdate(data.id, data.question, data.answer)
                                 : () => {}
                             }
-                            className={cursorByAuthorId(data.userId, me.id)}
+                            className={cursorByEdit()}
                           >
-                            <Edit color={colorByAuthorId(data.userId, me.id)} />
+                            <Edit color={colorByEdit()} />
                           </Button>
                           <Button
                             variant={'link'}
                             onClick={
-                              isEqualToMeId(data.userId, me.id)
+                              !isEditBlocked
                                 ? () => onSelectCardForDel(data.id, data.question)
                                 : () => {}
                             }
-                            className={cursorByAuthorId(data.userId, me.id)}
+                            className={cursorByEdit()}
                           >
-                            <TrashHollow color={colorByAuthorId(data.userId, me.id)} />
+                            <TrashHollow color={colorByEdit()} />
                           </Button>
                         </div>
                       </Table.Cell>
