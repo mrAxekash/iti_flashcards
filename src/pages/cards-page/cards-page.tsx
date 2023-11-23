@@ -180,7 +180,7 @@ export const CardsPage = () => {
         </div>
       ) : (
         <>
-          <div className={s.container}>
+          <div className={sT.container}>
             <Table.Root className={sT.tableContainer}>
               <Table.Header columns={columns} onSort={setSort} sort={sort} />
               <Table.Body>
