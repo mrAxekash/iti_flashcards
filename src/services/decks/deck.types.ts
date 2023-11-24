@@ -118,8 +118,6 @@ export type UpdateCardType = {
   answerVideo?: string | null
 }
 
-//todo add Pick for single types - finish
-
 export type LearnCardType = Omit<CardType, 'grade'> & {
   rating: number
 }
