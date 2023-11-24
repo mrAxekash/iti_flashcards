@@ -8,6 +8,7 @@ import { Edit } from '@/assets/icons/Edit.tsx'
 import { Play } from '@/assets/icons/Play.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
+import { sortStringCallback } from '@/common/services.ts'
 import { DecksOrderByType, SelectedDeckType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -22,7 +23,6 @@ import { TabSwitcherValuesType } from '@/components/ui/TabSwitcher/TabSwitcher.t
 import { Textfield } from '@/components/ui/Textfield'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
-import { sortStringCallback } from '@/pages/cards-page/cards-page.tsx'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
@@ -122,7 +122,7 @@ export const DecksPage = () => {
   useEffect(() => {
     const sortString: string | undefined = sortStringCallback(sort)
 
-    dispatch(setDecksOrderBy(sortString as DecksOrderByType)) // todo: maybe fix this later
+    dispatch(setDecksOrderBy(sortString as DecksOrderByType))
   }, [sort])
 
   const onViewDeck = (packId: string) => {

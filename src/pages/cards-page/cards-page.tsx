@@ -9,6 +9,7 @@ import { Edit } from '@/assets/icons/Edit.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
+import { sortStringCallback } from '@/common/services.ts'
 import { CardsOrderByType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -29,9 +30,6 @@ import {
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
 
-export const sortStringCallback = (sort: Sort) => {
-  return sort ? `${sort?.key}-${sort?.direction}` : undefined
-} //todo add helpers ts in common directory
 export const CardsPage = () => {
   const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
 
@@ -70,8 +68,8 @@ export const CardsPage = () => {
   useEffect(() => {
     const sortString: string | undefined = sortStringCallback(sort)
 
-    dispatch(setCardsOrderBy(sortString as CardsOrderByType)) // todo: maybe fix this later also
-  }, [sort]) //todo: maybe refactor, to avoid useEffect
+    dispatch(setCardsOrderBy(sortString as CardsOrderByType))
+  }, [sort]) //todo: maybe refactor, to avoid useEffect 'finish refactor'
 
   const columns: Column[] = [
     {
