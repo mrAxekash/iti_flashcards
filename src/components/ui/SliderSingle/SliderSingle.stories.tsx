@@ -44,5 +44,3 @@ export const SliderExample: Story = {
     minStepsBetweenThumbs: 1,
   },
 }
-
-//todo: fix this story
