@@ -17,8 +17,8 @@ import { Typography } from '@/components/ui/Typography'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
 
 export const DialogAddNewCard = (props: PropsType) => {
-  const minSliderValue = 1
-  const maxSliderValue = 10
+  const minSliderValue = 4
+  const maxSliderValue = 15
   const sliderStep = 1
   const canvaWidth = 484
   const canvaHeight = 119
@@ -240,7 +240,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                     image={inputImg}
                     crop={crop}
                     zoom={zoom}
-                    cropSize={{ width: 300, height: 200 }}
+                    cropSize={{ width: 484, height: 119 }}
                     onCropChange={onCropChange}
                     onCropComplete={onCropComplete}
                     onZoomChange={onZoomChange}
