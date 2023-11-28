@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react'
+import {ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState} from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Cropper, { Area, Point } from 'react-easy-crop'
@@ -24,7 +24,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const canvaHeight = 119
 
   const [value, setValue] = useState('Text') // for select
-  const [inputImg, setInputImg] = useState<null | string>(null)
+  const [inputImg, setInputImg] = useState<undefined | string>(undefined)
   const arr: Array<string> = ['Text', 'Picture'] // for select
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 }) // for img upload
   const [zoom, setZoom] = useState(minSliderValue) // for img upload
@@ -127,21 +127,26 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
 
   const onCropImg = async () => {
+
     if (cropArea && inputImg) {
+      console.log('cropArea', cropArea)
       const img = await getCroppedImg(inputImg, cropArea)
 
       setCropImg(img)
     }
   }
 
-  const onCropComplete = (croppedAreaPixels: Area) => {
-    setCropArea({
-      x: croppedAreaPixels.x,
-      y: croppedAreaPixels.y,
-      width: croppedAreaPixels.width,
-      height: croppedAreaPixels.height,
-    })
-  }
+  const onCropComplete = useCallback(
+      (croppedArea: Area, croppedAreaPixels: Area) => {
+        setCropArea({
+          x: croppedAreaPixels.x,
+          y: croppedAreaPixels.y,
+          width: croppedAreaPixels.width,
+          height: croppedAreaPixels.height
+        })
+      },
+      []
+  )
 
   const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -176,6 +181,8 @@ export const DialogAddNewCard = (props: PropsType) => {
     setZoom(value)
     setSliderValue([value])
   }
+
+
 
   return (
     <DialogsCommon
@@ -233,7 +240,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                     image={inputImg}
                     crop={crop}
                     zoom={zoom}
-                    cropSize={{ width: canvaWidth, height: canvaHeight }}
+                    cropSize={{ width: 300, height: 200 }}
                     onCropChange={onCropChange}
                     onCropComplete={onCropComplete}
                     onZoomChange={onZoomChange}

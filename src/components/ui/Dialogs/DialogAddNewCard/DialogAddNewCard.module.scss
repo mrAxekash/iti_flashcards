@@ -20,7 +20,7 @@
 
     .croppedImg {
         //margin-top: 5px;
-        //@include mixins.imgUploadSize;
+        @include mixins.imgUploadSize;
     }
 
 }
