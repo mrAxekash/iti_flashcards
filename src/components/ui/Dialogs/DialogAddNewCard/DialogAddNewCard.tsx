@@ -15,6 +15,9 @@ import { Select } from '@/components/ui/Select'
 import { SliderSingle } from '@/components/ui/SliderSingle/SliderSingle.tsx'
 import { Typography } from '@/components/ui/Typography'
 import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
+import trashIcon from "@/assets/icons/trashIcon.png"
+import imgUpload from '@/assets/icons/imgUpload.svg'
+import sT from "@/common/commonStyles/tables.module.scss"
 
 export const DialogAddNewCard = (props: PropsType) => {
   const minSliderValue = 4
@@ -32,6 +35,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   // const [imgName, setImgName] = useState('')
   const [cropImg, setCropImg] = useState<string | null>(null)
   const [sliderValue, setSliderValue] = useState<number[]>([minSliderValue])
+  // const [pictureMode] = useState('')
 
   const schema = z.object({
     answer: z.string().min(3),
@@ -152,7 +156,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0]
 
-      // setImgName(file.name)
       const reader = new FileReader()
 
       reader.addEventListener(
@@ -181,8 +184,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     setZoom(value)
     setSliderValue([value])
   }
-
-
 
   return (
     <DialogsCommon
@@ -232,7 +233,18 @@ export const DialogAddNewCard = (props: PropsType) => {
         ) : (
           <>
             <Typography variant={'Body_2'}>Question:</Typography>
-            <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileChange} />
+            <div className={s.dummyQuestionAnswer}>Plz select question img</div>
+            <Button variant="secondary" onClick={() => {alert('on open edit select question img')}} className={s.button}>
+              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon} />
+              Change cover
+            </Button>
+            <Typography variant={'Body_2'}>Answer:</Typography>
+            <div className={s.dummyQuestionAnswer}>Plz select answer img</div>
+            <Button variant="secondary" onClick={() => {alert('on open edit select answer img')}} className={s.button}>
+              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
+              Change cover
+            </Button>
+           {/* <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileChange} />
             <div className={s.uploadContainer}>
               <div className={s.imgContainer}>
                 {inputImg ? (
@@ -273,9 +285,9 @@ export const DialogAddNewCard = (props: PropsType) => {
                   <div className={s.dummyImg}>cropped dummy</div>
                 )}
               </div>
-              <Button onClick={onCropImg}>Change Cover</Button>
-            </div>
-            {/*<Typography variant={'Body_2'}>Answer:</Typography>*/}
+              <Button onClick={onCropImg}>Approve</Button>
+            </div>*/}
+
           </>
         )}
       </div>
@@ -289,7 +301,6 @@ type PropsType = {
   deckId: string
 }
 
-//todo: maybe reduce code duplication with DialogAddPack
 
 type CropType = {
   x: number
@@ -297,3 +308,5 @@ type CropType = {
   width: number
   height: number
 }
+
+//todo: maybe reduce code duplication with DialogAddPack
