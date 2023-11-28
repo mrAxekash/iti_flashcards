@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import { Loader } from '@/components/ui/Loader/Loader.tsx'
 import { useAppDispatch } from '@/hooks.ts'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.ts'
 import { updateDecksCurrentPage } from '@/services/decks/decks.slice.ts'
@@ -37,12 +38,14 @@ export const DialogAddPack = (props: PropsType) => {
   const [isPrivate, setIsPrivate] = useState(false)
 
   const dispatch = useAppDispatch()
-  const [createDeck] = useCreateDeckMutation()
+  const [createDeck, { error, isLoading }] = useCreateDeckMutation()
+
+  const errorMessage = error && error?.data?.errorMessages[0]?.message
 
   const handleFormSubmitted = handleSubmit(values => {
     onAddDeck(values.packName)
     reset()
-    props.setOpen(false)
+    // props.setOpen(false)
   })
 
   // on submit form emulation
@@ -52,11 +55,13 @@ export const DialogAddPack = (props: PropsType) => {
     formRef.current.submit()
   }
 
-  const onAddDeck = (packName: string) => {
+  async function onAddDeck(packName: string) {
     if (!packName) return
     dispatch(updateDecksCurrentPage(1))
-    createDeck({ name: packName, isPrivate })
-    props.setOpen(false)
+    const result = createDeck({ name: packName, isPrivate })
+
+    console.log(result)
+    // props.setOpen(false)
   }
 
   const onClose = () => {
@@ -82,6 +87,7 @@ export const DialogAddPack = (props: PropsType) => {
                 placeholder={'type a pack name'}
                 label={'Name Pack'}
                 control={control}
+                errorMessage={errorMessage}
               />
             </div>
           </div>
