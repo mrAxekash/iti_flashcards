@@ -1,312 +1,322 @@
 import {ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState} from 'react'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import Cropper, { Area, Point } from 'react-easy-crop'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import {zodResolver} from '@hookform/resolvers/zod'
+import Cropper, {Area, Point} from 'react-easy-crop'
+import {useForm} from 'react-hook-form'
+import {z} from 'zod'
 
 import s from './DialogAddNewCard.module.scss'
 
-import { Button } from '@/components/ui/Button'
-import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
+import {Button} from '@/components/ui/Button'
+import {ControlledTextField} from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
-import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon.tsx'
-import { Select } from '@/components/ui/Select'
-import { SliderSingle } from '@/components/ui/SliderSingle/SliderSingle.tsx'
-import { Typography } from '@/components/ui/Typography'
-import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
-import trashIcon from "@/assets/icons/trashIcon.png"
+import {DialogsCommon} from '@/components/ui/Dialogs/DialogsCommon.tsx'
+import {Select} from '@/components/ui/Select'
+import {SliderSingle} from '@/components/ui/SliderSingle/SliderSingle.tsx'
+import {Typography} from '@/components/ui/Typography'
+import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import imgUpload from '@/assets/icons/imgUpload.svg'
 import sT from "@/common/commonStyles/tables.module.scss"
 
 export const DialogAddNewCard = (props: PropsType) => {
-  const minSliderValue = 4
-  const maxSliderValue = 15
-  const sliderStep = 1
-  const canvaWidth = 484
-  const canvaHeight = 119
+    const minSliderValue = 4
+    const maxSliderValue = 15
+    const sliderStep = 1
+    const canvaWidth = 484
+    const canvaHeight = 119
 
-  const [value, setValue] = useState('Text') // for select
-  const [inputImg, setInputImg] = useState<undefined | string>(undefined)
-  const arr: Array<string> = ['Text', 'Picture'] // for select
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 }) // for img upload
-  const [zoom, setZoom] = useState(minSliderValue) // for img upload
-  const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
-  // const [imgName, setImgName] = useState('')
-  const [cropImg, setCropImg] = useState<string | null>(null)
-  const [sliderValue, setSliderValue] = useState<number[]>([minSliderValue])
-  // const [pictureMode] = useState('')
+    const [value, setValue] = useState('Text') // for select
+    const [inputImg, setInputImg] = useState<undefined | string>(undefined)
+    const arr: Array<string> = ['Text', 'Picture'] // for select
+    const [crop, setCrop] = useState<Point>({x: 0, y: 0}) // for img upload
+    const [zoom, setZoom] = useState(minSliderValue) // for img upload
+    const [cropArea, setCropArea] = useState<null | CropType>(null) // for img upload
+    // const [imgName, setImgName] = useState('')
+    const [cropImg, setCropImg] = useState<string | null>(null)
+    const [sliderValue, setSliderValue] = useState<number[]>([minSliderValue])
+    const [isEditPictureMode, setIsEditPictureMode] = useState(false)
 
-  const schema = z.object({
-    answer: z.string().min(3),
-    question: z.string().min(3),
-  })
-
-  type FormValues = z.input<typeof schema>
-
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<FormValues>({
-    mode: 'onSubmit',
-    resolver: zodResolver(schema),
-    defaultValues: {
-      answer: '',
-      question: '',
-    },
-  })
-  const [createCardInDeck] = useCreateCardInDeckMutation()
-
-  const formRef = useRef<HTMLFormElement | null>(null)
-
-  const handleFormSubmitted = handleSubmit(values => {
-    onAddNewCard(values.question, values.answer)
-    reset()
-    props.setOpen(false)
-  })
-
-  // on submit form emulation
-  const onSubmitEmulation = () => {
-    if (!formRef.current) return
-    formRef.current.submit = handleFormSubmitted
-    formRef.current.submit()
-  }
-
-  const onAddNewCard = (question: string, answer: string) => {
-    if (!question || !answer || !props.deckId) return
-    createCardInDeck({
-      deckId: props.deckId,
-      data: {
-        question,
-        answer,
-      },
-    })
-    props.setOpen(false)
-  }
-
-  const onClose = () => {
-    reset()
-    props.setOpen(false)
-  }
-
-  const setDialogVariantCallback = (value: string) => {
-    setValue(value)
-  }
-
-  // create the image with a src of the base64 string
-  const createImage = (url: string): Promise<CanvasImageSource> =>
-    new Promise((resolve, reject) => {
-      const image = new Image()
-
-      image.addEventListener('load', () => resolve(image))
-      image.addEventListener('error', error => reject(error))
-      image.setAttribute('crossOrigin', 'anonymous')
-      image.src = url
+    const schema = z.object({
+        answer: z.string().min(3),
+        question: z.string().min(3),
     })
 
-  const getCroppedImg = async (imageSrc: string, crop: CropType): Promise<string> => {
-    const image = await createImage(imageSrc)
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+    type FormValues = z.input<typeof schema>
 
-    canvas.width = canvaWidth
-    canvas.height = canvaHeight
-
-    ctx &&
-      ctx.drawImage(
-        image,
-        crop.x,
-        crop.y,
-        crop.width,
-        crop.height,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      )
-
-    return canvas.toDataURL('image/jpeg')
-  }
-
-  const onCropImg = async () => {
-
-    if (cropArea && inputImg) {
-      console.log('cropArea', cropArea)
-      const img = await getCroppedImg(inputImg, cropArea)
-
-      setCropImg(img)
-    }
-  }
-
-  const onCropComplete = useCallback(
-      (croppedArea: Area, croppedAreaPixels: Area) => {
-        setCropArea({
-          x: croppedAreaPixels.x,
-          y: croppedAreaPixels.y,
-          width: croppedAreaPixels.width,
-          height: croppedAreaPixels.height
-        })
-      },
-      []
-  )
-
-  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
-
-      const reader = new FileReader()
-
-      reader.addEventListener(
-        'load',
-        () => {
-          setInputImg(reader.result as string)
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: {errors},
+    } = useForm<FormValues>({
+        mode: 'onSubmit',
+        resolver: zodResolver(schema),
+        defaultValues: {
+            answer: '',
+            question: '',
         },
-        false
-      )
-      if (file) {
-        reader.readAsDataURL(file)
-      }
+    })
+    const [createCardInDeck] = useCreateCardInDeckMutation()
+
+    const formRef = useRef<HTMLFormElement | null>(null)
+
+    const handleFormSubmitted = handleSubmit(values => {
+        onAddNewCard(values.question, values.answer)
+        reset()
+        props.setOpen(false)
+    })
+
+    // on submit form emulation
+    const onSubmitEmulation = () => {
+        if (!formRef.current) return
+        formRef.current.submit = handleFormSubmitted
+        formRef.current.submit()
     }
-  }
 
-  const sliderChangeHandler = (newValue: number[]) => {
-    setZoom(newValue[0])
-    setSliderValue(newValue)
-  }
+    const onAddNewCard = (question: string, answer: string) => {
+        if (!question || !answer || !props.deckId) return
+        createCardInDeck({
+            deckId: props.deckId,
+            data: {
+                question,
+                answer,
+            },
+        })
+        props.setOpen(false)
+    }
 
-  const onCropChange = (location: Point) => {
-    setCrop(location)
-  }
+    const onClose = () => {
+        reset()
+        props.setOpen(false)
+    }
 
-  function onZoomChange(value: number) {
-    setZoom(value)
-    setSliderValue([value])
-  }
+    const setDialogVariantCallback = (value: string) => {
+        setValue(value)
+    }
 
-  return (
-    <DialogsCommon
-      title={'Add New Card'}
-      open={props.open}
-      setOpen={onClose}
-      onButtonAction={onSubmitEmulation}
-      actionButtonText={'Add New Card'}
-      isButtonDisable={Object.keys(errors).length > 0}
-    >
-      <div className={sC.DialogDescription}>
-        <div className={sC.dialogElement}>
-          <Select
-            options={arr}
-            onChangeOption={setDialogVariantCallback}
-            label={'Choose a question format'}
-            isGreyColor={true}
-            name={'dialogSelect'}
-            value={value}
-          />
-        </div>
-        {value === 'Text' ? (
-          <>
-            <form ref={formRef}>
-              <div className={sC.textFieldContainer}>
-                <div className={sC.element}>
-                  <ControlledTextField
-                    name={'question'}
-                    placeholder={'type a question'}
-                    label={'Question'}
-                    control={control}
-                  />
+    // create the image with a src of the base64 string
+    const createImage = (url: string): Promise<CanvasImageSource> =>
+        new Promise((resolve, reject) => {
+            const image = new Image()
+
+            image.addEventListener('load', () => resolve(image))
+            image.addEventListener('error', error => reject(error))
+            image.setAttribute('crossOrigin', 'anonymous')
+            image.src = url
+        })
+
+    const getCroppedImg = async (imageSrc: string, crop: CropType): Promise<string> => {
+        const image = await createImage(imageSrc)
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+
+        canvas.width = canvaWidth
+        canvas.height = canvaHeight
+
+        ctx &&
+        ctx.drawImage(
+            image,
+            crop.x,
+            crop.y,
+            crop.width,
+            crop.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        )
+
+        return canvas.toDataURL('image/jpeg')
+    }
+
+    const onCropImg = async () => {
+
+        if (cropArea && inputImg) {
+            console.log('cropArea', cropArea)
+            const img = await getCroppedImg(inputImg, cropArea)
+
+            setCropImg(img)
+        }
+    }
+
+    const onCropComplete = useCallback(
+        (croppedArea: Area, croppedAreaPixels: Area) => {
+            setCropArea({
+                x: croppedAreaPixels.x,
+                y: croppedAreaPixels.y,
+                width: croppedAreaPixels.width,
+                height: croppedAreaPixels.height
+            })
+        },
+        []
+    )
+
+    const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0]
+
+            const reader = new FileReader()
+
+            reader.addEventListener(
+                'load',
+                () => {
+                    setInputImg(reader.result as string)
+                },
+                false
+            )
+            if (file) {
+                reader.readAsDataURL(file)
+            }
+        }
+    }
+
+    const sliderChangeHandler = (newValue: number[]) => {
+        setZoom(newValue[0])
+        setSliderValue(newValue)
+    }
+
+    const onCropChange = (location: Point) => {
+        setCrop(location)
+    }
+
+    function onZoomChange(value: number) {
+        setZoom(value)
+        setSliderValue([value])
+    }
+
+    return (
+        <DialogsCommon
+            title={'Add New Card'}
+            open={props.open}
+            setOpen={onClose}
+            onButtonAction={onSubmitEmulation}
+            actionButtonText={'Add New Card'}
+            isButtonDisable={Object.keys(errors).length > 0}
+        >
+            <div className={sC.DialogDescription}>
+                <div className={sC.dialogElement}>
+                    <Select
+                        options={arr}
+                        onChangeOption={setDialogVariantCallback}
+                        label={'Choose a question format'}
+                        isGreyColor={true}
+                        name={'dialogSelect'}
+                        value={value}
+                    />
                 </div>
-              </div>
-              <div className={sC.textFieldContainer}>
-                <div className={sC.element}>
-                  <ControlledTextField
-                    name={'answer'}
-                    placeholder={'type an answer'}
-                    label={'Answer'}
-                    control={control}
-                  />
-                </div>
-              </div>
-            </form>
-          </>
-        ) : (
-          <>
-            <Typography variant={'Body_2'}>Question:</Typography>
-            <div className={s.dummyQuestionAnswer}>Plz select question img</div>
-            <Button variant="secondary" onClick={() => {alert('on open edit select question img')}} className={s.button}>
-              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon} />
-              Change cover
-            </Button>
-            <Typography variant={'Body_2'}>Answer:</Typography>
-            <div className={s.dummyQuestionAnswer}>Plz select answer img</div>
-            <Button variant="secondary" onClick={() => {alert('on open edit select answer img')}} className={s.button}>
-              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
-              Change cover
-            </Button>
-           {/* <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileChange} />
-            <div className={s.uploadContainer}>
-              <div className={s.imgContainer}>
-                {inputImg ? (
-                  <Cropper
-                    image={inputImg}
-                    crop={crop}
-                    zoom={zoom}
-                    cropSize={{ width: 484, height: 119 }}
-                    onCropChange={onCropChange}
-                    onCropComplete={onCropComplete}
-                    onZoomChange={onZoomChange}
-                    minZoom={minSliderValue}
-                    maxZoom={maxSliderValue}
-                    zoomSpeed={sliderStep * 2}
-                  />
+                {value === 'Text' ? (
+                    <>
+                        <form ref={formRef}>
+                            <div className={sC.textFieldContainer}>
+                                <div className={sC.element}>
+                                    <ControlledTextField
+                                        name={'question'}
+                                        placeholder={'type a question'}
+                                        label={'Question'}
+                                        control={control}
+                                    />
+                                </div>
+                            </div>
+                            <div className={sC.textFieldContainer}>
+                                <div className={sC.element}>
+                                    <ControlledTextField
+                                        name={'answer'}
+                                        placeholder={'type an answer'}
+                                        label={'Answer'}
+                                        control={control}
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </>
                 ) : (
-                  <div className={s.dummyImg}>Select question picture</div>
+                    <>
+                        {
+                            !isEditPictureMode
+                                ? <>
+                                    <Typography variant={'Body_2'}>Question:</Typography>
+                                    <div className={s.dummyQuestionAnswer}>Plz select question img</div>
+                                    <Button variant="secondary" onClick={() => {
+                                        setIsEditPictureMode(true)
+                                    }} className={s.button}>
+                                        <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
+                                        Change cover
+                                    </Button>
+                                    <Typography variant={'Body_2'}>Answer:</Typography>
+                                    <div className={s.dummyQuestionAnswer}>Plz select answer img</div>
+                                    <Button variant="secondary" onClick={() => {
+                                        alert('on open edit select answer img')
+                                    }} className={s.button}>
+                                        <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
+                                        Change cover
+                                    </Button>
+                                </>
+                                : <>
+                                    {!cropImg && <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileChange}/> }
+                                    <div className={s.uploadContainer}>
+
+                                        {inputImg ? (
+                                            !cropImg
+                                                ? <>
+                                                    <div className={s.imgContainer}>
+                                                        <Cropper
+                                                            image={inputImg}
+                                                            crop={crop}
+                                                            zoom={zoom}
+                                                            cropSize={{width: 484, height: 119}}
+                                                            onCropChange={onCropChange}
+                                                            onCropComplete={onCropComplete}
+                                                            onZoomChange={onZoomChange}
+                                                            minZoom={minSliderValue}
+                                                            maxZoom={maxSliderValue}
+                                                            zoomSpeed={sliderStep * 2}
+                                                        />
+
+                                                    </div>
+                                                    <SliderSingle
+                                                        defaultValue={minSliderValue}
+                                                        min={minSliderValue}
+                                                        max={maxSliderValue}
+                                                        step={sliderStep}
+                                                        value={sliderValue[0]}
+                                                        onValueChange={sliderChangeHandler}
+                                                    />
+                                                </>
+                                                : <img className={s.croppedImg} src={cropImg} alt="cropImg"/>
+
+                                        ) : (
+                                            <div className={s.dummyImg}>Select question picture</div>
+                                        )}
+                                    </div>
+
+                                    <div className={s.uploadContainer}>
+                                        <Button onClick={onCropImg}>Approve</Button>
+                                        <Button onClick={() => {
+                                            setCropImg(null)
+
+                                        }}>Change picture</Button>
+                                    </div>
+                                </>
+                        }
+                    </>
                 )}
-              </div>
-              {inputImg && (
-                <>
-                  <SliderSingle
-                    defaultValue={minSliderValue}
-                    min={minSliderValue}
-                    max={maxSliderValue}
-                    step={sliderStep}
-                    value={sliderValue[0]}
-                    onValueChange={sliderChangeHandler}
-                  />
-                </>
-              )}
             </div>
-            <div className={s.uploadContainer}>
-              <div className={s.imgContainer}>
-                {cropImg ? (
-                  <img className={s.croppedImg} src={cropImg} alt="cropImg" />
-                ) : (
-                  <div className={s.dummyImg}>cropped dummy</div>
-                )}
-              </div>
-              <Button onClick={onCropImg}>Approve</Button>
-            </div>*/}
-
-          </>
-        )}
-      </div>
-    </DialogsCommon>
-  )
+        </DialogsCommon>
+    )
 }
 
 type PropsType = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  deckId: string
+    open: boolean
+    setOpen: Dispatch<SetStateAction<boolean>>
+    deckId: string
 }
 
 
 type CropType = {
-  x: number
-  y: number
-  width: number
-  height: number
+    x: number
+    y: number
+    width: number
+    height: number
 }
 
 //todo: maybe reduce code duplication with DialogAddPack
