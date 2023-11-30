@@ -35,8 +35,8 @@ export const DialogAddNewCard = (props: PropsType) => {
   const [zoomAnswer, setZoomAnswer] = useState(minSliderValue) // for img upload
   const [cropQuestionArea, setCropQuestionArea] = useState<null | CropType>(null) // for img upload
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null) // for img upload
-  const [cropQuestionImg, setCropQuestionImg] = useState<string | null>(null)
-  const [cropAnswerImg, setCropAnswerImg] = useState<string | null>(null)
+  const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
+  const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
   const [sliderQuestionValue, setSliderQuestionValue] = useState<number[]>([minSliderValue])
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
@@ -86,6 +86,8 @@ export const DialogAddNewCard = (props: PropsType) => {
       data: {
         question,
         answer,
+        questionImg: cropQuestionImg,
+        answerImg: cropAnswerImg
       },
     })
     props.setOpen(false)
@@ -93,6 +95,8 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   const onClose = () => {
     reset()
+    setCropQuestionImg(undefined)
+    setCropAnswerImg(undefined)
     props.setOpen(false)
   }
 
