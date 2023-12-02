@@ -30,6 +30,7 @@ export const baseQueryWithReauth: BaseQueryFn<
         extraOptions
       )
 
+      console.log(refreshResult)
       if (refreshResult?.meta?.response?.status === 204) {
         // retry the initial query
         result = await baseQuery(args, api, extraOptions)

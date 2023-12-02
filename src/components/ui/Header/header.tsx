@@ -51,11 +51,11 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
           <div className={s.containerNameAva}>
             <div className={s.name}>{me && me.name}</div>
             <DropDownMenu
-              trigger={<Avatar urlAdress={me.avatar ? me.avatar : defaultAva} />}
+              trigger={<Avatar urlAdress={me?.avatar ? me.avatar : defaultAva} />}
               align={'end'}
             >
               <DropdownItemWithAvatar
-                trigger={<Avatar urlAdress={me.avatar ? me.avatar : defaultAva} />}
+                trigger={<Avatar urlAdress={me?.avatar ? me.avatar : defaultAva} />}
               >
                 <Typography variant={'Subtitle_2'} className={s.userName}>
                   {me && me.name}
