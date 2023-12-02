@@ -1,4 +1,4 @@
-import { ComponentProps, FC, useEffect, useState } from 'react'
+import { ComponentProps, FC } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
@@ -23,14 +23,9 @@ export type HeaderProps = ComponentProps<'header'>
 
 export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
   const { data: me } = useGetMeQuery()
+  const isLoggedIn = me && me.success !== false
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (me && me?.success === false) setIsLoggedIn(false)
-    else setIsLoggedIn(true)
-  }, [me])
 
   const classNames = {
     header: clsx(s.header, className),
