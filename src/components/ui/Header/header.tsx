@@ -2,7 +2,7 @@ import { ComponentProps, FC } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
 
@@ -60,13 +60,16 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                 </Typography>
               </DropdownItemWithAvatar>
               <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-              <DropdownItemWithIcon
-                icon={<Person color={'var(--color-light-100)'} className={s.icons} />}
-                className={s.dropDownMenuItem}
-                title={'My Profile'}
-                onClick={onClickHandler}
-                onSelect={() => {}}
-              />
+              <Link to={'/personal-information'}>
+                <DropdownItemWithIcon
+                  icon={<Person color={'var(--color-light-100)'} className={s.icons} />}
+                  className={s.dropDownMenuItem}
+                  title={'My Profile'}
+                  onClick={onClickHandler}
+                  onSelect={() => {}}
+                />
+              </Link>
+
               <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
               <DropdownItemWithIcon
                 icon={<Logout color={'var(--color-light-100)'} className={s.icons} />}
