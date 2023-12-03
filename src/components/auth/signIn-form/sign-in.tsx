@@ -21,8 +21,6 @@ const schema = z.object({
 type FormValues = z.input<typeof schema>
 
 export const SignIn = (props: PropsType) => {
-  const navigate = useNavigate()
-
   const {
     handleSubmit,
     control,
@@ -72,7 +70,7 @@ export const SignIn = (props: PropsType) => {
             className={sC.checkbox}
             position={'left'}
           />
-          <Button variant="link" className={sC.right} onClick={() => navigate('/recover-password')}>
+          <Button variant="link" as={'a'} href={'/recover-password'} className={sC.right}>
             Forgot Password?
           </Button>
           <Button type="submit" className={sC.button}>
@@ -85,7 +83,8 @@ export const SignIn = (props: PropsType) => {
             type="button"
             variant="link"
             className={clsx(sC.center, sC.signUp)}
-            onClick={() => navigate('/sign-up')}
+            as={'a'}
+            href={'/sign-up'}
           >
             Sign Up
           </Button>

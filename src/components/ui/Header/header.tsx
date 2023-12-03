@@ -2,7 +2,7 @@ import { ComponentProps, FC } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import s from './header.module.scss'
 
@@ -25,18 +25,16 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
   const { data: me } = useGetMeQuery()
   const isLoggedIn = me && me.success !== false
 
-  const navigate = useNavigate()
-
   const classNames = {
     header: clsx(s.header, className),
   }
 
   const [logout] = useLogoutMutation()
 
-  const onClickHandler = (e: any) => {
-    e.preventDefault()
-    navigate('/personal-information')
-  }
+  // const onClickHandler = (e: any) => {
+  //   e.preventDefault()
+  //   navigate('/personal-information')
+  // }
 
   return (
     <header className={classNames.header} {...rest}>
@@ -65,21 +63,24 @@ export const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                   icon={<Person color={'var(--color-light-100)'} className={s.icons} />}
                   className={s.dropDownMenuItem}
                   title={'My Profile'}
-                  onClick={onClickHandler}
+                  // onClick={onClickHandler}
+                  onClick={() => {}}
                   onSelect={() => {}}
                 />
               </Link>
 
               <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
+              {/*<Link to={'/login'}>*/}
               <DropdownItemWithIcon
                 icon={<Logout color={'var(--color-light-100)'} className={s.icons} />}
                 title={'Sign Out'}
                 onClick={() => logout()}
               />
+              {/*</Link>*/}
             </DropDownMenu>
           </div>
         ) : (
-          <Button className={s.button} variant="primary" onClick={() => navigate('/login')}>
+          <Button className={s.button} as={'a'} href={'/login'} variant="primary">
             <Vector />
             Sign In
           </Button>
