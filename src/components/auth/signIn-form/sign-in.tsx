@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import { Card } from '../../ui/Card'
