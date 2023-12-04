@@ -1,47 +1,47 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
-import { useNavigate, useParams } from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 import s from './cards-page.module.scss'
 
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
-import { Edit } from '@/assets/icons/Edit.tsx'
-import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
+import {Edit} from '@/assets/icons/Edit.tsx'
+import {TrashHollow} from '@/assets/icons/TrashHollow.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
-import { CardsOrderByType, SelectedCardType, SelectedCardUpdateType } from '@/common/types.ts'
-import { paginationSelectValues } from '@/common/values.ts'
-import { Button } from '@/components/ui/Button'
-import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
-import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
-import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
-import { Pagination } from '@/components/ui/Pagination'
-import { Grade } from '@/components/ui/Rating/rating.tsx'
-import { Column, Table } from '@/components/ui/Table'
-import { Typography } from '@/components/ui/Typography'
-import { useAppDispatch, useAppSelector } from '@/hooks.ts'
-import { useGetMeQuery } from '@/services/auth/auth.service.ts'
+import {CardsOrderByType, SelectedCardType, SelectedCardUpdateType} from '@/common/types.ts'
+import {paginationSelectValues} from '@/common/values.ts'
+import {Button} from '@/components/ui/Button'
+import {DialogAddNewCard} from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
+import {DialogRemoveCard} from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
+import {DialogUpdateCard} from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
+import {Pagination} from '@/components/ui/Pagination'
+import {Grade} from '@/components/ui/Rating/rating.tsx'
+import {Column, Table} from '@/components/ui/Table'
+import {Typography} from '@/components/ui/Typography'
+import {useAppDispatch, useAppSelector} from '@/hooks.ts'
+import {useGetMeQuery} from '@/services/auth/auth.service.ts'
 import {
   setCardId,
   setCardsItemsPerPage,
   setCardsOrderBy,
   updateCardsCurrentPage,
 } from '@/services/cards/cards.slice.ts'
-import { Sort } from '@/services/common/types.ts'
-import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
+import {Sort} from '@/services/common/types.ts'
+import {useGetCardsInDeckQuery, useGetDeckByIdQuery} from '@/services/decks/decks.service.ts'
 
 export const CardsPage = () => {
-  const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
+  const {currentPage, itemsPerPage, orderBy} = useAppSelector(state => state.cards)
 
-  let { deckId } = useParams()
-  const { data } = useGetDeckByIdQuery({ id: deckId ? deckId : '' })
-  const { data: cards } = useGetCardsInDeckQuery({
+  let {deckId} = useParams()
+  const {data} = useGetDeckByIdQuery({id: deckId ? deckId : ''})
+  const {data: cards} = useGetCardsInDeckQuery({
     itemsPerPage: +itemsPerPage,
     id: deckId ? deckId : '',
     currentPage,
     orderBy,
   })
-  const { data: me } = useGetMeQuery()
+  const {data: me} = useGetMeQuery()
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
@@ -114,11 +114,11 @@ export const CardsPage = () => {
 
   const onSelectCardForDel = (id: string, question: string) => {
     setIsDeleteDialogOpen(true)
-    setSelectedCard({ id, question })
+    setSelectedCard({id, question})
   }
   const onSelectCardForUpdate = (id: string, question: string, answer: string) => {
     setIsUpdateDialogOpen(true)
-    setSelectedForUpdateCard({ id, question, answer })
+    setSelectedForUpdateCard({id, question, answer})
   }
   const updateCardsCurrentPageCallback = (page: number | string) => {
     dispatch(updateCardsCurrentPage(+page))
@@ -153,7 +153,7 @@ export const CardsPage = () => {
         deckId={deckId ? deckId : ''}
       />
       <div className={s.arrowContainer} onClick={onArrowLeft}>
-        <img src={arrowLeft} alt="arrowLeft" />
+        <img src={arrowLeft} alt="arrowLeft"/>
         <span className={s.text}>Back to Packs List</span>
       </div>
       <div className={sT.topContainer}>
@@ -182,17 +182,19 @@ export const CardsPage = () => {
         <>
           <div className={sT.container}>
             <Table.Root className={sT.tableContainer}>
-              <Table.Header columns={columns} onSort={setSort} sort={sort} />
+              <Table.Header columns={columns} onSort={setSort} sort={sort}/>
               <Table.Body>
                 {cards &&
                   cards.items.map(data => {
                     return (
                       <Table.Row key={data.id}>
-                        <Table.Cell>{data.question}</Table.Cell>
-                        <Table.Cell>{data.answer}</Table.Cell>
+                        <Table.Cell>{data.questionImg && <img src={data.questionImg} alt={'questionImg'}
+                                                              className={sT.imgInCell}/>} <br/> {data.question}</Table.Cell>
+                        <Table.Cell>{data.answerImg && <img src={data.answerImg} alt={'answerImg'}
+                                                            className={sT.imgInCell}/>} <br/> {data.answer}</Table.Cell>
                         <Table.Cell>{data.updated}</Table.Cell>
                         <Table.Cell>
-                          <Grade value={data.grade} />
+                          <Grade value={data.grade}/>
                         </Table.Cell>
                         <Table.Cell>
                           <div className={sT.iconContainer}>
@@ -201,22 +203,24 @@ export const CardsPage = () => {
                               onClick={
                                 !isEditBlocked
                                   ? () => onSelectCardForUpdate(data.id, data.question, data.answer)
-                                  : () => {}
+                                  : () => {
+                                  }
                               }
                               className={cursorByEdit()}
                             >
-                              <Edit color={colorByEdit()} />
+                              <Edit color={colorByEdit()}/>
                             </Button>
                             <Button
                               variant={'link'}
                               onClick={
                                 !isEditBlocked
                                   ? () => onSelectCardForDel(data.id, data.question)
-                                  : () => {}
+                                  : () => {
+                                  }
                               }
                               className={cursorByEdit()}
                             >
-                              <TrashHollow color={colorByEdit()} />
+                              <TrashHollow color={colorByEdit()}/>
                             </Button>
                           </div>
                         </Table.Cell>

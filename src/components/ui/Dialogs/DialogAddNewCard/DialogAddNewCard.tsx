@@ -79,6 +79,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     formRef.current.submit()
   }
   const fromBase64 = (url: string) => {
+   //todo: fix File name
    const ext =url.split(';')[0].split('/')[1]
     return fetch(url)
       .then(res => res.blob())
@@ -87,25 +88,20 @@ export const DialogAddNewCard = (props: PropsType) => {
       })
   }
 
-  const fromBase642 = new File([
-    new Blob(["decoded_base64_String"])
-  ], "output_file_name");
-
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
     const formData = new FormData()
-    const quistionImg = await fromBase64(cropQuestionImg)
-    const quistionImgAns = await fromBase64(cropAnswerImg)
+    const questionImg = await fromBase64(cropQuestionImg)
+    const answerImg = await fromBase64(cropAnswerImg)
 
-    console.log(quistionImg)
     formData.append('question', question)
     formData.append('answer', answer)
     // formData.append('questionImg', cropQuestionImg)
     if (cropQuestionImg) {
-      formData.append('questionImg', quistionImg)
+      formData.append('questionImg', questionImg)
     }
     if (cropAnswerImg) {
-      formData.append('answerImg', quistionImgAns)
+      formData.append('answerImg', answerImg)
     }
     createCardInDeck({
       deckId: props.deckId,
@@ -144,7 +140,6 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   const getCroppedImg = async (imageSrc: string, crop: CropType): Promise<string> => {
     const image = await createImage(imageSrc)
-    debugger
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
