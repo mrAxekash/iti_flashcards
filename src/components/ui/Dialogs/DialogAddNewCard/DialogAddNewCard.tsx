@@ -17,6 +17,8 @@ import {Typography} from '@/components/ui/Typography'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import imgUpload from '@/assets/icons/imgUpload.svg'
 import sT from "@/common/commonStyles/tables.module.scss"
+import {fromBase64, onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/cropFunctions.ts"
+import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/CropTypes.ts"
 
 export const DialogAddNewCard = (props: PropsType) => {
   const minSliderValue = 4
@@ -78,16 +80,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     formRef.current.submit = handleFormSubmitted
     formRef.current.submit()
   }
-  const fromBase64 = (url: string) => {
-   //todo: fix File name
-    if (url.length === 0) return
-   const ext = url.split(';')[0].split('/')[1]
-    return fetch(url)
-      .then(res => res.blob())
-      .then(blob => {
-        return new File([blob], `File name.${ext}`,{ type: `image/${ext}` })
-      })
-  }
+
 
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
@@ -105,12 +98,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     }
     createCardInDeck({
       deckId: props.deckId,
-      /*data: {
-        question,
-        answer,
-        questionImg: cropQuestionImg,
-        answerImg: cropAnswerImg
-      },*/
       formData
     })
     props.setOpen(false)
@@ -125,60 +112,6 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   const setDialogVariantCallback = (value: string) => {
     setValue(value)
-  }
-
-  // create the image with a src of the base64 string
-  const createImage = (url: string): Promise<CanvasImageSource> =>
-    new Promise((resolve, reject) => {
-      const image = new Image()
-
-      image.addEventListener('load', () => resolve(image))
-      image.addEventListener('error', error => reject(error))
-      image.setAttribute('crossOrigin', 'anonymous')
-      image.src = url
-    })
-
-  const getCroppedImg = async (imageSrc: string, crop: CropType): Promise<string> => {
-    const image = await createImage(imageSrc)
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-
-    canvas.width = canvaWidth
-    canvas.height = canvaHeight
-
-    ctx &&
-    ctx.drawImage(
-      image,
-      crop.x,
-      crop.y,
-      crop.width,
-      crop.height,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    )
-
-    return canvas.toDataURL('image/jpeg')
-  }
-
-  const onCropQuestionImg = async () => {
-
-    if (cropQuestionArea && inputQuestionImg) {
-      const img = await getCroppedImg(inputQuestionImg, cropQuestionArea)
-
-      setCropQuestionImg(img)
-      fromBase64(img)
-    }
-  }
-
-  const onCropAnswerImg = async () => {
-
-    if (cropAnswerArea && inputAnswerImg) {
-      const img = await getCroppedImg(inputAnswerImg, cropAnswerArea)
-
-      setCropAnswerImg(img)
-    }
   }
 
   const onCropQuestionComplete = useCallback(
@@ -273,13 +206,13 @@ export const DialogAddNewCard = (props: PropsType) => {
 
   function onApproveQuestion() {
     setIsEditQuestionPicture(false)
-    onCropQuestionImg()
+    onCrop(cropQuestionArea, inputQuestionImg, canvaWidth, canvaHeight, setCropQuestionImg)
       .then()
   }
 
   function onApproveAnswer() {
     setIsEditAnswerPicture(false)
-    onCropAnswerImg()
+    onCrop(cropAnswerArea, inputAnswerImg, canvaWidth, canvaHeight, setCropAnswerImg)
       .then()
   }
 
@@ -441,14 +374,6 @@ type PropsType = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   deckId: string
-}
-
-
-type CropType = {
-  x: number
-  y: number
-  width: number
-  height: number
 }
 
 //todo: refactor: separate crop functions to another file, combine question & answer to component with variant
