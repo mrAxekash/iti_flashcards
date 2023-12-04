@@ -80,7 +80,8 @@ export const DialogAddNewCard = (props: PropsType) => {
   }
   const fromBase64 = (url: string) => {
    //todo: fix File name
-   const ext =url.split(';')[0].split('/')[1]
+    if (url.length === 0) return
+   const ext = url.split(';')[0].split('/')[1]
     return fetch(url)
       .then(res => res.blob())
       .then(blob => {
@@ -91,16 +92,15 @@ export const DialogAddNewCard = (props: PropsType) => {
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
     const formData = new FormData()
-    const questionImg = await fromBase64(cropQuestionImg)
-    const answerImg = await fromBase64(cropAnswerImg)
+    const questionImg = await fromBase64( cropQuestionImg ? cropQuestionImg : '')
+    const answerImg = await fromBase64( cropAnswerImg ? cropAnswerImg : '')
 
     formData.append('question', question)
     formData.append('answer', answer)
-    // formData.append('questionImg', cropQuestionImg)
-    if (cropQuestionImg) {
+    if (questionImg) {
       formData.append('questionImg', questionImg)
     }
-    if (cropAnswerImg) {
+    if (answerImg) {
       formData.append('answerImg', answerImg)
     }
     createCardInDeck({
