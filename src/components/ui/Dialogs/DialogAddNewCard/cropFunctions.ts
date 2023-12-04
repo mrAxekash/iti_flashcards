@@ -1,4 +1,5 @@
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/CropTypes.ts"
+import {ChangeEvent} from "react"
 
 export const fromBase64 = (url: string) => {
   //todo: fix fileName
@@ -9,7 +10,7 @@ export const fromBase64 = (url: string) => {
   return fetch(url)
     .then(res => res.blob())
     .then(blob => {
-      return new File([blob], `fileName.${ext}`,{ type: `image/${ext}` })
+      return new File([blob], `fileName.${ext}`, {type: `image/${ext}`})
     })
 }
 
@@ -48,10 +49,34 @@ export const getCroppedImg = async (imageSrc: string, crop: CropType, canvaWidth
   return canvas.toDataURL('image/jpeg')
 }
 
-export const onCrop = async (cropArea: CropType | null, inputImg: undefined | string, canvaWidth: number, canvaHeight: number, cropCallback: (img: string) => void) => {
+export const onCrop = async (
+  cropArea: CropType | null,
+  inputImg: undefined | string,
+  canvaWidth: number,
+  canvaHeight: number,
+  cropCallback: (img: string) => void) => {
   if (cropArea && inputImg) {
     const img = await getCroppedImg(inputImg, cropArea, canvaWidth, canvaHeight)
 
     cropCallback(img)
+  }
+}
+
+export const onFileChange = async (e: ChangeEvent<HTMLInputElement>, setImgCallback: (img: string) => void) => {
+  if (e.target.files && e.target.files.length > 0) {
+    const file = e.target.files[0]
+
+    const reader = new FileReader()
+
+    reader.addEventListener(
+      'load',
+      () => {
+        setImgCallback(reader.result as string)
+      },
+      false
+    )
+    if (file) {
+      reader.readAsDataURL(file)
+    }
   }
 }

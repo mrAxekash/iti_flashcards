@@ -17,7 +17,7 @@ import {Typography} from '@/components/ui/Typography'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import imgUpload from '@/assets/icons/imgUpload.svg'
 import sT from "@/common/commonStyles/tables.module.scss"
-import {fromBase64, onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/cropFunctions.ts"
+import {fromBase64, onCrop, onFileChange} from "@/components/ui/Dialogs/DialogAddNewCard/cropFunctions.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/CropTypes.ts"
 
 export const DialogAddNewCard = (props: PropsType) => {
@@ -138,42 +138,12 @@ export const DialogAddNewCard = (props: PropsType) => {
     []
   )
 
-  const onFileQuestionChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
-
-      const reader = new FileReader()
-
-      reader.addEventListener(
-        'load',
-        () => {
-          setInputQuestionImg(reader.result as string)
-        },
-        false
-      )
-      if (file) {
-        reader.readAsDataURL(file)
-      }
-    }
+  const onFileQuestionChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
+    await onFileChange(e, setInputQuestionImg)
   }
 
-  const onFileAnswerChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]
-
-      const reader = new FileReader()
-
-      reader.addEventListener(
-        'load',
-        () => {
-          setInputAnswerImg(reader.result as string)
-        },
-        false
-      )
-      if (file) {
-        reader.readAsDataURL(file)
-      }
-    }
+  const onFileAnswerChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
+    await onFileChange(e, setInputAnswerImg)
   }
 
   const sliderQuestionChangeHandler = (newValue: number[]) => {
@@ -279,7 +249,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                   </Button>
                 </>
                 : <>
-                  {(!cropQuestionImg || isEditQuestionPicture) && <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileQuestionChange}/>}
+                  {(!cropQuestionImg || isEditQuestionPicture) && <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileQuestionChangeCallback}/>}
                   {inputQuestionImg
                     ? <>
                       <div className={s.imgContainer}>
@@ -329,7 +299,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                   </Button>
                 </>
               :  <>
-                  {(!cropAnswerImg || isEditAnswerPicture) && <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileAnswerChange}/>}
+                  {(!cropAnswerImg || isEditAnswerPicture) && <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileAnswerChangeCallback}/>}
                   {inputAnswerImg
                     ? <>
                       <div className={s.imgContainer}>
