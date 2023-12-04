@@ -11,8 +11,6 @@
     position: relative;
     @include mixins.imgUploadSize;
 
-
-
     .croppedImg {
         //margin-top: 5px;
         @include mixins.imgUploadSize;
