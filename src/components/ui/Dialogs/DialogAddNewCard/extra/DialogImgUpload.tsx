@@ -9,7 +9,7 @@ import {ChangeEvent, useCallback, useState} from "react"
 import {onCrop, onFileChange} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 
-export const PictureUploadMode = (props: PropsType) => {
+export const DialogImgUpload = (props: PropsType) => {
   const canvaWidth = 484
   const canvaHeight = 119
   const minSliderValue = 4
@@ -18,17 +18,15 @@ export const PictureUploadMode = (props: PropsType) => {
 
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
-  // const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
-  // const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
   const [inputAnswerImg, setInputAnswerImg] = useState<undefined | string>(undefined)
   const [inputQuestionImg, setInputQuestionImg] = useState<undefined | string>(undefined)
-  const [cropQuestion, setCropQuestion] = useState<Point>({x: 0, y: 0}) // for img upload
-  const [zoomQuestion, setZoomQuestion] = useState(minSliderValue) // for img upload
-  const [cropQuestionArea, setCropQuestionArea] = useState<null | CropType>(null) // for img upload
+  const [cropQuestion, setCropQuestion] = useState<Point>({x: 0, y: 0})
+  const [zoomQuestion, setZoomQuestion] = useState(minSliderValue)
+  const [cropQuestionArea, setCropQuestionArea] = useState<null | CropType>(null)
   const [sliderQuestionValue, setSliderQuestionValue] = useState<number[]>([minSliderValue])
-  const [cropAnswer, setCropAnswer] = useState<Point>({x: 0, y: 0}) // for img upload
-  const [zoomAnswer, setZoomAnswer] = useState(minSliderValue) // for img upload
-  const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null) // for img upload
+  const [cropAnswer, setCropAnswer] = useState<Point>({x: 0, y: 0})
+  const [zoomAnswer, setZoomAnswer] = useState(minSliderValue)
+  const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null)
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
 
   const onFileQuestionChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +62,7 @@ export const PictureUploadMode = (props: PropsType) => {
   }
 
   const onCropAnswerComplete = useCallback(
+    // @ts-ignore
     (croppedArea: Area, croppedAreaPixels: Area) => {
       setCropAnswerArea({
         x: croppedAreaPixels.x,
@@ -76,6 +75,7 @@ export const PictureUploadMode = (props: PropsType) => {
   )
 
   const onCropQuestionComplete = useCallback(
+    // @ts-ignore
     (croppedArea: Area, croppedAreaPixels: Area) => {
       setCropQuestionArea({
         x: croppedAreaPixels.x,

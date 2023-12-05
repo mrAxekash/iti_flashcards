@@ -9,7 +9,7 @@ import {DialogsCommon} from '@/components/ui/Dialogs/DialogsCommon.tsx'
 import {Select} from '@/components/ui/Select'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
-import {PictureUploadMode} from "@/components/ui/Dialogs/DialogAddNewCard/extra/PictureUploadMode.tsx"
+import {DialogImgUpload} from "@/components/ui/Dialogs/DialogAddNewCard/extra/DialogImgUpload.tsx"
 
 export const DialogAddNewCard = (props: PropsType) => {
   const [value, setValue] = useState('Text') // for select
@@ -133,7 +133,7 @@ export const DialogAddNewCard = (props: PropsType) => {
               </div>
             </form>
           </>
-        ) : <PictureUploadMode
+        ) : <DialogImgUpload
           cropQuestionImg={cropQuestionImg}
           cropAnswerImg={cropAnswerImg}
           setCropQuestionImg={setCropQuestionImg}
@@ -150,5 +150,3 @@ type PropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>
   deckId: string
 }
-
-//todo: refactor: separate crop functions to another file, combine question & answer to component with variant
