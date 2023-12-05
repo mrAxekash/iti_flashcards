@@ -6,10 +6,10 @@ import sT from "@/common/commonStyles/tables.module.scss"
 import Cropper, {Area, Point} from "react-easy-crop"
 import {SliderSingle} from "@/components/ui/SliderSingle/SliderSingle.tsx"
 import {ChangeEvent, useCallback, useState} from "react"
-import {onCrop, onFileChange} from "@/components/ui/Dialogs/DialogAddNewCard/cropFunctions.ts"
-import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/CropTypes.ts"
+import {onCrop, onFileChange} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
+import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 
-export const PictureUploadMode = () => {
+export const PictureUploadMode = (props: PropsType) => {
   const canvaWidth = 484
   const canvaHeight = 119
   const minSliderValue = 4
@@ -18,14 +18,14 @@ export const PictureUploadMode = () => {
 
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
-  const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
+  // const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
+  // const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
   const [inputAnswerImg, setInputAnswerImg] = useState<undefined | string>(undefined)
   const [inputQuestionImg, setInputQuestionImg] = useState<undefined | string>(undefined)
   const [cropQuestion, setCropQuestion] = useState<Point>({x: 0, y: 0}) // for img upload
   const [zoomQuestion, setZoomQuestion] = useState(minSliderValue) // for img upload
   const [cropQuestionArea, setCropQuestionArea] = useState<null | CropType>(null) // for img upload
   const [sliderQuestionValue, setSliderQuestionValue] = useState<number[]>([minSliderValue])
-  const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
   const [cropAnswer, setCropAnswer] = useState<Point>({x: 0, y: 0}) // for img upload
   const [zoomAnswer, setZoomAnswer] = useState(minSliderValue) // for img upload
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null) // for img upload
@@ -51,7 +51,7 @@ export const PictureUploadMode = () => {
 
   function onApproveQuestion() {
     setIsEditQuestionPicture(false)
-    onCrop(cropQuestionArea, inputQuestionImg, canvaWidth, canvaHeight, setCropQuestionImg)
+    onCrop(cropQuestionArea, inputQuestionImg, canvaWidth, canvaHeight, props.setCropQuestionImg)
       .then()
   }
 
@@ -99,7 +99,7 @@ export const PictureUploadMode = () => {
 
   function onApproveAnswer() {
     setIsEditAnswerPicture(false)
-    onCrop(cropAnswerArea, inputAnswerImg, canvaWidth, canvaHeight, setCropAnswerImg)
+    onCrop(cropAnswerArea, inputAnswerImg, canvaWidth, canvaHeight, props.setCropAnswerImg)
       .then()
   }
 
@@ -109,9 +109,9 @@ export const PictureUploadMode = () => {
       {
         !isEditQuestionPicture
           ? <>
-            {!cropQuestionImg
+            {!props.cropQuestionImg
               ? <div className={s.dummyQuestionAnswer}>Plz select question img</div>
-              : <div className={s.imgContainer}><img className={s.croppedImg} src={cropQuestionImg} alt="cropImg"/></div>
+              : <div className={s.imgContainer}><img className={s.croppedImg} src={props.cropQuestionImg} alt="cropImg"/></div>
             }
             <Button variant="secondary" onClick={() => {
               setIsEditQuestionPicture(true)
@@ -121,7 +121,7 @@ export const PictureUploadMode = () => {
             </Button>
           </>
           : <>
-            {(!cropQuestionImg || isEditQuestionPicture) &&
+            {(!props.cropQuestionImg || isEditQuestionPicture) &&
                 <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileQuestionChangeCallback}/>}
             {inputQuestionImg
               ? <>
@@ -160,9 +160,9 @@ export const PictureUploadMode = () => {
       {
         !isEditAnswerPicture
           ? <>
-            {!cropAnswerImg
+            {!props.cropAnswerImg
               ? <div className={s.dummyQuestionAnswer}>Plz select question img</div>
-              : <div className={s.imgContainer}><img className={s.croppedImg} src={cropAnswerImg} alt="cropImg"/></div>
+              : <div className={s.imgContainer}><img className={s.croppedImg} src={props.cropAnswerImg} alt="cropImg"/></div>
             }
             <Button variant="secondary" onClick={() => {
               setIsEditAnswerPicture(true)
@@ -172,7 +172,7 @@ export const PictureUploadMode = () => {
             </Button>
           </>
           : <>
-            {(!cropAnswerImg || isEditAnswerPicture) &&
+            {(!props.cropAnswerImg || isEditAnswerPicture) &&
                 <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileAnswerChangeCallback}/>}
             {inputAnswerImg
               ? <>
@@ -209,4 +209,11 @@ export const PictureUploadMode = () => {
 
     </>
   )
+}
+
+type PropsType = {
+  cropQuestionImg: string | undefined
+  cropAnswerImg: string | undefined
+  setCropQuestionImg: (value: string) => void
+  setCropAnswerImg: (value: string) => void
 }

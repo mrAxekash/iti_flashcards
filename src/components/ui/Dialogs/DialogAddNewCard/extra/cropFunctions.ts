@@ -1,4 +1,4 @@
-import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/CropTypes.ts"
+import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 import {ChangeEvent} from "react"
 
 export const fromBase64 = (url: string) => {

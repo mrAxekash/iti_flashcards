@@ -8,8 +8,8 @@ import sC from '@/components/ui/Dialogs/DialogsCommon.module.scss'
 import {DialogsCommon} from '@/components/ui/Dialogs/DialogsCommon.tsx'
 import {Select} from '@/components/ui/Select'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
-import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/cropFunctions.ts"
-import {PictureUploadMode} from "@/components/ui/Dialogs/DialogAddNewCard/PictureUploadMode.tsx"
+import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
+import {PictureUploadMode} from "@/components/ui/Dialogs/DialogAddNewCard/extra/PictureUploadMode.tsx"
 
 export const DialogAddNewCard = (props: PropsType) => {
   const [value, setValue] = useState('Text') // for select
@@ -59,8 +59,8 @@ export const DialogAddNewCard = (props: PropsType) => {
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
     const formData = new FormData()
-    const questionImg = await fromBase64( cropQuestionImg ? cropQuestionImg : '')
-    const answerImg = await fromBase64( cropAnswerImg ? cropAnswerImg : '')
+    const questionImg = await fromBase64(cropQuestionImg ? cropQuestionImg : '')
+    const answerImg = await fromBase64(cropAnswerImg ? cropAnswerImg : '')
 
     formData.append('question', question)
     formData.append('answer', answer)
@@ -133,7 +133,12 @@ export const DialogAddNewCard = (props: PropsType) => {
               </div>
             </form>
           </>
-        ) : <PictureUploadMode/>
+        ) : <PictureUploadMode
+          cropQuestionImg={cropQuestionImg}
+          cropAnswerImg={cropAnswerImg}
+          setCropQuestionImg={setCropQuestionImg}
+          setCropAnswerImg={setCropAnswerImg}
+        />
         }
       </div>
     </DialogsCommon>
