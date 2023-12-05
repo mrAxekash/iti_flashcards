@@ -108,8 +108,7 @@ export const DialogAddNewCard = (props: PropsType) => {
             value={value}
           />
         </div>
-        {value === 'Text' ? (
-          <>
+
             <form ref={formRef}>
               <div className={sC.textFieldContainer}>
                 <div className={sC.element}>
@@ -132,14 +131,13 @@ export const DialogAddNewCard = (props: PropsType) => {
                 </div>
               </div>
             </form>
-          </>
-        ) : <DialogImgUpload
+        {value === 'Picture' && <DialogImgUpload
           cropQuestionImg={cropQuestionImg}
           cropAnswerImg={cropAnswerImg}
           setCropQuestionImg={setCropQuestionImg}
           setCropAnswerImg={setCropAnswerImg}
-        />
-        }
+        /> }
+
       </div>
     </DialogsCommon>
   )
