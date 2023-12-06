@@ -9,7 +9,7 @@ import { Play } from '@/assets/icons/Play.tsx'
 import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
-import { sortStringCallback } from '@/common/services.ts'
+import {formatDate, sortStringCallback} from '@/common/functions.ts'
 import { DecksOrderByType, SelectedDeckType } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
@@ -291,8 +291,4 @@ export const DecksPage = () => {
   )
 }
 
-function formatDate(date: string | number | undefined) {
-  if (!date) return null
 
-  return new Date(date).toLocaleString('ru-RU')
-}

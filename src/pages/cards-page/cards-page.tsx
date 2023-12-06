@@ -21,7 +21,7 @@ import { Column, Table } from '@/components/ui/Table'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
-import { sortStringCallback } from '@/common/services.ts'
+import {formatDate, sortStringCallback} from '@/common/functions.ts'
 import {
   setCardId,
   setCardsItemsPerPage,
@@ -198,7 +198,7 @@ export const CardsPage = () => {
                                                               className={sT.imgInCell}/>} <br/> {data.question}</Table.Cell>
                         <Table.Cell>{data.answerImg && <img src={data.answerImg} alt={'answerImg'}
                                                             className={sT.imgInCell}/>} <br/> {data.answer}</Table.Cell>
-                        <Table.Cell>{data.updated}</Table.Cell>
+                        <Table.Cell>{formatDate(data.updated)}</Table.Cell>
                         <Table.Cell>
                           <Grade value={data.grade}/>
                         </Table.Cell>
