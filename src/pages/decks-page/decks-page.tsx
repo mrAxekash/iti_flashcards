@@ -36,6 +36,7 @@ import {
   setSearchByName,
   updateDecksCurrentPage,
 } from '@/services/decks/decks.slice.ts'
+import {Deck} from "@/services/decks/deck.types.ts"
 
 export const DecksPage = () => {
   const { itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy } =
@@ -81,14 +82,7 @@ export const DecksPage = () => {
     orderBy,
   })
 
-  const onSelectDeckForDel = (id: string, name: string) => {
-    setIsDeleteDialogOpen(true)
-    setSelectedDeck({ id, name })
-  }
-  const onSelectDeckForUpdate = (id: string, name: string, isPrivate: boolean) => {
-    setIsUpdateDialogOpen(true)
-    setSelectedDeck({ id, name, isPrivate })
-  }
+
 
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [
@@ -156,11 +150,31 @@ export const DecksPage = () => {
 
   const isEqualToMeId = (deckAuthorId: string): boolean => deckAuthorId === me.id
 
-  const cursorByAuthorId = (deckAauthorId: string) =>
-    isEqualToMeId(deckAauthorId) ? '' : sT.cursorAuto
+  const cursorByAuthorId = (deckAuthorId: string) =>
+    isEqualToMeId(deckAuthorId) ? '' : sT.cursorAuto
 
   const colorByAuthorId = (deckAauthorId: string): 'white' | 'grey' =>
     isEqualToMeId(deckAauthorId) ? 'white' : 'grey'
+
+  const onSelectDeckForDel = (id: string, name: string) => {
+    setIsDeleteDialogOpen(true)
+    setSelectedDeck({ id, name })
+  }
+  const onSelectDeckForUpdate = (id: string, name: string, isPrivate: boolean) => {
+    setIsUpdateDialogOpen(true)
+    setSelectedDeck({ id, name, isPrivate })
+  }
+
+  const onEdit = (deck: Deck) => {
+    if (!isEqualToMeId(deck.author.id)) return
+    onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
+  }
+
+  const onDelete = (deck: Deck) => {
+    if (!isEqualToMeId(deck.author.id)) return
+    onSelectDeckForDel(deck.id, deck.name)
+
+  }
 
   // logging
   if (decksLoading) return <div>Loading...</div>
@@ -245,21 +259,13 @@ export const DecksPage = () => {
                         <Button
                           variant={'link'}
                           className={cursorByAuthorId(deck.author.id)}
-                          onClick={
-                            isEqualToMeId(deck.author.id)
-                              ? () => onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
-                              : () => {}
-                          }
+                          onClick={() => onEdit(deck)}
                         >
                           <Edit color={colorByAuthorId(deck.author.id)} />
                         </Button>
                         <Button
                           variant={'link'}
-                          onClick={
-                            isEqualToMeId(deck.author.id)
-                              ? () => onSelectDeckForDel(deck.id, deck.name)
-                              : () => {}
-                          }
+                          onClick={() => onDelete(deck)}
                           className={cursorByAuthorId(deck.author.id)}
                         >
                           <TrashHollow color={colorByAuthorId(deck.author.id)} />

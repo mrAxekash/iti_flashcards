@@ -30,6 +30,7 @@ import {
 } from '@/services/cards/cards.slice.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
+import {CardType} from "@/services/decks/deck.types.ts"
 
 export const CardsPage = () => {
   const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
@@ -131,6 +132,16 @@ export const CardsPage = () => {
   const cursorByEdit = () => (!isEditBlocked ? '' : sT.cursorAuto)
   const colorByEdit = (): 'white' | 'grey' => (!isEditBlocked ? 'white' : 'grey')
 
+  const onEdit = (data: CardType) => {
+    if (isEditBlocked) return
+    onSelectCardForUpdate(data.id, data.question, data.answer)
+  }
+
+  const onDelete = (data: CardType) => {
+    if (isEditBlocked) return
+    onSelectCardForDel(data.id, data.question)
+  }
+
   return (
     <div className={sT.component}>
       {isDeleteDialogOpen && (
@@ -206,22 +217,14 @@ export const CardsPage = () => {
                           <div className={sT.iconContainer}>
                             <Button
                               variant={'link'}
-                              onClick={
-                                !isEditBlocked
-                                  ? () => onSelectCardForUpdate(data.id, data.question, data.answer)
-                                  : () => {}
-                              }
+                              onClick={() => {onEdit(data)}}
                               className={cursorByEdit()}
                             >
                               <Edit color={colorByEdit()} />
                             </Button>
                             <Button
                               variant={'link'}
-                              onClick={
-                                !isEditBlocked
-                                  ? () => onSelectCardForDel(data.id, data.question)
-                                  : () => {}
-                              }
+                              onClick={() => {onDelete(data)}}
                               className={cursorByEdit()}
                             >
                               <TrashHollow color={colorByEdit()} />
