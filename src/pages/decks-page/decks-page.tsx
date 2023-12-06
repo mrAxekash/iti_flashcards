@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import sT from '../../common/commonStyles/tables.module.scss'
 
@@ -36,7 +36,7 @@ import {
   setSearchByName,
   updateDecksCurrentPage,
 } from '@/services/decks/decks.slice.ts'
-import {Deck} from "@/services/decks/deck.types.ts"
+import {DeckType} from "@/services/decks/deck.types.ts"
 
 export const DecksPage = () => {
   const {itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy} =
@@ -49,8 +49,6 @@ export const DecksPage = () => {
     name: '',
     isPrivate: false,
   })
-  const navigate = useNavigate()
-
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for update dialog
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false) // for add dialog
@@ -115,11 +113,6 @@ export const DecksPage = () => {
     dispatch(setDecksOrderBy(sortString as DecksOrderByType))
   }, [sort])
 
-  const onViewDeck = (packId: string) => {
-    // window.alert(`Edit pack with id: ${packId}`)
-    navigate(`/cards/${packId}`)
-  }
-
   const columns: Column[] = [
     {
       key: 'name',
@@ -147,7 +140,7 @@ export const DecksPage = () => {
     },
   ]
 
-  const isEditHidden = (deck: Deck): boolean => deck.author.id !== me.id
+  const isEditHidden = (deck: DeckType): boolean => deck.author.id !== me.id
 
   const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
@@ -158,11 +151,11 @@ export const DecksPage = () => {
     setSelectedDeck({id, name, isPrivate})
   }
 
-  const onEdit = (deck: Deck) => {
+  const onEdit = (deck: DeckType) => {
     onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
   }
 
-  const onDelete = (deck: Deck) => {
+  const onDelete = (deck: DeckType) => {
     onSelectDeckForDel(deck.id, deck.name)
   }
 
@@ -237,7 +230,10 @@ export const DecksPage = () => {
               decks.items.map(deck => {
                 return (
                   <Table.Row key={deck.id}>
-                    <Table.Cell onDoubleClick={() => onViewDeck(deck.id)}>{deck.name}</Table.Cell>
+                    <Table.Cell>
+                      <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
+                      {deck.name}
+                    </Button></Table.Cell>
                     <Table.Cell>{deck.cardsCount}</Table.Cell>
                     <Table.Cell>{formatDate(deck.updated)}</Table.Cell>
                     <Table.Cell>{deck.author.name}</Table.Cell>
