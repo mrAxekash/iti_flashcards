@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 
 import s from './sign-in-page.module.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { SignIn } from '@/components/auth/signIn-form'
 import { useGetMeQuery, useLoginMutation } from '@/services/auth/auth.service.ts'
@@ -14,7 +16,10 @@ export const SignInPage = () => {
     login(args)
       .unwrap()
       .catch(e => {
-        console.log(e)
+        const notify = () => toast(e.data.message)
+
+        notify()
+        console.log(e.data.message)
       })
   }
 
@@ -24,6 +29,7 @@ export const SignInPage = () => {
   return (
     <div className={s.component}>
       <SignIn onSubmit={handleLogin} />
+      <ToastContainer />
     </div>
   )
 }
