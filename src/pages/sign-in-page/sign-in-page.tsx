@@ -29,7 +29,7 @@ export const SignInPage = () => {
   return (
     <div className={s.component}>
       <SignIn onSubmit={handleLogin} />
-      <ToastContainer />
+      <ToastContainer position={'top-center'} />
     </div>
   )
 }
