@@ -1,15 +1,9 @@
 import {useEffect, useState} from 'react'
 
-import {Link} from 'react-router-dom'
-
 import sT from '../../common/commonStyles/tables.module.scss'
-
-import {Edit} from '@/assets/icons/Edit.tsx'
-import {Play} from '@/assets/icons/Play.tsx'
-import {TrashHollow} from '@/assets/icons/TrashHollow.tsx'
 import trashIcon from '@/assets/icons/trashIcon.png'
 import sC from '@/common/commonStyles/common.module.scss'
-import {formatDate, sortStringCallback} from '@/common/functions.ts'
+import {sortStringCallback} from '@/common/functions.ts'
 import {DecksOrderByType, SelectedDeckType} from '@/common/types.ts'
 import {paginationSelectValues} from '@/common/values.ts'
 import {Button} from '@/components/ui/Button'
@@ -18,7 +12,6 @@ import {DialogRemovePack} from '@/components/ui/Dialogs/DialogRemovePack.tsx'
 import {DialogUpdatePack} from '@/components/ui/Dialogs/DialogUpdatePack.tsx'
 import {Pagination} from '@/components/ui/Pagination/Pagination.tsx'
 import {Slider} from '@/components/ui/Slider/slider.tsx'
-import {Column, Table} from '@/components/ui/Table'
 import {TabSwitcher} from '@/components/ui/TabSwitcher'
 import {TabSwitcherValuesType} from '@/components/ui/TabSwitcher/TabSwitcher.tsx'
 import {Textfield} from '@/components/ui/Textfield'
@@ -36,7 +29,7 @@ import {
   setSearchByName,
   updateDecksCurrentPage,
 } from '@/services/decks/decks.slice.ts'
-import {DeckType} from "@/services/decks/deck.types.ts"
+import {DecksTable} from "@/pages/decks-page/DecksTable.tsx"
 
 export const DecksPage = () => {
   const {itemsPerPage, searchByName, cardsCounts, currentPage, authorId, orderBy} =
@@ -62,7 +55,6 @@ export const DecksPage = () => {
   }
 
   //for slider
-  // const [value, setValue] = useState<number[]>([0, maxCardsCountHard])
   const sliderChangeHandler = (newValue: number[]) => {
     dispatch(setCardsCounts(newValue))
   }
@@ -79,7 +71,6 @@ export const DecksPage = () => {
     authorId,
     orderBy,
   })
-
 
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValuesType> = [
@@ -113,35 +104,6 @@ export const DecksPage = () => {
     dispatch(setDecksOrderBy(sortString as DecksOrderByType))
   }, [sort])
 
-  const columns: Column[] = [
-    {
-      key: 'name',
-      title: 'Name',
-      sortable: true,
-    },
-    {
-      key: 'cardsCount',
-      title: 'Cards',
-      sortable: true,
-    },
-    {
-      key: 'updated',
-      title: 'Last Updated',
-      sortable: true,
-    },
-    {
-      key: 'created',
-      title: 'Created by',
-      sortable: true,
-    },
-    {
-      key: 'options',
-      title: '',
-    },
-  ]
-
-  const isEditHidden = (deck: DeckType): boolean => deck.author.id !== me.id
-
   const onSelectDeckForDel = (id: string, name: string) => {
     setIsDeleteDialogOpen(true)
     setSelectedDeck({id, name})
@@ -149,14 +111,6 @@ export const DecksPage = () => {
   const onSelectDeckForUpdate = (id: string, name: string, isPrivate: boolean) => {
     setIsUpdateDialogOpen(true)
     setSelectedDeck({id, name, isPrivate})
-  }
-
-  const onEdit = (deck: DeckType) => {
-    onSelectDeckForUpdate(deck.id, deck.name, deck.isPrivate)
-  }
-
-  const onDelete = (deck: DeckType) => {
-    onSelectDeckForDel(deck.id, deck.name)
   }
 
   // logging
@@ -223,38 +177,12 @@ export const DecksPage = () => {
       </div>
 
       <div className={sT.container}>
-        <Table.Root className={sT.tableContainer}>
-          <Table.Header columns={columns} onSort={setSort} sort={sort}/>
-          <Table.Body>
-            {decks?.items &&
-              decks.items.map(deck => {
-                return (
-                  <Table.Row key={deck.id}>
-                    <Table.Cell>
-                      <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
-                      {deck.name}
-                    </Button></Table.Cell>
-                    <Table.Cell>{deck.cardsCount}</Table.Cell>
-                    <Table.Cell>{formatDate(deck.updated)}</Table.Cell>
-                    <Table.Cell>{deck.author.name}</Table.Cell>
-                    <Table.Cell>
-                      <div className={sT.iconContainer}>
-                        <Button as={Link} variant={'link'} to={`learn/${deck.name}/${deck.id}`}>
-                          <Play/>
-                        </Button>
-                        {
-                          !isEditHidden(deck) && <>
-                                <Button variant={'link'} onClick={() => onEdit(deck)}><Edit/></Button>
-                                <Button variant={'link'} onClick={() => onDelete(deck)}><TrashHollow/></Button>
-                            </>
-                        }
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
-                )
-              })}
-          </Table.Body>
-        </Table.Root>
+        <DecksTable
+          items={decks?.items}
+          onSelectDeckForUpdate={onSelectDeckForUpdate}
+          onSelectDeckForDel={onSelectDeckForDel}
+          sort={sort}
+          setSort={setSort}/>
       </div>
 
       <div className={sC.paginationContainer}>
@@ -274,5 +202,3 @@ export const DecksPage = () => {
     </div>
   )
 }
-
-
