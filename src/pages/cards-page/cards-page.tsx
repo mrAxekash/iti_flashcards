@@ -5,8 +5,6 @@ import {useNavigate, useParams} from 'react-router-dom'
 import s from './cards-page.module.scss'
 
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
-import {Edit} from '@/assets/icons/Edit.tsx'
-import {TrashHollow} from '@/assets/icons/TrashHollow.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
 import {CardsOrderByType, SelectedCardType, SelectedCardUpdateType} from '@/common/types.ts'
@@ -16,12 +14,10 @@ import {DialogAddNewCard} from '@/components/ui/Dialogs/DialogAddNewCard/DialogA
 import {DialogRemoveCard} from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import {DialogUpdateCard} from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
 import {Pagination} from '@/components/ui/Pagination'
-import {Grade} from '@/components/ui/Rating/rating.tsx'
-import {Column, Table} from '@/components/ui/Table'
 import {Typography} from '@/components/ui/Typography'
 import {useAppDispatch, useAppSelector} from '@/hooks.ts'
 import {useGetMeQuery} from '@/services/auth/auth.service.ts'
-import {formatDate, sortStringCallback} from '@/common/functions.ts'
+import {sortStringCallback} from '@/common/functions.ts'
 import {
   setCardId,
   setCardsItemsPerPage,
@@ -30,7 +26,7 @@ import {
 } from '@/services/cards/cards.slice.ts'
 import {Sort} from '@/services/common/types.ts'
 import {useGetCardsInDeckQuery, useGetDeckByIdQuery} from '@/services/decks/decks.service.ts'
-import {CardType} from "@/services/decks/deck.types.ts"
+import {CardsTable} from "@/pages/cards-page/CardsTable.tsx"
 
 export const CardsPage = () => {
   const {currentPage, itemsPerPage, orderBy} = useAppSelector(state => state.cards)
@@ -73,38 +69,11 @@ export const CardsPage = () => {
     const sortString: string | undefined = sortStringCallback(sort)
 
     dispatch(setCardsOrderBy(sortString as CardsOrderByType))
-  }, [sort]) //todo: maybe refactor, to avoid useEffect 'finish refactor'
+  }, [sort])
 
   useEffect(() => {
     setIsEditHidden(data?.userId !== me.id)
   }, [data?.userId, me.id])
-
-  const columns: Column[] = [
-    {
-      key: 'question',
-      title: 'Question',
-      sortable: true,
-    },
-    {
-      key: 'answer',
-      title: 'Answer',
-      sortable: true,
-    },
-    {
-      key: 'updated',
-      title: 'Last Updated',
-      sortable: true,
-    },
-    {
-      key: 'grade',
-      title: 'Grade',
-      sortable: true,
-    },
-    {
-      key: 'options',
-      title: '',
-    },
-  ]
 
   const onOpenDialog = () => {
     setIsAddNewCardDialogOpen(true)
@@ -127,14 +96,6 @@ export const CardsPage = () => {
   }
 
   const setCardsItemsPerPageCallback = (value: string) => dispatch(setCardsItemsPerPage(value)) // for pagination
-
-  const onEdit = (data: CardType) => {
-    onSelectCardForUpdate(data.id, data.question, data.answer)
-  }
-
-  const onDelete = (data: CardType) => {
-    onSelectCardForDel(data.id, data.question)
-  }
 
   return (
     <div className={sT.component}>
@@ -192,46 +153,14 @@ export const CardsPage = () => {
       ) : (
         <>
           <div className={sT.container}>
-            <Table.Root className={sT.tableContainer}>
-              <Table.Header columns={columns} onSort={setSort} sort={sort}/>
-              <Table.Body>
-                {cards &&
-                  cards.items.map(data => {
-                    return (
-                      <Table.Row key={data.id}>
-                        <Table.Cell>{data.questionImg && <><img src={data.questionImg} alt={'questionImg'}
-                                                                className={sT.imgInCell}/><br/></>} {data.question}
-                        </Table.Cell>
-                        <Table.Cell>{data.answerImg && <><img src={data.answerImg} alt={'answerImg'}
-                                                              className={sT.imgInCell}/><br/></>} {data.answer}</Table.Cell>
-                        <Table.Cell>{formatDate(data.updated)}</Table.Cell>
-                        <Table.Cell>
-                          <Grade value={data.grade}/>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <div className={sT.iconContainer}>
-                            {
-                              !isEditHidden && <>
-                                    <Button
-                                        variant={'link'}
-                                        onClick={() => {onEdit(data)}}>
-                                        <Edit/>
-                                    </Button>
-                                    <Button
-                                        variant={'link'}
-                                        onClick={() => {onDelete(data) }}>
-                                        <TrashHollow/>
-                                    </Button>
-                                </>
-                            }
-
-                          </div>
-                        </Table.Cell>
-                      </Table.Row>
-                    )
-                  })}
-              </Table.Body>
-            </Table.Root>
+            <CardsTable
+              sort={sort}
+              setSort={setSort}
+              items={cards?.items}
+              isEditHidden={isEditHidden}
+              onSelectCardForUpdate={onSelectCardForUpdate}
+              onSelectCardForDel={onSelectCardForDel}
+            />
           </div>
 
           <div className={sC.paginationContainer}>
