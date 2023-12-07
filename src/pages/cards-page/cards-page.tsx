@@ -199,11 +199,11 @@ export const CardsPage = () => {
                   cards.items.map(data => {
                     return (
                       <Table.Row key={data.id}>
-                        <Table.Cell>{data.questionImg && <img src={data.questionImg} alt={'questionImg'}
-                                                              className={sT.imgInCell}/>} <br/> {data.question}
+                        <Table.Cell>{data.questionImg && <><img src={data.questionImg} alt={'questionImg'}
+                                                                className={sT.imgInCell}/><br/></>} {data.question}
                         </Table.Cell>
-                        <Table.Cell>{data.answerImg && <img src={data.answerImg} alt={'answerImg'}
-                                                            className={sT.imgInCell}/>} <br/> {data.answer}</Table.Cell>
+                        <Table.Cell>{data.answerImg && <><img src={data.answerImg} alt={'answerImg'}
+                                                              className={sT.imgInCell}/><br/></>} {data.answer}</Table.Cell>
                         <Table.Cell>{formatDate(data.updated)}</Table.Cell>
                         <Table.Cell>
                           <Grade value={data.grade}/>
