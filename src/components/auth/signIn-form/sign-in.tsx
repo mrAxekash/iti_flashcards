@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
+import { ToastContainer } from 'react-toastify'
 import { z } from 'zod'
 
 import { Card } from '../../ui/Card'
@@ -39,6 +40,7 @@ export const SignIn = (props: PropsType) => {
   return (
     <form onSubmit={handleFormSubmitted}>
       <div className={sC.outerContainer}>
+        <ToastContainer position={'top-center'} />
         <Card className={sC.card}>
           <Typography variant={'H1'} className={sC.center}>
             Sign In

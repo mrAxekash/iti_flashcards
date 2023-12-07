@@ -61,6 +61,10 @@ const privateRoutes: RouteObject[] = [
     element: <LearnModalPage />,
   },
   {
+    path: '/learn/:deckTitle/:deckId/:test',
+    element: <LearnModalPage />,
+  },
+  {
     path: '/error',
     element: <ErrorPage />,
   },
