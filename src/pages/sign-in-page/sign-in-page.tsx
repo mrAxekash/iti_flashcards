@@ -12,7 +12,11 @@ export const SignInPage = () => {
   const [login, { error }] = useLoginMutation()
   const { data: me, isLoading: isMeLoading } = useGetMeQuery()
 
-  console.log(error)
+  //@ts-ignore
+  let errorMessage: string | undefined =
+    //@ts-ignore
+    (error?.status === 401 && error?.data.message) ?? 'Some error'
+
   const handleLogin = (args: LoginArgs) => {
     login(args)
       .unwrap()
@@ -28,7 +32,7 @@ export const SignInPage = () => {
 
   return (
     <div className={s.component}>
-      <SignIn onSubmit={handleLogin} />
+      <SignIn onSubmit={handleLogin} error={errorMessage} />
     </div>
   )
 }

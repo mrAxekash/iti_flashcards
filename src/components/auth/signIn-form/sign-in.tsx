@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
@@ -24,6 +26,7 @@ export const SignIn = (props: PropsType) => {
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors },
   } = useForm<FormValues>({
     mode: 'onSubmit',
@@ -34,6 +37,13 @@ export const SignIn = (props: PropsType) => {
       rememberMe: false,
     },
   })
+
+  useEffect(() => {
+    if (props.error !== undefined) {
+      setError('email', { message: props.error, type: 'custom' })
+      setError('password', { message: props.error, type: 'custom' })
+    }
+  }, [props.error])
 
   const handleFormSubmitted = handleSubmit(props.onSubmit)
 
@@ -99,4 +109,5 @@ type FormType = z.infer<typeof schema>
 
 type PropsType = {
   onSubmit: (data: FormType) => void
+  error?: string | undefined
 }
