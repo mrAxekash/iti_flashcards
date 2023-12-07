@@ -75,10 +75,6 @@ export const CardsPage = () => {
     setIsEditHidden(data?.userId !== me.id)
   }, [data?.userId, me.id])
 
-  const onOpenDialog = () => {
-    setIsAddNewCardDialogOpen(true)
-  }
-
   const onArrowLeft = () => {
     navigate(`/`)
   }
@@ -96,6 +92,10 @@ export const CardsPage = () => {
   }
 
   const setCardsItemsPerPageCallback = (value: string) => dispatch(setCardsItemsPerPage(value)) // for pagination
+
+  const onAddCard = () => {
+    setIsAddNewCardDialogOpen(true)
+  }
 
   return (
     <div className={sT.component}>
@@ -131,7 +131,7 @@ export const CardsPage = () => {
       <div className={sT.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
         {data?.cardsCount !== 0 && (
-          <Button disabled={isEditHidden} onClick={() => setIsAddNewCardDialogOpen(true)}>
+          <Button disabled={isEditHidden} onClick={onAddCard}>
             Add New Card
           </Button>
         )}
@@ -146,7 +146,7 @@ export const CardsPage = () => {
               <span> You can&apos;t create cards in a deck that you don&apos;t own.</span>
             )}
           </Typography>
-          <Button onClick={onOpenDialog} disabled={isEditHidden}>
+          <Button onClick={onAddCard} disabled={isEditHidden}>
             Add New Card
           </Button>
         </div>
