@@ -60,7 +60,7 @@ export const SignIn = (props: PropsType) => {
               <ControlledTextField
                 name={'email'}
                 errorMessage={errors.email?.message}
-                label={'email'}
+                label={'Email'}
                 control={control}
               />
             </div>
