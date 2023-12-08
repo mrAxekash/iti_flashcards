@@ -38,7 +38,6 @@ export const SignUpForm = () => {
     signUp(omit(data, ['confirm']))
       .unwrap()
       .catch(e => {
-        console.log(e)
         const notify = () =>
           toast.error(e.data.errorMessages[0], { theme: 'colored', autoClose: 2000 })
 
@@ -108,7 +107,7 @@ export const SignUpForm = () => {
             <div className={sC.element}>
               <ControlledTextField
                 name={'confirm'}
-                label={'Confirm password'}
+                label={'Confirm Password'}
                 type={'password'}
                 errorMessage={errors.confirm?.message}
                 control={control}
