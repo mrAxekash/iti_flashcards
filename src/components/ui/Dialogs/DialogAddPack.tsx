@@ -36,6 +36,8 @@ export const DialogAddPack = (props: PropsType) => {
   const formRef = useRef<HTMLFormElement | null>(null)
   // this is temporary here
   const [isPrivate, setIsPrivate] = useState(false)
+  const [cropImg, setCropImg] = useState<string | undefined>(undefined)
+
 
   const dispatch = useAppDispatch()
   const [createDeck] = useCreateDeckMutation()
@@ -75,7 +77,7 @@ export const DialogAddPack = (props: PropsType) => {
       isButtonDisable={Object.keys(errors).length > 0}
     >
       <div className={sC.DialogDescription}>
-        <div className={sC.dialogElement}><DialogAddPackImgUpload/></div>
+        <div className={sC.dialogElement}><DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg}/></div>
         <div className={sC.dialogElement}>
           <form ref={formRef}>
             <ControlledTextField

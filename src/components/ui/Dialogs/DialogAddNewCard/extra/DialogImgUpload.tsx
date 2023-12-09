@@ -3,18 +3,21 @@ import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.
 import {Button} from "@/components/ui/Button"
 import imgUpload from "@/assets/icons/imgUpload.svg"
 import sT from "@/common/commonStyles/tables.module.scss"
+import sC from '../../sharedData/sharedStylesDialogs.module.scss'
 import Cropper, {Area, Point} from "react-easy-crop"
 import {SliderSingle} from "@/components/ui/SliderSingle/SliderSingle.tsx"
 import {ChangeEvent, useCallback, useState} from "react"
-import {onCrop, onFileChange} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
+import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
+import {onFileChange} from "@/common/functions.ts"
+import {
+  canvaHeight,
+  canvaWidth,
+  maxSliderValue,
+  minSliderValue, sliderStep
+} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
 
 export const DialogImgUpload = (props: PropsType) => {
-  const canvaWidth = 484
-  const canvaHeight = 119
-  const minSliderValue = 4
-  const maxSliderValue = 15
-  const sliderStep = 1
 
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
@@ -110,8 +113,8 @@ export const DialogImgUpload = (props: PropsType) => {
         !isEditQuestionPicture
           ? <>
             {!props.cropQuestionImg
-              ? <div className={s.dummyQuestionAnswer}>Plz select question img</div>
-              : <div className={s.imgContainer}><img className={s.croppedImg} src={props.cropQuestionImg} alt="cropImg"/></div>
+              ? <div className={sC.dummyImg}>Plz select question img</div>
+              : <div className={sC.imgContainer}><img className={s.croppedImg} src={props.cropQuestionImg} alt="cropImg"/></div>
             }
             <Button variant="secondary" onClick={() => {
               setIsEditQuestionPicture(true)
@@ -125,7 +128,7 @@ export const DialogImgUpload = (props: PropsType) => {
                 <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileQuestionChangeCallback}/>}
             {inputQuestionImg
               ? <>
-                <div className={s.imgContainer}>
+                <div className={sC.imgContainer}>
                   <Cropper
                     image={inputQuestionImg}
                     crop={cropQuestion}
@@ -150,7 +153,7 @@ export const DialogImgUpload = (props: PropsType) => {
                 <Button onClick={onApproveQuestion}>Approve</Button>k
               </>
               : <>
-                <div className={s.dummyQuestionAnswer}>Plz select question img</div>
+                <div className={sC.dummyImg}>Plz select question img</div>
               </>
             }
           </>
@@ -161,7 +164,7 @@ export const DialogImgUpload = (props: PropsType) => {
         !isEditAnswerPicture
           ? <>
             {!props.cropAnswerImg
-              ? <div className={s.dummyQuestionAnswer}>Plz select question img</div>
+              ? <div className={s.dummyImg}>Plz select question img</div>
               : <div className={s.imgContainer}><img className={s.croppedImg} src={props.cropAnswerImg} alt="cropImg"/></div>
             }
             <Button variant="secondary" onClick={() => {
@@ -201,7 +204,7 @@ export const DialogImgUpload = (props: PropsType) => {
                 <Button onClick={onApproveAnswer}>Approve</Button>
               </>
               : <>
-                <div className={s.dummyQuestionAnswer}>Plz select question img</div>
+                <div className={s.dummyImg}>Plz select question img</div>
               </>
             }
           </>
