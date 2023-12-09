@@ -1,15 +1,13 @@
 import {ChangeEvent, useCallback, useState} from "react"
 import {onFileChange} from "@/common/functions.ts"
-import sC from '@/components/ui/Dialogs/sharedData/sharedStylesDialogs.module.scss'
 import {Area, Point} from "react-easy-crop"
 import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
-import {Button} from "@/components/ui/Button"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
-import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
-import imgUpload from "@/assets/icons/imgUpload.svg"
-import sT from "@/common/commonStyles/tables.module.scss"
-import {ComboFileCropperSliderApprove} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
+import {
+  ComboCropImgDummyChangeCover,
+  ComboFileCropperSliderApprove
+} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
 
 export const DialogAddPackImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)
@@ -61,18 +59,7 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
     <div>
       {
         !isEditPicture
-          ? <>
-            {!props.cropImg
-              ? <div className={sC.dummyImg}>Plz select question img</div>
-              : <div className={sC.imgContainer}><img className={s.croppedImg} src={props.cropImg} alt="cropImg"/></div>
-            }
-            <Button variant="secondary" onClick={() => {
-              setIsEditPicture(true)
-            }} className={s.button}>
-              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
-              Change cover
-            </Button>
-          </>
+          ? <ComboCropImgDummyChangeCover cropImg={props.cropImg} setIsEditPicture={setIsEditPicture}/>
           : <ComboFileCropperSliderApprove
             file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
             inputImg={inputImg}

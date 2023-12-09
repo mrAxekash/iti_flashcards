@@ -9,8 +9,11 @@ import {
 import {SliderSingle} from "@/components/ui/SliderSingle/SliderSingle.tsx"
 import {Button} from "@/components/ui/Button"
 import {ChangeEvent} from "react"
+import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
+import imgUpload from "@/assets/icons/imgUpload.svg"
+import sT from "@/common/commonStyles/tables.module.scss"
 
-export const ComboFileCropperSliderApprove = (props: PropsType) => {
+export const ComboFileCropperSliderApprove = (props: ComboFileCropperSliderApprovePropsType) => {
   return (
     <>
       {(!props.file.cropImg || props.file.isEditPicture) &&
@@ -48,7 +51,24 @@ export const ComboFileCropperSliderApprove = (props: PropsType) => {
   )
 }
 
-type PropsType = {
+export const ComboCropImgDummyChangeCover = (props: ComboCropImgDummyChangeCoverType) => {
+  return (
+    <>
+      {!props.cropImg
+        ? <div className={sC.dummyImg}>Plz select question img</div>
+        : <div className={sC.imgContainer}><img className={s.croppedImg} src={props.cropImg} alt="cropImg"/></div>
+      }
+      <Button variant="secondary" onClick={() => {
+        props.setIsEditPicture(true)
+      }} className={s.button}>
+        <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
+        Change cover
+      </Button>
+    </>
+  )
+}
+
+type ComboFileCropperSliderApprovePropsType = {
   file: {
     cropImg: string | undefined
     isEditPicture: boolean
@@ -68,4 +88,9 @@ type PropsType = {
   }
   onApprove: () => void
   cropSuggestionText: string
+}
+
+type ComboCropImgDummyChangeCoverType = {
+  cropImg: string | undefined
+  setIsEditPicture: (value: boolean) => void
 }

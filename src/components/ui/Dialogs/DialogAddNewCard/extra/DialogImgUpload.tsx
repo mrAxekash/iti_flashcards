@@ -1,16 +1,14 @@
 import {Typography} from "@/components/ui/Typography"
-import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
-import {Button} from "@/components/ui/Button"
-import imgUpload from "@/assets/icons/imgUpload.svg"
-import sT from "@/common/commonStyles/tables.module.scss"
-import sC from '../../sharedData/sharedStylesDialogs.module.scss'
 import {Area, Point} from "react-easy-crop"
 import {ChangeEvent, useCallback, useState} from "react"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 import {onFileChange} from "@/common/functions.ts"
 import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
-import {ComboFileCropperSliderApprove} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
+import {
+  ComboCropImgDummyChangeCover,
+  ComboFileCropperSliderApprove
+} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
 
 export const DialogImgUpload = (props: PropsType) => {
 
@@ -106,20 +104,8 @@ export const DialogImgUpload = (props: PropsType) => {
       <Typography variant={'Body_2'}>Question:</Typography>
       {
         !isEditQuestionPicture
-          ? <>
-            {!props.cropQuestionImg
-              ? <div className={sC.dummyImg}>Plz select question img</div>
-              : <div className={sC.imgContainer}><img className={sC.croppedImg} src={props.cropQuestionImg} alt="cropImg"/></div>
-            }
-            <Button variant="secondary" onClick={() => {
-              setIsEditQuestionPicture(true)
-            }} className={s.button}>
-              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
-              Change cover
-            </Button>
-          </>
-          :
-          <ComboFileCropperSliderApprove
+          ? <ComboCropImgDummyChangeCover cropImg={props.cropQuestionImg} setIsEditPicture={setIsEditQuestionPicture}/>
+          : <ComboFileCropperSliderApprove
             file={ {cropImg: props.cropQuestionImg, isEditPicture: isEditQuestionPicture, onFileChangeCallback: onFileQuestionChangeCallback} }
             inputImg={inputQuestionImg}
             cropper={ {crop: cropQuestion, zoom: zoomQuestion, onCropChange: onCropQuestionChange, onCropComplete: onCropQuestionComplete, onZoomChange: onZoomQuestionChange} }
@@ -130,29 +116,14 @@ export const DialogImgUpload = (props: PropsType) => {
       <Typography variant={'Body_2'}>Answer:</Typography>
       {
         !isEditAnswerPicture
-          ? <>
-            {!props.cropAnswerImg
-              ? <div className={sC.dummyImg}>Plz select question img</div>
-              : <div className={sC.imgContainer}><img className={sC.croppedImg} src={props.cropAnswerImg} alt="cropImg"/></div>
-            }
-            <Button variant="secondary" onClick={() => {
-              setIsEditAnswerPicture(true)
-            }} className={s.button}>
-              <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
-              Change cover
-            </Button>
-          </>
-          :
-          <>
-            <ComboFileCropperSliderApprove
+          ? <ComboCropImgDummyChangeCover cropImg={props.cropAnswerImg} setIsEditPicture={setIsEditAnswerPicture}/>
+          : <ComboFileCropperSliderApprove
               file={ {cropImg: props.cropAnswerImg, isEditPicture: isEditAnswerPicture, onFileChangeCallback: onFileAnswerChangeCallback} }
               inputImg={inputAnswerImg}
               cropper={ {crop: cropAnswer, zoom: zoomAnswer, onCropChange: onCropAnswerChange, onCropComplete: onCropAnswerComplete, onZoomChange: onZoomAnswerChange} }
               slider={ {sliderValue: sliderAnswerValue, sliderChangeHandler: sliderAnswerChangeHandler} }
               onApprove={onApproveAnswer} cropSuggestionText={'Plz select answer img'}/>
-          </>
       }
-
     </>
   )
 }
