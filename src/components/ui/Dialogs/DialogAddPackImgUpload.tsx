@@ -19,7 +19,6 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
 
   const cropSuggestionText = 'Plz select deck img... if you wish'
 
-
   const onFileChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
     await onFileChange(e, setInputImg)
   }
@@ -61,15 +60,15 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
     <div>
       {
         !isEditPicture
-          ? <ComboCropImgDummyChangeCover cropImg={props.cropImg} setIsEditPicture={setIsEditPicture} cropSuggestionText={cropSuggestionText}/>
+          ? <ComboCropImgDummyChangeCover cropImg={props.cropImg} setIsEditPicture={setIsEditPicture}
+                                          cropSuggestionText={cropSuggestionText}/>
           : <ComboFileCropperSliderApprove
             file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
             inputImg={inputImg}
             cropper={{crop, zoom, onCropChange, onCropComplete, onZoomChange}}
             slider={{sliderValue, sliderChangeHandler}}
-            onApprove={onApprove} cropSuggestionText={'Plz select deck img... if you wish'}/>
+            onApprove={onApprove} cropSuggestionText={cropSuggestionText}/>
       }
-
     </div>
   )
 }

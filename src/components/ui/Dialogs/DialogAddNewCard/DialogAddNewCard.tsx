@@ -55,7 +55,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     formRef.current.submit()
   }
 
-
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
     const formData = new FormData()
