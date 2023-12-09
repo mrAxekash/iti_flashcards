@@ -55,7 +55,7 @@ export const ComboCropImgDummyChangeCover = (props: ComboCropImgDummyChangeCover
   return (
     <>
       {!props.cropImg
-        ? <div className={sC.dummyImg}>Plz select question img</div>
+        ? <div className={sC.dummyImg}>{props.cropSuggestionText}</div>
         : <div className={sC.imgContainer}><img className={s.croppedImg} src={props.cropImg} alt="cropImg"/></div>
       }
       <Button variant="secondary" onClick={() => {
@@ -93,4 +93,5 @@ type ComboFileCropperSliderApprovePropsType = {
 type ComboCropImgDummyChangeCoverType = {
   cropImg: string | undefined
   setIsEditPicture: (value: boolean) => void
+  cropSuggestionText: string
 }

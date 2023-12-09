@@ -38,7 +38,6 @@ export const DialogAddPack = (props: PropsType) => {
   const [isPrivate, setIsPrivate] = useState(false)
   const [cropImg, setCropImg] = useState<string | undefined>(undefined)
 
-
   const dispatch = useAppDispatch()
   const [createDeck] = useCreateDeckMutation()
 
