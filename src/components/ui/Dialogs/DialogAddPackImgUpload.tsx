@@ -1,20 +1,15 @@
 import {ChangeEvent, useCallback, useState} from "react"
 import {onFileChange} from "@/common/functions.ts"
 import sC from '@/components/ui/Dialogs/sharedData/sharedStylesDialogs.module.scss'
-import Cropper, {Area, Point} from "react-easy-crop"
-import {
-  canvaHeight,
-  canvaWidth,
-  maxSliderValue,
-  minSliderValue, sliderStep
-} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
+import {Area, Point} from "react-easy-crop"
+import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
-import {SliderSingle} from "@/components/ui/SliderSingle/SliderSingle.tsx"
 import {Button} from "@/components/ui/Button"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
 import imgUpload from "@/assets/icons/imgUpload.svg"
 import sT from "@/common/commonStyles/tables.module.scss"
+import {ComboFileCropperSliderApprove} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
 
 export const DialogAddPackImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)
@@ -78,39 +73,12 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
               Change cover
             </Button>
           </>
-          : <>
-            {(!props.cropImg || isEditPicture) &&
-                <input type="file" accept=".jpg, .jpeg, .png" onChange={onFileChangeCallback}/>}
-            {
-              inputImg
-                ? <>
-                  <div className={sC.imgContainer}>
-                    <Cropper
-                      image={inputImg}
-                      crop={crop}
-                      zoom={zoom}
-                      cropSize={{width: canvaWidth, height: canvaHeight}}
-                      onCropChange={onCropChange}
-                      onCropComplete={onCropComplete}
-                      onZoomChange={onZoomChange}
-                      minZoom={minSliderValue}
-                      maxZoom={maxSliderValue}
-                      zoomSpeed={sliderStep * 2}
-                    />
-                  </div>
-                  <SliderSingle
-                    defaultValue={minSliderValue}
-                    min={minSliderValue}
-                    max={maxSliderValue}
-                    step={sliderStep}
-                    value={sliderValue[0]}
-                    onValueChange={sliderChangeHandler}
-                  />
-                  <Button onClick={onApprove}>Approve</Button>
-                </>
-                : <div className={sC.dummyImg}>Plz select deck img... if you wish</div>
-            }
-            </>
+          : <ComboFileCropperSliderApprove
+            file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
+            inputImg={inputImg}
+            cropper={{crop, zoom, onCropChange, onCropComplete, onZoomChange}}
+            slider={{sliderValue, sliderChangeHandler}}
+            onApprove={onApprove} cropSuggestionText={'Plz select deck img... if you wish'}/>
       }
 
     </div>

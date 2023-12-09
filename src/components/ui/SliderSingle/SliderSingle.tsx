@@ -26,7 +26,7 @@ export const SliderSingle = (props: PropsType) => {
   )
 }
 
-export type PropsType = {
+type PropsType = {
   defaultValue: number
   min: number
   max: number
