@@ -147,7 +147,7 @@ export const DialogImgUpload = (props: PropsType) => {
                   value={sliderQuestionValue[0]}
                   onValueChange={sliderQuestionChangeHandler}
                 />
-                <Button onClick={onApproveQuestion}>Approve</Button>
+                <Button onClick={onApproveQuestion}>Approve</Button>k
               </>
               : <>
                 <div className={s.dummyQuestionAnswer}>Plz select question img</div>
