@@ -39,7 +39,7 @@ export const LearnModalPage = () => {
 
   if (isError) {
     // return <ErrorPage errorMessage={error?.data?.message} />
-    return <Navigate to={'/error'} />
+    return <Navigate to={'/error-clean-pack'} />
   }
 
   const cardData = data || dataGet
