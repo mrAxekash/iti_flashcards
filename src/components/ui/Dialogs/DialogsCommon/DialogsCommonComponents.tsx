@@ -1,11 +1,11 @@
-import sC from "@/components/ui/Dialogs/sharedData/sharedStylesDialogs.module.scss"
+import sC from "@/components/ui/Dialogs/DialogsCommon/DialogsCommon.module.scss"
 import Cropper, {Area, Point} from "react-easy-crop"
 import {
   canvaHeight,
   canvaWidth,
   maxSliderValue,
   minSliderValue, sliderStep
-} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
+} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts"
 import {SliderSingle} from "@/components/ui/SliderSingle/SliderSingle.tsx"
 import {Button} from "@/components/ui/Button"
 import {ChangeEvent} from "react"

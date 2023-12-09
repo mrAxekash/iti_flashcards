@@ -6,8 +6,8 @@ import {z} from 'zod'
 
 import {Checkbox} from '@/components/ui/Checkbox'
 import {ControlledTextField} from '@/components/ui/controlled/controlled-text-field'
-import sC from '@/components/ui/Dialogs/DialogsCommon/DialogsCommon.module.scss'
-import {DialogsCommon} from '@/components/ui/Dialogs/DialogsCommon/DialogsCommon.tsx'
+import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
+import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import {useAppDispatch} from '@/hooks.ts'
 import {useCreateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
@@ -68,7 +68,7 @@ export const DialogAddPack = (props: PropsType) => {
   }
 
   return (
-    <DialogsCommon
+    <DialogsParrent
       title={'Add New Pack'}
       open={props.open}
       setOpen={onClose}
@@ -93,7 +93,7 @@ export const DialogAddPack = (props: PropsType) => {
         </div>
 
       </div>
-    </DialogsCommon>
+    </DialogsParrent>
   )
 }
 

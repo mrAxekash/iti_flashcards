@@ -1,13 +1,13 @@
 import {ChangeEvent, useCallback, useState} from "react"
 import {onFileChange} from "@/common/functions.ts"
 import {Area, Point} from "react-easy-crop"
-import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
+import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import {
   ComboCropImgDummyChangeCover,
   ComboFileCropperSliderApprove
-} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
+} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx"
 
 export const DialogAddPackImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)

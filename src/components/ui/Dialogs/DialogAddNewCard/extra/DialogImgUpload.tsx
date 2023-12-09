@@ -4,11 +4,11 @@ import {ChangeEvent, useCallback, useState} from "react"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 import {onFileChange} from "@/common/functions.ts"
-import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/sharedData/sharedDataDialogs.ts"
+import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts"
 import {
   ComboCropImgDummyChangeCover,
   ComboFileCropperSliderApprove
-} from "@/components/ui/Dialogs/sharedData/sharedComponentsDialogs.tsx"
+} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx"
 
 export const DialogImgUpload = (props: PropsType) => {
 
