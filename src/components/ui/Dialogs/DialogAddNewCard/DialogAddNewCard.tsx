@@ -1,15 +1,15 @@
-import {Dispatch, SetStateAction, useRef, useState} from 'react'
+import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
-import {zodResolver} from '@hookform/resolvers/zod'
-import {useForm} from 'react-hook-form'
-import {z} from 'zod'
-import {ControlledTextField} from '@/components/ui/controlled/controlled-text-field'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
 import sC from '@/components/ui/Dialogs/DialogsCommon/DialogsCommon.module.scss'
-import {DialogsCommon} from '@/components/ui/Dialogs/DialogsCommon/DialogsCommon.tsx'
-import {Select} from '@/components/ui/Select'
-import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
-import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
-import {DialogImgUpload} from "@/components/ui/Dialogs/DialogAddNewCard/extra/DialogImgUpload.tsx"
+import { DialogsCommon } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommon.tsx'
+import { Select } from '@/components/ui/Select'
+import { useCreateCardInDeckMutation } from '@/services/decks/decks.service.ts'
+import { fromBase64 } from '@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts'
+import { DialogImgUpload } from '@/components/ui/Dialogs/DialogAddNewCard/extra/DialogImgUpload.tsx'
 
 export const DialogAddNewCard = (props: PropsType) => {
   const [value, setValue] = useState('Text') // for select
@@ -28,7 +28,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     handleSubmit,
     control,
     reset,
-    formState: {errors},
+    formState: { errors },
   } = useForm<FormValues>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
@@ -42,8 +42,7 @@ export const DialogAddNewCard = (props: PropsType) => {
   const formRef = useRef<HTMLFormElement | null>(null)
 
   const handleFormSubmitted = handleSubmit(values => {
-    onAddNewCard(values.question, values.answer)
-      .then()
+    onAddNewCard(values.question, values.answer).then()
     reset()
     props.setOpen(false)
   })
@@ -54,7 +53,6 @@ export const DialogAddNewCard = (props: PropsType) => {
     formRef.current.submit = handleFormSubmitted
     formRef.current.submit()
   }
-
 
   const onAddNewCard = async (question: string, answer: string) => {
     if (!question || !answer || !props.deckId) return
@@ -72,7 +70,7 @@ export const DialogAddNewCard = (props: PropsType) => {
     }
     createCardInDeck({
       deckId: props.deckId,
-      formData
+      formData,
     })
     props.setOpen(false)
   }
@@ -130,13 +128,14 @@ export const DialogAddNewCard = (props: PropsType) => {
             </div>
           </div>
         </form>
-        {value === 'Picture' && <DialogImgUpload
+        {value === 'Picture' && (
+          <DialogImgUpload
             cropQuestionImg={cropQuestionImg}
             cropAnswerImg={cropAnswerImg}
             setCropQuestionImg={setCropQuestionImg}
             setCropAnswerImg={setCropAnswerImg}
-        />}
-
+          />
+        )}
       </div>
     </DialogsCommon>
   )
