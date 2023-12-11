@@ -58,6 +58,7 @@ export const CardsTable = (props: PropsType) => {
                     <br />
                   </>
                 )}{' '}
+                {/*TODO ask a question mentor */}
                 {data.question.length > 30 ? (
                   <div title={data.question}>{data.question}</div>
                 ) : (
@@ -71,6 +72,7 @@ export const CardsTable = (props: PropsType) => {
                     <br />
                   </>
                 )}{' '}
+                {/*TODO ask a question mentor */}
                 {data.answer.length > 30 ? (
                   <div title={data.answer}>{data.answer}</div>
                 ) : (
