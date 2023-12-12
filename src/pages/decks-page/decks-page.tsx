@@ -37,6 +37,7 @@ export const DecksPage = () => {
     useAppSelector(state => state.decks)
 
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
+  const [sliderValue, setSliderValue] = useState([0])
 
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
     id: '',
@@ -56,9 +57,10 @@ export const DecksPage = () => {
   }
 
   //for slider
-  const sliderChangeHandler = (newValue: number[]) => {
-    dispatch(setCardsCounts(newValue))
+  const sliderChangeHandler = () => {
+    dispatch(setCardsCounts(sliderValue))
   }
+
   const {
     currentData: decks,
     isLoading: decksLoading,
@@ -162,9 +164,10 @@ export const DecksPage = () => {
           label={'Show packs cards'}
         />
         <Slider
-          value={cardsCounts}
+          value={sliderValue}
           defaultValue={[1]}
-          onValueChange={sliderChangeHandler}
+          onValueChange={setSliderValue}
+          onValueCommit={sliderChangeHandler}
           step={1}
           min={0}
           max={decks?.maxCardsCount || maxCardsCountHard}

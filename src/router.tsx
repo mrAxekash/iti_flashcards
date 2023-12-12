@@ -99,6 +99,5 @@ function PrivateRoutes() {
 
   if (isMeLoading) return <div>Loading...</div>
 
-  debugger
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
