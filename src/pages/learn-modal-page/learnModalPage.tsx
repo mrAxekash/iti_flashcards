@@ -2,6 +2,7 @@ import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import s from './learnModalPage.module.scss'
 
+import { Loader } from '@/components/ui/Loader/Loader.tsx'
 import { LearnModal } from '@/components/ui/modal/LearnModal.tsx'
 import { useGetCardQuery, usePostCardMutation } from '@/services/decks/decks.service.ts'
 
@@ -33,7 +34,7 @@ export const LearnModalPage = () => {
   })
 
   if (isLoading || isFetching || isPostCardLoading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
   console.log(error)
 

@@ -8,6 +8,7 @@ import {
 
 import { Layout } from './layout'
 
+import { Loader } from '@/components/ui/Loader/Loader.tsx'
 import { CardsPage } from '@/pages/cards-page/cards-page.tsx'
 import { CheckEmailPage } from '@/pages/check-email-page/check-email-page.tsx'
 import { CreateNewPasswordPage } from '@/pages/create-new-password/create-new-password-page.tsx'
@@ -97,7 +98,7 @@ function PrivateRoutes() {
 
   const isAuthenticated = me && me?.success !== false
 
-  if (isMeLoading) return <div>Loading...</div>
+  if (isMeLoading) return <Loader />
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
