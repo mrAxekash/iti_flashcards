@@ -41,7 +41,7 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/confirm-email/:token',
     element: <CreateNewPasswordPage />,
-  }
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -71,8 +71,8 @@ const privateRoutes: RouteObject[] = [
   },
   {
     path: '/cards/:deckId',
-    element: <CardsPage/>
-  }
+    element: <CardsPage />,
+  },
 ]
 
 const router = createBrowserRouter([
@@ -99,6 +99,5 @@ function PrivateRoutes() {
 
   if (isMeLoading) return <div>Loading...</div>
 
-  debugger
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
