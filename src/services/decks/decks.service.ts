@@ -39,7 +39,7 @@ export const decksService = baseApi.injectEndpoints({
       }),
       providesTags: ['CardsIdDeck'],
     }),
-    createDeck: builder.mutation<Deck, { name: string; isPrivate: boolean }>({
+    createDeck: builder.mutation<Deck, { name: string; isPrivate: boolean; cover?: string }>({
       query: data => ({
         url: `v1/decks`,
         method: 'POST',
@@ -153,7 +153,8 @@ export const decksService = baseApi.injectEndpoints({
           console.error(e)
         }
       },
-      // invalidatesTags: ['CardsIdDeck'], // not works together with onQueryStarted
+      invalidatesTags: ['CardsIdDeck'], // not works together with onQueryStarted
+
       //todo: understand why it not works together
     }),
     getCard: builder.query<Card, { deckId: string }>({
