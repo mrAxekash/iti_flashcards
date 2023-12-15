@@ -55,7 +55,7 @@ const privateRoutes: RouteObject[] = [
     element: <PersonalInformationPage />,
   },
   {
-    path: '/learn/:deckTitle/:deckId',
+    path: '/learn/:deckId',
     element: <LearnModalPage />,
   },
   {
