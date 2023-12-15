@@ -101,6 +101,14 @@ export const DialogImgUpload = (props: PropsType) => {
       .then()
   }
 
+  const onCancelQuestion = () => {
+    setInputQuestionImg(undefined)
+  }
+
+  function onCancelAnswer() {
+    setInputAnswerImg(undefined)
+  }
+
   return (
     <>
       <Typography variant={'Body_2'}>Question:</Typography>
@@ -109,7 +117,9 @@ export const DialogImgUpload = (props: PropsType) => {
         inputImg={inputQuestionImg}
         cropper={{crop: cropQuestion, zoom: zoomQuestion, onCropChange: onCropQuestionChange, onCropComplete: onCropQuestionComplete, onZoomChange: onZoomQuestionChange}}
         slider={{sliderValue: sliderQuestionValue, sliderChangeHandler: sliderQuestionChangeHandler}}
-        onApprove={onApproveQuestion} cropSuggestionText={cropSuggestionTextQuestion}/>
+        onApprove={onApproveQuestion} cropSuggestionText={cropSuggestionTextQuestion}
+        onCancel={onCancelQuestion}
+      />
 
       <Typography variant={'Body_2'}>Answer:</Typography>
       <ComboChangeCoverDummyImgCropper
@@ -117,7 +127,9 @@ export const DialogImgUpload = (props: PropsType) => {
         inputImg={inputAnswerImg}
         cropper={{crop: cropAnswer, zoom: zoomAnswer, onCropChange: onCropAnswerChange, onCropComplete: onCropAnswerComplete, onZoomChange: onZoomAnswerChange}}
         slider={{sliderValue: sliderAnswerValue, sliderChangeHandler: sliderAnswerChangeHandler}}
-        onApprove={onApproveAnswer} cropSuggestionText={cropSuggestionTextAnswer}/>
+        onApprove={onApproveAnswer} cropSuggestionText={cropSuggestionTextAnswer}
+        onCancel={onCancelAnswer}
+      />
     </>
   )
 }

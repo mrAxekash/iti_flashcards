@@ -54,13 +54,20 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
       .then()
   }
 
+  const onCancel = () => {
+    setInputImg(undefined)
+  }
+
   return (
     <ComboChangeCoverDummyImgCropper
       file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
       inputImg={inputImg}
       cropper={{crop, zoom, onCropChange, onCropComplete, onZoomChange}}
       slider={{sliderValue, sliderChangeHandler}}
-      onApprove={onApprove} cropSuggestionText={cropSuggestionText}/>
+      onApprove={onApprove}
+      cropSuggestionText={cropSuggestionText}
+      onCancel={onCancel}
+    />
   )
 }
 
