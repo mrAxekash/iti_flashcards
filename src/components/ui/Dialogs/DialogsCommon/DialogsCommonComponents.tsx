@@ -65,7 +65,7 @@ export const ComboChangeCoverDummyImgCropper = (props: ComboChangeCoverDummyImgC
                    value={props.slider.sliderValue[0]}
                    onValueChange={props.slider.sliderChangeHandler}
                  />
-                 <Button onClick={props.onApprove}>Approve</Button>
+                 <Button onClick={props.onApprove} variant="secondary" className={s.button}>Approve</Button>
                </>
                : <div className={sC.imgContainer}><img className={s.croppedImg} src={props.file.cropImg} alt="cropImg"/></div>
            }
