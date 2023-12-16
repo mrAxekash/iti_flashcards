@@ -64,9 +64,7 @@ export const DialogAddPack = (props: PropsType) => {
     if (deckCoverImg) {
       formData.append('cover', deckCoverImg)
     }
-
     dispatch(updateDecksCurrentPage(1))
-    // createDeck({name: packName, isPrivate})
     createDeckForm({formData})
     props.setOpen(false)
   }

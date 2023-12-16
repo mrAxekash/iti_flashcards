@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
-import { Edit } from '@/assets/icons/Edit.tsx'
-import { Play } from '@/assets/icons/Play.tsx'
-import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
+import {Edit} from '@/assets/icons/Edit.tsx'
+import {Play} from '@/assets/icons/Play.tsx'
+import {TrashHollow} from '@/assets/icons/TrashHollow.tsx'
 import sT from '@/common/commonStyles/tables.module.scss'
-import { formatDate } from '@/common/functions.ts'
-import { Button } from '@/components/ui/Button'
-import { Column, Table } from '@/components/ui/Table'
-import { useGetMeQuery } from '@/services/auth/auth.service.ts'
-import { Sort } from '@/services/common/types.ts'
-import { Deck } from '@/services/decks/deck.types.ts'
+import {formatDate} from '@/common/functions.ts'
+import {Button} from '@/components/ui/Button'
+import {Column, Table} from '@/components/ui/Table'
+import {useGetMeQuery} from '@/services/auth/auth.service.ts'
+import {Sort} from '@/services/common/types.ts'
+import {Deck} from '@/services/decks/deck.types.ts'
 
 export const DecksTable = (props: PropsType) => {
   const columns: Column[] = [
@@ -39,7 +39,7 @@ export const DecksTable = (props: PropsType) => {
     },
   ]
 
-  const { data: me } = useGetMeQuery()
+  const {data: me} = useGetMeQuery()
 
   const isEditHidden = (deck: Deck): boolean => deck.author.id !== me.id
 
@@ -53,22 +53,23 @@ export const DecksTable = (props: PropsType) => {
 
   return (
     <Table.Root className={sT.tableContainer}>
-      <Table.Header columns={columns} onSort={props.setSort} sort={props.sort} />
+      <Table.Header columns={columns} onSort={props.setSort} sort={props.sort}/>
       <Table.Body>
         {props.items &&
           props.items.map(deck => {
             return (
               <Table.Row key={deck.id}>
                 <Table.Cell>
-                  { deck.cover &&
-                      <>
+                  <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
+                    <div>
+                      {deck.cover && (
+                        <>
                           <img src={deck.cover} alt={'questionImg'} className={sT.imgInCell}/>
                           <br/>
-                      </>
-                  }
-                  <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
-
-                    {deck.name}
+                        </>
+                      )}
+                      <div>{deck.name}</div>
+                    </div>
                   </Button>
                 </Table.Cell>
                 <Table.Cell>{deck.cardsCount}</Table.Cell>
@@ -77,15 +78,15 @@ export const DecksTable = (props: PropsType) => {
                 <Table.Cell>
                   <div className={sT.iconContainer}>
                     <Button as={Link} variant={'link'} to={`learn/${deck.id}`}>
-                      <Play />
+                      <Play/>
                     </Button>
                     {!isEditHidden(deck) && (
                       <>
                         <Button variant={'link'} onClick={() => onEdit(deck)}>
-                          <Edit />
+                          <Edit/>
                         </Button>
                         <Button variant={'link'} onClick={() => onDelete(deck)}>
-                          <TrashHollow />
+                          <TrashHollow/>
                         </Button>
                       </>
                     )}
