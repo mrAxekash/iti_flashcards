@@ -22,8 +22,8 @@ export const DialogImgUpload = (props: PropsType) => {
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null)
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
 
-  const cropSuggestionTextQuestion = 'Plz select question img'
-  const cropSuggestionTextAnswer = 'Plz select answer img'
+  const cropSuggestionTextQuestion = 'Picture image'
+  const cropSuggestionTextAnswer = 'Answer image'
 
   const onFileQuestionChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
     props.setCropQuestionImg('')
