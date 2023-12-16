@@ -4,10 +4,7 @@ import {Area, Point} from "react-easy-crop"
 import {canvaHeight, canvaWidth, minSliderValue} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts"
 import {CropType} from "@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts"
 import {onCrop} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
-import {
-  ComboCropImgDummyChangeCover,
-  ComboFileCropperSliderApprove
-} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx"
+import {ComboChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx"
 
 export const DialogAddPackImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)
@@ -20,6 +17,7 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
   const cropSuggestionText = 'Plz select deck img... if you wish'
 
   const onFileChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
+    props.setCropImg('')
     await onFileChange(e, setInputImg)
   }
 
@@ -56,20 +54,20 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
       .then()
   }
 
+  const onCancel = () => {
+    setInputImg(undefined)
+  }
+
   return (
-    <div>
-      {
-        !isEditPicture
-          ? <ComboCropImgDummyChangeCover cropImg={props.cropImg} setIsEditPicture={setIsEditPicture}
-                                          cropSuggestionText={cropSuggestionText}/>
-          : <ComboFileCropperSliderApprove
-            file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
-            inputImg={inputImg}
-            cropper={{crop, zoom, onCropChange, onCropComplete, onZoomChange}}
-            slider={{sliderValue, sliderChangeHandler}}
-            onApprove={onApprove} cropSuggestionText={cropSuggestionText}/>
-      }
-    </div>
+    <ComboChangeCoverDummyImgCropper
+      file={{cropImg: props.cropImg, isEditPicture, onFileChangeCallback}}
+      inputImg={inputImg}
+      cropper={{crop, zoom, onCropChange, onCropComplete, onZoomChange}}
+      slider={{sliderValue, sliderChangeHandler}}
+      onApprove={onApprove}
+      cropSuggestionText={cropSuggestionText}
+      onCancel={onCancel}
+    />
   )
 }
 
