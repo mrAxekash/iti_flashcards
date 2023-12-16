@@ -66,7 +66,7 @@ export const DialogAddPack = (props: PropsType) => {
     }
 
     dispatch(updateDecksCurrentPage(1))
-    // createDeck({name: packName, isPrivate, cover: cropImage})
+    createDeck({name: packName, isPrivate})
 
     props.setOpen(false)
   }
