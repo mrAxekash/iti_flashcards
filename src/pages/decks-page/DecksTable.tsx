@@ -60,7 +60,14 @@ export const DecksTable = (props: PropsType) => {
             return (
               <Table.Row key={deck.id}>
                 <Table.Cell>
+                  { deck.cover &&
+                      <>
+                          <img src={deck.cover} alt={'questionImg'} className={sT.imgInCell}/>
+                          <br/>
+                      </>
+                  }
                   <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
+
                     {deck.name}
                   </Button>
                 </Table.Cell>
