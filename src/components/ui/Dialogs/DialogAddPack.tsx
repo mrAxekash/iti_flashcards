@@ -41,7 +41,7 @@ export const DialogAddPack = (props: PropsType) => {
 
   const dispatch = useAppDispatch()
   const [createDeck] = useCreateDeckMutation()
-  const [] = useCreateDeckFormMutation()
+  const [createDeckForm] = useCreateDeckFormMutation()
 
   const handleFormSubmitted = handleSubmit(values => {
     onAddDeck(values.packName)
@@ -66,8 +66,8 @@ export const DialogAddPack = (props: PropsType) => {
     }
 
     dispatch(updateDecksCurrentPage(1))
-    createDeck({name: packName, isPrivate})
-
+    // createDeck({name: packName, isPrivate})
+    createDeckForm({formData})
     props.setOpen(false)
   }
 

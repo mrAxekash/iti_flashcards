@@ -77,8 +77,8 @@ export const decksService = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Decks'],
     }),
-    createDeckForm: builder.mutation<Deck, { formData?: FormData }>({
-      query: formData => ({
+    createDeckForm: builder.mutation<Deck, { formData: FormData }>({
+      query: ({formData}) => ({
         url: `v1/decks`,
         method: 'POST',
         body: formData,

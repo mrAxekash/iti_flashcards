@@ -154,7 +154,7 @@ export const DecksPage = () => {
             type={'search'}
             value={searchByName}
             onChange={e => dispatch(setSearchByName(e.currentTarget.value))}
-            placeholder={'Search...'}
+            placeholder={'PackName...'}
           />
         </div>
         <TabSwitcher
