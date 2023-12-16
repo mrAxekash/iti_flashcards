@@ -36,7 +36,7 @@ export const DialogAddPack = (props: PropsType) => {
 
   const formRef = useRef<HTMLFormElement | null>(null)
   // this is temporary here
-  const [isPrivate, setIsPrivate] = useState(false)
+  const [isPrivate, setIsPrivate] = useState<boolean>(false)
   const [cropImg, setCropImg] = useState<string | undefined>(undefined)
 
   const dispatch = useAppDispatch()
@@ -60,7 +60,7 @@ export const DialogAddPack = (props: PropsType) => {
     const formData = new FormData()
     const deckCoverImg = await fromBase64(cropImg ? cropImg : '')
     formData.append('name', packName)
-    // formData.append('isPrivate', isPrivate)
+    formData.append('isPrivate', JSON.stringify(isPrivate))
     if (deckCoverImg) {
       formData.append('cover', deckCoverImg)
     }
