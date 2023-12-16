@@ -10,6 +10,7 @@ import {Column, Table} from '@/components/ui/Table'
 import {useGetMeQuery} from '@/services/auth/auth.service.ts'
 import {Sort} from '@/services/common/types.ts'
 import {Deck} from '@/services/decks/deck.types.ts'
+import s from './DecksTable.module.scss'
 
 export const DecksTable = (props: PropsType) => {
   const columns: Column[] = [
@@ -61,7 +62,7 @@ export const DecksTable = (props: PropsType) => {
               <Table.Row key={deck.id}>
                 <Table.Cell>
                   <Button as={Link} variant={'link'} to={`cards/${deck.id}`}>
-                    <div>
+                    <div className={s.buttonContainer}>
                       {deck.cover && (
                         <>
                           <img src={deck.cover} alt={'questionImg'} className={sT.imgInCell}/>
