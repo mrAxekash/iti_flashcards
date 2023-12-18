@@ -38,7 +38,7 @@ export const DecksPage = () => {
     useAppSelector(state => state.decks)
 
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
-  const [sliderValue, setSliderValue] = useState([0])
+  const [sliderValue, setSliderValue] = useState([0, 61])
 
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
     id: '',
