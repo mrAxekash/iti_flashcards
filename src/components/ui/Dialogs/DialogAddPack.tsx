@@ -9,7 +9,7 @@ import {ControlledTextField} from '@/components/ui/controlled/controlled-text-fi
 import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import {useAppDispatch} from '@/hooks.ts'
-import {useCreateDeckFormMutation, useCreateDeckMutation} from '@/services/decks/decks.service.ts'
+import {useCreateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
 import {DialogAddPackImgUpload} from "@/components/ui/Dialogs/DialogAddPackImgUpload.tsx"
 import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
@@ -40,8 +40,7 @@ export const DialogAddPack = (props: PropsType) => {
   const [cropImg, setCropImg] = useState<string | undefined>(undefined)
 
   const dispatch = useAppDispatch()
-  const [createDeck] = useCreateDeckMutation()
-  const [createDeckForm] = useCreateDeckFormMutation()
+  const [createDeckForm] = useCreateDeckMutation()
 
   const handleFormSubmitted = handleSubmit(values => {
     onAddDeck(values.packName)
