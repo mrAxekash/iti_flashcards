@@ -113,8 +113,8 @@ export type CreateCardInDeckResponse = Omit<Card, 'grade'> & {
 export type UpdateCard = {
   questionImg?: string | null
   answerImg?: string | null
-  question: string
-  answer: string
+  question?: string
+  answer?: string
   questionVideo?: string | null
   answerVideo?: string | null
 }
