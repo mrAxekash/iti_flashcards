@@ -44,7 +44,7 @@ export const DialogUpdatePack = (props: PropsType) => {
   const [updateDeck] = useUpdateDeckMutation()
 
   const handleFormSubmitted = handleSubmit(values => {
-    onUpdateDeck(values.cover, values.name, isPrivate)
+    onUpdateDeck(values.name, isPrivate)
     reset()
     props.setOpen(false)
   })
@@ -56,21 +56,34 @@ export const DialogUpdatePack = (props: PropsType) => {
     formRef.current.submit()
   }
 
-  const onUpdateDeck = (cover: string, name: string, isPrivate: boolean) => {
-    if (!name || !props.deckId) return
+  const onUpdateDeck = (name: string, isPrivate: boolean) => {
+    if (!name || !props.deckId) return;
 
-    dispatch(updateDecksCurrentPage(1))
-    updateDeck({
-      deckId: props.deckId,
-      data: {
-        cover,
-        name,
-        isPrivate,
-      },
-    })
+    // Check if any of the properties has changed
+    const isNameChanged = props.name !== name;
+    const isPrivateChanged = props.isPrivate !== isPrivate;
 
-    props.setOpen(false)
-  }
+    if (isNameChanged || isPrivateChanged) {
+      dispatch(updateDecksCurrentPage(1));
+
+      // Prepare the data object with only the changed properties
+      const updatedData: { name?: string; cover?: string; isPrivate?: boolean } = {};
+      if (isNameChanged) {
+        updatedData.name = name;
+      }
+      if (isPrivateChanged) {
+        updatedData.isPrivate = isPrivate;
+      }
+
+      updateDeck({
+        deckId: props.deckId,
+        data: updatedData,
+      });
+    }
+
+    props.setOpen(false);
+  };
+
   const onClose = () => {
     reset()
     props.setOpen(false)

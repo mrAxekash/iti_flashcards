@@ -77,10 +77,11 @@ export type CreateCardInDeckType = {
 }
 
 export type UpdateDeck = {
-  cover: string
-  name: string
+  cover?: string
+  name?: string
   isPrivate?: boolean
 }
+
 export type Card = {
   id: string
   deckId: string
