@@ -1,3 +1,5 @@
+import { Tooltip } from 'react-tooltip'
+
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import sT from '@/common/commonStyles/tables.module.scss'
@@ -60,7 +62,13 @@ export const CardsTable = (props: PropsType) => {
                 )}{' '}
                 {/*TODO ask a question mentor */}
                 {data.question.length > 30 ? (
-                  <div title={data.question}>{data.question}</div>
+                  <>
+                    <a data-tooltip-id="my-tooltip" data-tooltip-content={data.question}>
+                      {/*<div title={data.question}></div>*/}
+                      {data.question}
+                    </a>
+                    <Tooltip id="my-tooltip" />
+                  </>
                 ) : (
                   <div>{data.question}</div>
                 )}
@@ -74,8 +82,14 @@ export const CardsTable = (props: PropsType) => {
                 )}{' '}
                 {/*TODO ask a question mentor */}
                 {data.answer.length > 30 ? (
-                  <div title={data.answer}>{data.answer}</div>
+                  <>
+                    <a data-tooltip-id="my-tooltip" data-tooltip-content={data.answer}>
+                      {data.answer}
+                    </a>
+                    <Tooltip id={'my-tooltip'} />
+                  </>
                 ) : (
+                  // <div title={data.answer}>{data.answer}</div>
                   <div>{data.answer}</div>
                 )}
               </Table.Cell>
