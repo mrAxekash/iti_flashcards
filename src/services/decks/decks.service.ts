@@ -37,7 +37,7 @@ export const decksService = baseApi.injectEndpoints({
         method: 'GET',
         params: { ...params },
       }),
-      providesTags: ['CardsIdDeck'],
+      providesTags: ['CardsInDeck'],
     }),
     createDeck: builder.mutation<Deck, { formData: FormData }>({
       query: ({ formData }) => ({
@@ -153,7 +153,7 @@ export const decksService = baseApi.injectEndpoints({
           console.error(e)
         }
       },
-      invalidatesTags: ['CardsIdDeck'], // not works together with onQueryStarted
+      invalidatesTags: ['CardsInDeck'], // not works together with onQueryStarted
 
       //todo: understand why it not works together
     }),

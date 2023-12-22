@@ -18,14 +18,13 @@ const cardsService = baseApi.injectEndpoints({
             draft?.items?.splice(draft?.items?.findIndex(card => card?.id === id), 1)
           })
         )
-
         try {
           await queryFulfilled
         } catch (e) {
           patchResult.undo()
         }
       },
-      invalidatesTags: ['CardsIdDeck'],
+      invalidatesTags: ['CardsInDeck'],
     }),
     updateCard: builder.mutation<Card, { id: string; data: UpdateCard }>({
       query: ({ id, data }) => ({
@@ -33,7 +32,7 @@ const cardsService = baseApi.injectEndpoints({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: ['CardsIdDeck'],
+      invalidatesTags: ['CardsInDeck'],
     }),
   }),
 })
