@@ -2,7 +2,6 @@ import { omit } from 'remeda'
 
 import { baseApi } from '@/services/base-api.ts'
 import {
-  Card,
   CreateCardInDeckResponse,
   Deck,
   DeckByIdResponse,
@@ -14,6 +13,7 @@ import {
   UpdateDeck,
 } from '@/services/decks/deck.types.ts'
 import { RootState } from '@/services/store.ts'
+import {Card} from "@/services/cards/cards.types.ts"
 
 export const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({

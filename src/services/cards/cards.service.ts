@@ -1,7 +1,7 @@
 import { baseApi } from '@/services/base-api.ts'
-import { Card, UpdateCard } from '@/services/decks/deck.types.ts'
 import { decksService } from '@/services/decks/decks.service.ts'
 import { RootState } from '@/services/store.ts'
+import {Card, UpdateCard} from "@/services/cards/cards.types.ts"
 const cardsService = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteCard: builder.mutation<{}, { id: string }>({
