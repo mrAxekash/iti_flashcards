@@ -70,7 +70,7 @@ export const CardsTable = (props: PropsType) => {
                     >
                       {data.question}
                     </a>
-                    <Tooltip id="my-tooltip" className={sT.tooltip} />
+                    <Tooltip id="my-tooltip" />
                   </>
                 ) : (
                   <div>{data.question}</div>
@@ -86,10 +86,10 @@ export const CardsTable = (props: PropsType) => {
                 {/*TODO ask a question mentor */}
                 {data.answer.length > 30 ? (
                   <>
-                    <a data-tooltip-id="my-tooltip" data-tooltip-content={data.answer}>
+                    <a data-tooltip-id="my-tooltip1" data-tooltip-content={data.answer}>
                       {data.answer}
                     </a>
-                    <Tooltip id={'my-tooltip'} />
+                    <Tooltip id={'my-tooltip1'} />
                   </>
                 ) : (
                   <div>{data.answer}</div>
