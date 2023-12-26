@@ -1,5 +1,3 @@
-import { Tooltip } from 'react-tooltip'
-
 import { Edit } from '@/assets/icons/Edit.tsx'
 import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import sT from '@/common/commonStyles/tables.module.scss'
@@ -7,6 +5,7 @@ import { formatDate } from '@/common/functions.ts'
 import { Button } from '@/components/ui/Button'
 import { Grade } from '@/components/ui/Rating/rating.tsx'
 import { Column, Table } from '@/components/ui/Table'
+import { Tooltip } from '@/components/ui/Tooltip/Tooltip'
 import { Sort } from '@/services/common/types.ts'
 import { Card } from '@/services/decks/deck.types.ts'
 
@@ -61,20 +60,21 @@ export const CardsTable = (props: PropsType) => {
                   </>
                 )}{' '}
                 {/*TODO ask a question mentor */}
-                {data.question.length > 30 ? (
-                  <>
-                    <a
-                      data-tooltip-id="my-tooltip"
-                      data-tooltip-content={data.question}
-                      className={sT.tooltip}
-                    >
-                      {data.question}
-                    </a>
-                    <Tooltip id="my-tooltip" />
-                  </>
-                ) : (
-                  <div>{data.question}</div>
-                )}
+                <Tooltip triggerData={data.question} />
+                {/*{data.question.length > 30 ? (*/}
+                {/*  <>*/}
+                {/*    <a*/}
+                {/*      data-tooltip-id="my-tooltip"*/}
+                {/*      data-tooltip-content={data.question}*/}
+                {/*      className={sT.tooltip}*/}
+                {/*    >*/}
+                {/*      {data.question}*/}
+                {/*    </a>*/}
+                {/*    <Tooltip id="my-tooltip" />*/}
+                {/*  </>*/}
+                {/*) : (*/}
+                {/*  <div>{data.question}</div>*/}
+                {/*)}*/}
               </Table.Cell>
               <Table.Cell>
                 {data.answerImg && (
@@ -84,16 +84,17 @@ export const CardsTable = (props: PropsType) => {
                   </>
                 )}{' '}
                 {/*TODO ask a question mentor */}
-                {data.answer.length > 30 ? (
-                  <>
-                    <a data-tooltip-id="my-tooltip1" data-tooltip-content={data.answer}>
-                      {data.answer}
-                    </a>
-                    <Tooltip id={'my-tooltip1'} />
-                  </>
-                ) : (
-                  <div>{data.answer}</div>
-                )}
+                <Tooltip triggerData={data.answer} />
+                {/*{data.answer.length > 30 ? (*/}
+                {/*  <>*/}
+                {/*    <a data-tooltip-id="my-tooltip1" data-tooltip-content={data.answer}>*/}
+                {/*      {data.answer}*/}
+                {/*    </a>*/}
+                {/*    <Tooltip id={'my-tooltip1'} />*/}
+                {/*  </>*/}
+                {/*) : (*/}
+                {/*  <div>{data.answer}</div>*/}
+                {/*)}*/}
               </Table.Cell>
               <Table.Cell>{formatDate(data.updated)}</Table.Cell>
               <Table.Cell>
