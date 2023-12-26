@@ -60,21 +60,11 @@ export const CardsTable = (props: PropsType) => {
                   </>
                 )}{' '}
                 {/*TODO ask a question mentor */}
-                <Tooltip triggerData={data.question} />
-                {/*{data.question.length > 30 ? (*/}
-                {/*  <>*/}
-                {/*    <a*/}
-                {/*      data-tooltip-id="my-tooltip"*/}
-                {/*      data-tooltip-content={data.question}*/}
-                {/*      className={sT.tooltip}*/}
-                {/*    >*/}
-                {/*      {data.question}*/}
-                {/*    </a>*/}
-                {/*    <Tooltip id="my-tooltip" />*/}
-                {/*  </>*/}
-                {/*) : (*/}
-                {/*  <div>{data.question}</div>*/}
-                {/*)}*/}
+                {data.question.length > 30 ? (
+                  <Tooltip triggerData={data.question} />
+                ) : (
+                  <div>{data.question}</div>
+                )}
               </Table.Cell>
               <Table.Cell>
                 {data.answerImg && (
@@ -84,17 +74,11 @@ export const CardsTable = (props: PropsType) => {
                   </>
                 )}{' '}
                 {/*TODO ask a question mentor */}
-                <Tooltip triggerData={data.answer} />
-                {/*{data.answer.length > 30 ? (*/}
-                {/*  <>*/}
-                {/*    <a data-tooltip-id="my-tooltip1" data-tooltip-content={data.answer}>*/}
-                {/*      {data.answer}*/}
-                {/*    </a>*/}
-                {/*    <Tooltip id={'my-tooltip1'} />*/}
-                {/*  </>*/}
-                {/*) : (*/}
-                {/*  <div>{data.answer}</div>*/}
-                {/*)}*/}
+                {data.answer.length > 30 ? (
+                  <Tooltip triggerData={data.answer} />
+                ) : (
+                  <div>{data.answer}</div>
+                )}
               </Table.Cell>
               <Table.Cell>{formatDate(data.updated)}</Table.Cell>
               <Table.Cell>
