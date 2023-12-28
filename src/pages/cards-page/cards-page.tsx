@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import s from './cards-page.module.scss'
 
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
+import { Play } from '@/assets/icons/Play.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
 import { sortStringCallback } from '@/common/functions.ts'
@@ -14,6 +15,8 @@ import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
+import { DropDownMenu } from '@/components/ui/DropDownMenu/DropDownMenu.tsx'
+import { DropdownItemWithIcon } from '@/components/ui/DropDownMenu/DropdownMenuWithIcon'
 import { Pagination } from '@/components/ui/Pagination'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
@@ -130,6 +133,9 @@ export const CardsPage = () => {
       </div>
       <div className={sT.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
+        <DropDownMenu>
+          <DropdownItemWithIcon icon={<Play />} title={'Learn'}></DropdownItemWithIcon>
+        </DropDownMenu>
         {data?.cardsCount !== 0 && (
           <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>
             Add New Card
