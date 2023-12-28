@@ -68,7 +68,7 @@ export type GetCardsInDeckArgs = {
   itemsPerPage?: number
 }
 
-export type UpdateDeck = {
+type UpdateDeckData = {
   cover?: string
   name?: string
   isPrivate?: boolean
@@ -76,7 +76,7 @@ export type UpdateDeck = {
 
 export type UpdateDeckArgs = {
   deckId: string
-  data: UpdateDeck
+  data: UpdateDeckData
 }
 
 export type GetCardsInDeckResponse = {
@@ -89,6 +89,10 @@ export type CreateCardInDeckResponse = Omit<Card, 'grade'> & {
   moreId: string | null
   rating: number
   type: string | null
+}
+export type createCardInDeckArgs = {
+  deckId: string
+  formData?: FormData
 }
 
 export type DeckLearnArg = {
