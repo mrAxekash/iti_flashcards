@@ -1,23 +1,23 @@
-import { omit } from 'remeda'
+import {omit} from 'remeda'
 
-import { baseApi } from '@/services/base-api.ts'
+import {baseApi} from '@/services/base-api.ts'
 import {
   CreateCardInDeckResponse,
   Deck,
+  DeckArgs,
   DeckByIdResponse,
   DeckLearnArg,
-  DeckParams,
   DecksResponse,
-  GetCardsInDeckParams,
+  GetCardsInDeckArgs,
   GetCardsInDeckResponse,
-  UpdateDeck,
+  UpdateDeckArgs,
 } from '@/services/decks/deck.types.ts'
-import { RootState } from '@/services/store.ts'
+import {RootState} from '@/services/store.ts'
 import {Card} from "@/services/cards/cards.types.ts"
 
 export const decksService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getDecks: builder.query<DecksResponse, DeckParams | void>({
+    getDecks: builder.query<DecksResponse, DeckArgs | void>({
       query: params => ({
         url: 'v1/decks',
         method: 'GET',
@@ -31,7 +31,7 @@ export const decksService = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    getCardsInDeck: builder.query<GetCardsInDeckResponse, GetCardsInDeckParams>({
+    getCardsInDeck: builder.query<GetCardsInDeckResponse, GetCardsInDeckArgs>({
       query: ({ id, ...params }) => ({
         url: `v1/decks/${id}/cards`,
         method: 'GET',
@@ -114,7 +114,7 @@ export const decksService = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Decks'],
     }),
-    updateDeck: builder.mutation<DeckByIdResponse, { deckId: string; data: UpdateDeck }>({
+    updateDeck: builder.mutation<DeckByIdResponse, UpdateDeckArgs>({
       query: ({ deckId, data }) => {
         return {
           method: 'PATCH',

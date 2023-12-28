@@ -49,7 +49,7 @@ export type DeckByIdResponse = {
   cardsCount: number
 }
 
-export type DeckParams = {
+export type DeckArgs = {
   name?: string
   authorId?: string
   orderBy?: DecksOrderBy
@@ -59,7 +59,7 @@ export type DeckParams = {
   itemsPerPage?: number
 }
 
-export type GetCardsInDeckParams = {
+export type GetCardsInDeckArgs = {
   id: string
   question?: string
   answer?: string
@@ -72,6 +72,11 @@ export type UpdateDeck = {
   cover?: string
   name?: string
   isPrivate?: boolean
+}
+
+export type UpdateDeckArgs = {
+  deckId: string
+  data: UpdateDeck
 }
 
 export type GetCardsInDeckResponse = {
