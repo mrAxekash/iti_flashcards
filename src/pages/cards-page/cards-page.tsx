@@ -141,11 +141,20 @@ export const CardsPage = () => {
             <DropdownItemWithIcon
               icon={<Play className={s.icons} />}
               title={'Learn'}
+              className={s.dropDownMenuItem}
             ></DropdownItemWithIcon>
             <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownItemWithIcon icon={<Edit className={s.icons} />} title={'Edit'} />
+            <DropdownItemWithIcon
+              icon={<Edit className={s.icons} />}
+              className={s.dropDownMenuItem}
+              title={'Edit'}
+            />
             <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownItemWithIcon icon={<TrashHollow className={s.icons} />} title={'Delete'} />
+            <DropdownItemWithIcon
+              icon={<TrashHollow className={s.icons} />}
+              className={s.dropDownMenuItem}
+              title={'Delete'}
+            />
           </DropDownMenu>
         </Typography>
 
