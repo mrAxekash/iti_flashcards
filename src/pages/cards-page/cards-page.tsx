@@ -137,7 +137,7 @@ export const CardsPage = () => {
       <div className={sT.topContainer}>
         <Typography variant={'H1'}>
           {data?.name}
-          <DropDownMenu align={'end'}>
+          <DropDownMenu align={'end'} className={s.dropDownMenuContent}>
             <DropdownItemWithIcon
               icon={<Play className={s.icons} />}
               title={'Learn'}
