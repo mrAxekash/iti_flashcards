@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import s from './cards-page.module.scss'
 
 import arrowLeft from '@/assets/icons/ArrowLeft.svg'
+import { Edit } from '@/assets/icons/Edit'
 import { Play } from '@/assets/icons/Play.tsx'
+import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
 import { sortStringCallback } from '@/common/functions.ts'
@@ -132,10 +135,20 @@ export const CardsPage = () => {
         <span className={s.text}>Back to Packs List</span>
       </div>
       <div className={sT.topContainer}>
-        <Typography variant={'H1'}>{data?.name}</Typography>
-        <DropDownMenu>
-          <DropdownItemWithIcon icon={<Play />} title={'Learn'}></DropdownItemWithIcon>
-        </DropDownMenu>
+        <Typography variant={'H1'}>
+          {data?.name}
+          <DropDownMenu align={'end'}>
+            <DropdownItemWithIcon
+              icon={<Play className={s.icons} />}
+              title={'Learn'}
+            ></DropdownItemWithIcon>
+            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
+            <DropdownItemWithIcon icon={<Edit className={s.icons} />} title={'Edit'} />
+            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
+            <DropdownItemWithIcon icon={<TrashHollow className={s.icons} />} title={'Delete'} />
+          </DropDownMenu>
+        </Typography>
+
         {data?.cardsCount !== 0 && (
           <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>
             Add New Card
