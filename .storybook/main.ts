@@ -10,7 +10,8 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
-    "@storybook/addon-mdx-gfm"
+    "@storybook/addon-mdx-gfm",
+    'storybook-addon-react-router-v6'
   ],
   "framework": {
     "name": "@storybook/react-vite",
