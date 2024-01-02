@@ -135,8 +135,10 @@ export const CardsPage = () => {
         <span className={s.text}>Back to Packs List</span>
       </div>
       <div className={sT.topContainer}>
-        <Typography variant={'H1'}>
-          {data?.name}
+        <div className={sT.topContainer}>
+          <Typography className={sT.topHeader} variant={'H1'}>
+            {data?.name}
+          </Typography>
           <DropDownMenu align={'end'} className={s.dropDownMenuContent}>
             <DropdownItemWithIcon
               icon={<Play className={s.icons} />}
@@ -156,7 +158,7 @@ export const CardsPage = () => {
               title={'Delete'}
             />
           </DropDownMenu>
-        </Typography>
+        </div>
 
         {data?.cardsCount !== 0 && (
           <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>

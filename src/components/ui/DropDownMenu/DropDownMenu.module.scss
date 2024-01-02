@@ -1,6 +1,8 @@
 .button {
   all: unset;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   //border-radius: 100%;
 }
 .userAvatar {
