@@ -12,12 +12,13 @@ import { TrashHollow } from '@/assets/icons/TrashHollow.tsx'
 import sC from '@/common/commonStyles/common.module.scss'
 import sT from '@/common/commonStyles/tables.module.scss'
 import { sortStringCallback } from '@/common/functions.ts'
-import { CardsOrderBy, SelectedCard, SelectedCardUpdate } from '@/common/types.ts'
+import { CardsOrderBy, SelectedCard, SelectedCardUpdate, SelectedDeck } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
+import { DialogUpdatePack } from '@/components/ui/Dialogs/DialogUpdatePack.tsx'
 import { DropDownMenu } from '@/components/ui/DropDownMenu/DropDownMenu.tsx'
 import { DropdownItemWithIcon } from '@/components/ui/DropDownMenu/DropdownMenuWithIcon'
 import { Pagination } from '@/components/ui/Pagination'
@@ -46,6 +47,17 @@ export const CardsPage = () => {
     orderBy,
   })
   const { data: me } = useGetMeQuery()
+
+  console.log(data)
+
+  const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
+    id: '',
+    name: '',
+    isPrivate: false,
+  })
+
+  const [isUpdateDeckDialogOpen, setIsUpdateDeckDialogOpen] = useState(false) // for update dialog
+  const [isDeleteDeckDialogOpen, setIsDeleteDeckDialogOpen] = useState(false) // for delete dialog
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
@@ -83,6 +95,19 @@ export const CardsPage = () => {
 
   const onArrowLeft = () => {
     navigate(`/`)
+  }
+
+  const onPlayLearn = () => {
+    navigate(`/learn/${deckId}`)
+  }
+
+  const onSelectDeckForDel = (id: string, name: string) => {
+    setIsDeleteDeckDialogOpen(true)
+    setSelectedDeck({ id, name })
+  }
+  const onSelectDeckForUpdate = (id: string, name: string, isPrivate: boolean) => {
+    setIsUpdateDeckDialogOpen(true)
+    setSelectedDeck({ id, name, isPrivate })
   }
 
   const onSelectCardForDel = (id: string, question: string) => {
@@ -144,12 +169,16 @@ export const CardsPage = () => {
               icon={<Play className={s.icons} />}
               title={'Learn'}
               className={s.dropDownMenuItem}
+              onClick={onPlayLearn}
             ></DropdownItemWithIcon>
             <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
             <DropdownItemWithIcon
               icon={<Edit className={s.icons} />}
               className={s.dropDownMenuItem}
               title={'Edit'}
+              onClick={() =>
+                onSelectDeckForUpdate(selectedDeck.id, 'Hello', selectedDeck.isPrivate)
+              }
             />
             <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
             <DropdownItemWithIcon
@@ -159,6 +188,19 @@ export const CardsPage = () => {
             />
           </DropDownMenu>
         </div>
+
+        {isUpdateDeckDialogOpen && selectedDeck && (
+          <DialogUpdatePack
+            name={selectedDeck.name}
+            deckId={selectedDeck.id ?? ''}
+            open={isUpdateDialogOpen}
+            setOpen={setIsUpdateDialogOpen}
+            isPrivate={selectedDeck.isPrivate}
+            setIsPrivate={setSelectedDeck}
+            selectedDeck={selectedDeck}
+            setSelectedDeck={setSelectedDeck}
+          />
+        )}
 
         {data?.cardsCount !== 0 && (
           <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>
