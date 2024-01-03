@@ -97,6 +97,11 @@ export const CardsPage = () => {
     setIsAddNewCardDialogOpen(true)
   }
 
+  const isEmptyPack = (): boolean => {
+    return cards?.items.length === 0
+  }
+
+
   return (
     <div className={sT.component}>
       {isDeleteDialogOpen && (
@@ -130,13 +135,13 @@ export const CardsPage = () => {
       </div>
       <div className={sT.topContainer}>
         <Typography variant={'H1'}>{data?.name}</Typography>
-        {data?.cardsCount !== 0 && (
-          <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>
-            Add New Card
-          </Button>
-        )}
+          { !isEmptyPack() &&
+            <Button disabled={isEditHidden} onClick={onAddCard} className={s.button}>
+              Add New Card
+            </Button>
+          }
       </div>
-      {cards && cards.items.length === 0 ? (
+      {isEmptyPack() ? (
         <div className={s.emptyPackContainer}>
           <Typography variant={'Subtitle_2'} className={s.Subtitle_2}>
             This pack is empty.
