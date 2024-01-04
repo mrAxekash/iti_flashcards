@@ -17,6 +17,7 @@ import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
 import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
+import { DialogRemovePack } from '@/components/ui/Dialogs/DialogRemovePack.tsx'
 import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
 import { DialogUpdatePack } from '@/components/ui/Dialogs/DialogUpdatePack.tsx'
 import { DropDownMenu } from '@/components/ui/DropDownMenu/DropDownMenu.tsx'
@@ -48,16 +49,14 @@ export const CardsPage = () => {
   })
   const { data: me } = useGetMeQuery()
 
-  console.log(data)
-
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
     id: '',
     name: '',
     isPrivate: false,
   })
 
-  const [isUpdateDeckDialogOpen, setIsUpdateDeckDialogOpen] = useState(false) // for update dialog
-  const [isDeleteDeckDialogOpen, setIsDeleteDeckDialogOpen] = useState(false) // for delete dialog
+  const [isUpdateDeckDialogOpen, setIsUpdateDeckDialogOpen] = useState(false) // for update decks dialog
+  const [isDeleteDeckDialogOpen, setIsDeleteDeckDialogOpen] = useState(false) // for delete decks dialog
 
   const [isAddNewCardDialogOpen, setIsAddNewCardDialogOpen] = useState(false)
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for Update dialog
@@ -97,6 +96,7 @@ export const CardsPage = () => {
     navigate(`/`)
   }
 
+  // DECKS
   const onPlayLearn = () => {
     navigate(`/learn/${deckId}`)
   }
@@ -108,6 +108,14 @@ export const CardsPage = () => {
   const onSelectDeckForUpdate = (id: string, name: string, isPrivate: boolean) => {
     setIsUpdateDeckDialogOpen(true)
     setSelectedDeck({ id, name, isPrivate })
+  }
+
+  const onEditDeckHandler = () => {
+    onSelectDeckForUpdate(data?.id ?? '123', data?.name ?? 'Hello', data?.isPrivate ?? false)
+  }
+
+  const onDeleteDeckHandler = () => {
+    onSelectDeckForDel(data?.id ?? '123', data?.name ?? 'Hello')
   }
 
   const onSelectCardForDel = (id: string, question: string) => {
@@ -171,21 +179,24 @@ export const CardsPage = () => {
               className={s.dropDownMenuItem}
               onClick={onPlayLearn}
             ></DropdownItemWithIcon>
-            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownItemWithIcon
-              icon={<Edit className={s.icons} />}
-              className={s.dropDownMenuItem}
-              title={'Edit'}
-              onClick={() =>
-                onSelectDeckForUpdate(selectedDeck.id, 'Hello', selectedDeck.isPrivate)
-              }
-            />
-            <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
-            <DropdownItemWithIcon
-              icon={<TrashHollow className={s.icons} />}
-              className={s.dropDownMenuItem}
-              title={'Delete'}
-            />
+            {me?.id === data?.userId && (
+              <>
+                <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
+                <DropdownItemWithIcon
+                  icon={<Edit className={s.icons} />}
+                  className={s.dropDownMenuItem}
+                  title={'Edit'}
+                  onClick={onEditDeckHandler}
+                />
+                <DropdownMenu.Separator className={s.dropDownMenuSeparator} />
+                <DropdownItemWithIcon
+                  icon={<TrashHollow className={s.icons} />}
+                  className={s.dropDownMenuItem}
+                  title={'Delete'}
+                  onClick={onDeleteDeckHandler}
+                />
+              </>
+            )}
           </DropDownMenu>
         </div>
 
@@ -193,10 +204,19 @@ export const CardsPage = () => {
           <DialogUpdatePack
             name={selectedDeck.name}
             deckId={selectedDeck.id ?? ''}
-            open={isUpdateDialogOpen}
-            setOpen={setIsUpdateDialogOpen}
+            open={isUpdateDeckDialogOpen}
+            setOpen={setIsUpdateDeckDialogOpen}
             isPrivate={selectedDeck.isPrivate}
             setIsPrivate={setSelectedDeck}
+            selectedDeck={selectedDeck}
+            setSelectedDeck={setSelectedDeck}
+          />
+        )}
+
+        {isDeleteDeckDialogOpen && (
+          <DialogRemovePack
+            open={isDeleteDeckDialogOpen}
+            setOpen={setIsDeleteDeckDialogOpen}
             selectedDeck={selectedDeck}
             setSelectedDeck={setSelectedDeck}
           />
