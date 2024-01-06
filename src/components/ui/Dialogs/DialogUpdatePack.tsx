@@ -12,6 +12,7 @@ import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParr
 import {useAppDispatch} from '@/hooks.ts'
 import {useUpdateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
+import {DialogAddPackImgUpload} from "@/components/ui/Dialogs/DialogAddPackImgUpload.tsx"
 
 export const DialogUpdatePack = (props: PropsType) => {
     const schema = z.object({
@@ -39,6 +40,7 @@ export const DialogUpdatePack = (props: PropsType) => {
     const formRef = useRef<HTMLFormElement | null>(null)
 
     const [isPrivate, setIsPrivate] = useState<boolean>(props.selectedDeck.isPrivate ? props.selectedDeck.isPrivate : false)
+    const [cropImg, setCropImg] = useState<string | undefined>(undefined)
 
     const dispatch = useAppDispatch()
     const [updateDeck] = useUpdateDeckMutation()
@@ -98,6 +100,9 @@ export const DialogUpdatePack = (props: PropsType) => {
             actionButtonText={'Save Changes'}
             isButtonDisable={Object.keys(errors).length > 0}
         >
+            <div className={sC.dialogElement}>
+                <DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg}/>
+            </div>
             <form ref={formRef}>
                 <div className={sC.DialogDescription}>
                     <div className={sC.textFieldContainer}>
