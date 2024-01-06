@@ -31,16 +31,16 @@ export const DialogUpdatePack = (props: PropsType) => {
         mode: 'onSubmit',
         resolver: zodResolver(schema),
         defaultValues: {
-            cover: '',
             name: props.selectedDeck.name,
             isPrivate: props.selectedDeck.isPrivate,
+            cover: props.selectedDeck.cover
         },
     })
 
     const formRef = useRef<HTMLFormElement | null>(null)
 
     const [isPrivate, setIsPrivate] = useState<boolean>(props.selectedDeck.isPrivate ? props.selectedDeck.isPrivate : false)
-    const [cropImg, setCropImg] = useState<string | undefined>(undefined)
+    const [cropImg, setCropImg] = useState<string>(props.selectedDeck.cover)
 
     const dispatch = useAppDispatch()
     const [updateDeck] = useUpdateDeckMutation()
@@ -100,8 +100,11 @@ export const DialogUpdatePack = (props: PropsType) => {
             actionButtonText={'Save Changes'}
             isButtonDisable={Object.keys(errors).length > 0}
         >
-            <div className={sC.dialogElement}>
-                <DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg}/>
+            <div className={sC.DialogDescription}>
+                <div className={sC.dialogElement}>
+                    <DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg}/>
+                </div>
+
             </div>
             <form ref={formRef}>
                 <div className={sC.DialogDescription}>

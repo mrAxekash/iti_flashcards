@@ -12,7 +12,7 @@ export type Deck = {
   name: string
   isPrivate: boolean
   shots: number
-  cover: string | null
+  cover: string
   rating: number
   isDeleted?: boolean | null
   isBlocked?: boolean | null
