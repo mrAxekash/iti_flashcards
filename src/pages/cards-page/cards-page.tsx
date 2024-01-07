@@ -118,6 +118,7 @@ export const CardsPage = () => {
 
   const onDeleteDeckHandler = () => {
     onSelectDeckForDel(data?.id ?? '123', data?.name ?? 'Hello')
+    // navigate(`/`)
   }
 
   const onSelectCardForDel = (id: string, question: string) => {
@@ -137,6 +138,8 @@ export const CardsPage = () => {
   const onAddCard = () => {
     setIsAddNewCardDialogOpen(true)
   }
+
+  if (!data) navigate('/')
 
   return (
     <div className={sT.component}>

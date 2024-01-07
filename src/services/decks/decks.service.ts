@@ -113,7 +113,7 @@ export const decksService = baseApi.injectEndpoints({
           patchResult.undo()
         }
       },
-      invalidatesTags: ['Decks'],
+      invalidatesTags: ['Decks', 'Deck'],
     }),
     updateDeck: builder.mutation<DeckByIdResponse, { deckId: string; data: UpdateDeck }>({
       query: ({ deckId, data }) => {
