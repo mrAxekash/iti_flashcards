@@ -66,20 +66,21 @@ export const DialogUpdatePack = (props: PropsType) => {
         const isPrivateChanged = props.isPrivate !== isPrivate
 
         if (isNameChanged || isPrivateChanged) {
+            const formData = new FormData()
+
             dispatch(updateDecksCurrentPage(1))
 
             // Prepare the data object with only the changed properties
-            const updatedData: { name?: string; cover?: string; isPrivate?: boolean } = {}
             if (isNameChanged) {
-                updatedData.name = name
+                formData.append('name', name)
             }
             if (isPrivateChanged) {
-                updatedData.isPrivate = isPrivate
+                formData.append('isPrivate', JSON.stringify(isPrivate))
             }
 
             updateDeck({
                 deckId: props.deckId,
-                data: updatedData,
+                formData,
             })
         }
 
