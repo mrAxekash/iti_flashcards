@@ -63,6 +63,7 @@ export const DialogAddPack = (props: PropsType) => {
     formData.append('isPrivate', JSON.stringify(isPrivate))
     if (deckCoverImg) {
       formData.append('cover', deckCoverImg)
+      debugger
     }
     dispatch(updateDecksCurrentPage(1))
     createDeckForm({ formData })

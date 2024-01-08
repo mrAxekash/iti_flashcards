@@ -13,6 +13,7 @@ import {useAppDispatch} from '@/hooks.ts'
 import {useUpdateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
 import {DialogAddPackImgUpload} from "@/components/ui/Dialogs/DialogAddPackImgUpload.tsx"
+import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
 
 export const DialogUpdatePack = (props: PropsType) => {
     const schema = z.object({
@@ -46,7 +47,7 @@ export const DialogUpdatePack = (props: PropsType) => {
     const [updateDeck] = useUpdateDeckMutation()
 
     const handleFormSubmitted = handleSubmit(values => {
-        onUpdateDeck(values.name, isPrivate)
+        onUpdateDeck(values.name, isPrivate, cropImg)
         reset()
         props.setOpen(false)
     })
@@ -58,12 +59,18 @@ export const DialogUpdatePack = (props: PropsType) => {
         formRef.current.submit()
     }
 
-    const onUpdateDeck = (name: string, isPrivate: boolean) => {
+    const onUpdateDeck = async (name: string, isPrivate: boolean, cover: string) => {
+        debugger
+        console.log('cover', cover)
+
         if (!name || !props.deckId) return
 
         // Check if any of the properties has changed
         const isNameChanged = props.name !== name
         const isPrivateChanged = props.isPrivate !== isPrivate
+
+        const coverImg = await fromBase64(cover ? cover : '')
+        const isCoverChanged = props.selectedDeck.cover !== cover
 
         if (isNameChanged || isPrivateChanged) {
             const formData = new FormData()
@@ -74,6 +81,7 @@ export const DialogUpdatePack = (props: PropsType) => {
             if (isNameChanged) {
                 formData.append('name', name)
             }
+
             if (isPrivateChanged) {
                 formData.append('isPrivate', JSON.stringify(isPrivate))
             }
