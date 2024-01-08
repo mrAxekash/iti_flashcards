@@ -13,7 +13,8 @@ import {useAppDispatch} from '@/hooks.ts'
 import {useUpdateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
 import {DialogAddPackImgUpload} from "@/components/ui/Dialogs/DialogAddPackImgUpload.tsx"
-import {fromBase64} from "@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts"
+
+import {fromBase64, getFileFromUrl} from "@/common/functions.ts"
 
 export const DialogUpdatePack = (props: PropsType) => {
     const schema = z.object({
@@ -61,7 +62,6 @@ export const DialogUpdatePack = (props: PropsType) => {
 
     const onUpdateDeck = async (name: string, isPrivate: boolean, cover: string) => {
         debugger
-        console.log('cover', cover)
 
         if (!name || !props.deckId) return
 
@@ -70,7 +70,11 @@ export const DialogUpdatePack = (props: PropsType) => {
         const isPrivateChanged = props.isPrivate !== isPrivate
 
         const coverImg = await fromBase64(cover ? cover : '')
-        const isCoverChanged = props.selectedDeck.cover !== cover
+        const coverFromProps = await getFileFromUrl(props.selectedDeck.cover)
+
+        debugger
+
+        const isCoverChanged = coverFromProps !== coverImg
 
         if (isNameChanged || isPrivateChanged) {
             const formData = new FormData()

@@ -6,13 +6,13 @@ import { z } from 'zod'
 
 import { Checkbox } from '@/components/ui/Checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
-import { fromBase64 } from '@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts'
 import { DialogAddPackImgUpload } from '@/components/ui/Dialogs/DialogAddPackImgUpload.tsx'
 import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import { DialogsParrent } from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import { useAppDispatch } from '@/hooks.ts'
 import { useCreateDeckMutation } from '@/services/decks/decks.service.ts'
 import { updateDecksCurrentPage } from '@/services/decks/decks.slice.ts'
+import {fromBase64} from "@/common/functions.ts"
 
 export const DialogAddPack = (props: PropsType) => {
   const schema = z.object({
