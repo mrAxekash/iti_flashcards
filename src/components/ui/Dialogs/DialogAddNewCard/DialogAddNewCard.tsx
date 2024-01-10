@@ -13,10 +13,13 @@ import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/common/functions.ts"
 
 export const DialogAddNewCard = (props: PropsType) => {
-    const [value, setValue] = useState('Text + Picture') // for select
     const arr: Array<string> = ['Text + Picture', 'Video'] // for select
+
+    const [value, setValue] = useState('Text + Picture') // for select
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
     const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
+    const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
+    const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
 
     const schema = z.object({
         answer: z.string().min(3),
@@ -87,6 +90,14 @@ export const DialogAddNewCard = (props: PropsType) => {
         setValue(value)
     }
 
+    const onApproveAnswer = () => {
+        setIsCoverAnswerChanged(true)
+    }
+
+    const onApproveQuestion = () => {
+        setIsCoverQuestionChanged(true)
+    }
+
     return (
         <DialogsParrent
             title={'Add New Card'}
@@ -134,6 +145,8 @@ export const DialogAddNewCard = (props: PropsType) => {
                     cropAnswerImg={cropAnswerImg}
                     setCropQuestionImg={setCropQuestionImg}
                     setCropAnswerImg={setCropAnswerImg}
+                    onApproveAnswerCallback={onApproveAnswer}
+                    onApproveQuestionCallback={onApproveQuestion}
                 />
 
             </div>

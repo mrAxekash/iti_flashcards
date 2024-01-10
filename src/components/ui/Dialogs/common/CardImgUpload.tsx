@@ -173,4 +173,6 @@ type PropsType = {
   cropAnswerImg: string | undefined
   setCropQuestionImg: (value: string) => void
   setCropAnswerImg: (value: string) => void
+  onApproveAnswerCallback: () => void
+  onApproveQuestionCallback: () => void
 }
