@@ -47,27 +47,3 @@ export const fromBase64 = (url: string) => {
         console.error(e)
       })
 }
-
-const getUrlExtension = (url: string): string | undefined => {
-    const parts = url.split(/[#?]/)[0].split(".");
-    const extension = parts.length > 1 ? parts.pop()!.trim() : undefined;
-    return extension;
-};
-
-export const getFileFromUrl = async (imgUrl: string) => {
-    try {
-        const imgExt = getUrlExtension(imgUrl);
-
-        const response = await fetch(imgUrl);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch image. Status: ${response.status}`);
-        }
-
-        const blob = await response.blob();
-        return new File([blob], `profileImage.${imgExt}`, { type: blob.type });
-    } catch (error) {
-        console.error('Error fetching or creating file:', error);
-        throw error; // Rethrow the error for the calling code to handle
-    }
-};

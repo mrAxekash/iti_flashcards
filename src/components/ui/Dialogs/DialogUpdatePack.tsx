@@ -73,7 +73,6 @@ export const DialogUpdatePack = (props: PropsType) => {
         const isNameChanged = props.name !== name
         const isPrivateChanged = props.isPrivate !== isPrivate
 
-        const coverImg = await fromBase64(cover ? cover : '')
 
         if (isNameChanged || isPrivateChanged || isCoverChanged) {
             const formData = new FormData()
@@ -89,8 +88,9 @@ export const DialogUpdatePack = (props: PropsType) => {
                 formData.append('isPrivate', JSON.stringify(isPrivate))
             }
 
-            if (isCoverChanged && coverImg) {
-                formData.append('cover', coverImg)
+            if (isCoverChanged) {
+                const coverImg = await fromBase64(cover ? cover : '')
+                if (coverImg) formData.append('cover', coverImg)
             }
 
             setTimeout(() => {
