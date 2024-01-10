@@ -12,8 +12,7 @@ import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParr
 import {useAppDispatch} from '@/hooks.ts'
 import {useUpdateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
-import {DialogAddPackImgUpload} from "@/components/ui/Dialogs/DialogAddPackImgUpload.tsx"
-
+import {DialogImgUpload} from "@/components/ui/Dialogs/DialogImgUpload.tsx"
 import {fromBase64} from "@/common/functions.ts"
 
 export const DialogUpdatePack = (props: PropsType) => {
@@ -51,8 +50,13 @@ export const DialogUpdatePack = (props: PropsType) => {
 
     const handleFormSubmitted = handleSubmit(values => {
         onUpdateDeck(values.name, isPrivate, cropImg)
-        reset()
-        props.setOpen(false)
+            .then(() => {
+                reset()
+                props.setOpen(false)
+            }).catch(() => {
+            console.error('handleFormSubmitted error')
+        })
+
     })
 
     // on submit form emulation
@@ -70,9 +74,6 @@ export const DialogUpdatePack = (props: PropsType) => {
         const isPrivateChanged = props.isPrivate !== isPrivate
 
         const coverImg = await fromBase64(cover ? cover : '')
-        // console.log('props.selectedDeck.cover', props.selectedDeck.cover)
-        // const coverFromProps = await getFileFromUrl(props.selectedDeck.cover)
-
 
         if (isNameChanged || isPrivateChanged || isCoverChanged) {
             const formData = new FormData()
@@ -88,15 +89,8 @@ export const DialogUpdatePack = (props: PropsType) => {
                 formData.append('isPrivate', JSON.stringify(isPrivate))
             }
 
-/*            if (isCoverChanged) {
-                // formData.append('cover', coverImg)
-                debugger
-                console.log('cover changed')
-            }*/
-
             if (isCoverChanged && coverImg) {
                 formData.append('cover', coverImg)
-                // console.log('cover changed')
             }
 
             setTimeout(() => {
@@ -104,7 +98,7 @@ export const DialogUpdatePack = (props: PropsType) => {
                     deckId: props.deckId,
                     formData,
                 })
-            }, 5000);
+            }, 5000)
 
 
         }
@@ -118,7 +112,6 @@ export const DialogUpdatePack = (props: PropsType) => {
     }
 
     const onApprove = () => {
-        debugger
         setIsCoverChanged(true)
     }
 
@@ -133,7 +126,7 @@ export const DialogUpdatePack = (props: PropsType) => {
         >
             <div className={sC.DialogDescription}>
                 <div className={sC.dialogElement}>
-                    <DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={onApprove}/>
+                    <DialogImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={onApprove}/>
                 </div>
 
             </div>

@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 import { Checkbox } from '@/components/ui/Checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
-import { DialogAddPackImgUpload } from '@/components/ui/Dialogs/DialogAddPackImgUpload.tsx'
+import { DialogImgUpload } from '@/components/ui/Dialogs/DialogImgUpload.tsx'
 import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import { DialogsParrent } from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import { useAppDispatch } from '@/hooks.ts'
@@ -63,7 +63,6 @@ export const DialogAddPack = (props: PropsType) => {
     formData.append('isPrivate', JSON.stringify(isPrivate))
     if (deckCoverImg) {
       formData.append('cover', deckCoverImg)
-      debugger
     }
     dispatch(updateDecksCurrentPage(1))
     createDeckForm({ formData })
@@ -86,7 +85,7 @@ export const DialogAddPack = (props: PropsType) => {
     >
       <div className={sC.DialogDescription}>
         <div className={sC.dialogElement}>
-          <DialogAddPackImgUpload cropImg={cropImg} setCropImg={setCropImg} />
+          <DialogImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={() => {}}/>
         </div>
         <div className={sC.dialogElement}>
           <form ref={formRef}>

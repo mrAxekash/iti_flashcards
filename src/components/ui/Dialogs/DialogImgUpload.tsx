@@ -12,7 +12,7 @@ import {
   minSliderValue,
 } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts'
 
-export const DialogAddPackImgUpload = (props: PropsType) => {
+export const DialogImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)
   const [inputImg, setInputImg] = useState<undefined | string>(undefined)
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
