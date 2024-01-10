@@ -11,7 +11,7 @@ import { sortStringCallback } from '@/common/functions.ts'
 import { CardsOrderBy, SelectedCard, SelectedCardUpdate } from '@/common/types.ts'
 import { paginationSelectValues } from '@/common/values.ts'
 import { Button } from '@/components/ui/Button'
-import { DialogAddNewCard } from '@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.tsx'
+import { DialogAddCard } from '@/components/ui/Dialogs/DialogAddCard/DialogAddCard.tsx'
 import { DialogRemoveCard } from '@/components/ui/Dialogs/DialogRemoveCard.tsx'
 import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
 import { Pagination } from '@/components/ui/Pagination'
@@ -125,7 +125,7 @@ export const CardsPage = () => {
         />
       )}
 
-      <DialogAddNewCard
+      <DialogAddCard
         open={isAddNewCardDialogOpen}
         setOpen={setIsAddNewCardDialogOpen}
         deckId={deckId ? deckId : ''}

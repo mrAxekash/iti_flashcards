@@ -1,5 +1,5 @@
 import sC from "@/components/ui/Dialogs/common/Dialogs.module.scss"
-import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
+import s from "@/components/ui/Dialogs/DialogAddCard/DialogAddCard.module.scss"
 import Cropper, {Area, Point} from "react-easy-crop"
 import {
     canvaHeight,

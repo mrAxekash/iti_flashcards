@@ -12,7 +12,7 @@ import {Select} from '@/components/ui/Select'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/common/functions.ts"
 
-export const DialogAddNewCard = (props: PropsType) => {
+export const DialogAddCard = (props: PropsType) => {
     const arr: Array<string> = ['Text + Picture', 'Video'] // for select
 
     const [value, setValue] = useState('Text + Picture') // for select

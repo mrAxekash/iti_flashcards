@@ -1,6 +1,6 @@
 import {ChangeEvent, useRef} from "react"
 import {Button} from "@/components/ui/Button"
-import s from "@/components/ui/Dialogs/DialogAddNewCard/DialogAddNewCard.module.scss"
+import s from "@/components/ui/Dialogs/DialogAddCard/DialogAddCard.module.scss"
 import imgUpload from "@/assets/icons/imgUpload.svg"
 import sT from "@/common/commonStyles/tables.module.scss"
 
