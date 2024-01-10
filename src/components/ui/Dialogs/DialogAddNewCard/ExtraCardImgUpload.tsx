@@ -3,9 +3,9 @@ import { ChangeEvent, useCallback, useState } from 'react'
 import { Area, Point } from 'react-easy-crop'
 
 import { onFileChange } from '@/common/functions.ts'
-import { onCrop } from '@/components/ui/Dialogs/DialogAddNewCard/extra/cropFunctions.ts'
-import { CropType } from '@/components/ui/Dialogs/DialogAddNewCard/extra/CropTypes.ts'
-import { ComboChangeCoverDummyImgCropper } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx'
+import { onCrop } from '@/components/ui/Dialogs/common/cropFunctions.ts'
+import { CropType } from '@/components/ui/Dialogs/common/CropTypes.ts'
+import { ExtraChangeCoverDummyImgCropper } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx'
 import {
   canvaHeight,
   canvaWidth,
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts'
 import { Typography } from '@/components/ui/Typography'
 
-export const DialogImgUpload = (props: PropsType) => {
+export const ExtraCardImgUpload = (props: PropsType) => {
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
   const [inputAnswerImg, setInputAnswerImg] = useState<undefined | string>(undefined)
@@ -121,7 +121,7 @@ export const DialogImgUpload = (props: PropsType) => {
   return (
     <>
       <Typography variant={'Body_2'}>Question:</Typography>
-      <ComboChangeCoverDummyImgCropper
+      <ExtraChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropQuestionImg,
           isEditPicture: isEditQuestionPicture,
@@ -145,7 +145,7 @@ export const DialogImgUpload = (props: PropsType) => {
       />
 
       <Typography variant={'Body_2'}>Answer:</Typography>
-      <ComboChangeCoverDummyImgCropper
+      <ExtraChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropAnswerImg,
           isEditPicture: isEditAnswerPicture,

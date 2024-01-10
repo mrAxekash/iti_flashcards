@@ -39,7 +39,7 @@ export const CustomFileUpload = (props: CustomFileUploadProps) => {
     )
 }
 
-export const ComboChangeCoverDummyImgCropper = (props: ComboChangeCoverDummyImgCropperProps) => {
+export const ExtraChangeCoverDummyImgCropper = (props: ComboChangeCoverDummyImgCropperProps) => {
     return (
         <>
             {!props.inputImg ? (
