@@ -55,12 +55,19 @@ const getUrlExtension = (url: string): string | undefined => {
 };
 
 export const getFileFromUrl = async (imgUrl: string) => {
-  const imgExt = getUrlExtension(imgUrl);
+    try {
+        const imgExt = getUrlExtension(imgUrl);
 
-  const response = await fetch(imgUrl);
-  const blob = await response.blob();
-  return new File([blob], "profileImage." + imgExt, {
-    type: blob.type,
-  });
+        const response = await fetch(imgUrl);
 
-}
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image. Status: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        return new File([blob], `profileImage.${imgExt}`, { type: blob.type });
+    } catch (error) {
+        console.error('Error fetching or creating file:', error);
+        throw error; // Rethrow the error for the calling code to handle
+    }
+};

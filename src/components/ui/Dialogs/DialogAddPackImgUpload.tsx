@@ -55,6 +55,7 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
   }
 
   function onApprove() {
+    props.onApproveCallback()
     setIsEditPicture(false)
     onCrop(cropArea, inputImg, canvaWidth, canvaHeight, props.setCropImg).then()
   }
@@ -79,4 +80,5 @@ export const DialogAddPackImgUpload = (props: PropsType) => {
 type PropsType = {
   cropImg: string | undefined
   setCropImg: (value: string) => void
+  onApproveCallback: () => void
 }
