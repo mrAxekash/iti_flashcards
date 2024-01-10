@@ -92,15 +92,10 @@ export const DialogUpdatePack = (props: PropsType) => {
                 const coverImg = await fromBase64(cover ? cover : '')
                 if (coverImg) formData.append('cover', coverImg)
             }
-
-            setTimeout(() => {
-                updateDeck({
-                    deckId: props.deckId,
-                    formData,
-                })
-            }, 5000)
-
-
+            updateDeck({
+                deckId: props.deckId,
+                formData,
+            })
         }
 
         props.setOpen(false)
