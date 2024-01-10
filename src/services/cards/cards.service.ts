@@ -1,5 +1,5 @@
 import { baseApi } from '@/services/base-api.ts'
-import { Card, UpdateCardArgs, UpdateCard } from '@/services/cards/cards.types.ts'
+import { Card, UpdateCard } from '@/services/cards/cards.types.ts'
 import { decksService } from '@/services/decks/decks.service.ts'
 import { RootState } from '@/services/store.ts'
 
