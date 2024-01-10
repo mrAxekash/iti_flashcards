@@ -27,6 +27,7 @@ export const CardImgUpload = (props: PropsType) => {
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null)
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
 
+
   const cropSuggestionTextQuestion = 'Picture image'
   const cropSuggestionTextAnswer = 'Answer image'
 
@@ -49,16 +50,7 @@ export const CardImgUpload = (props: PropsType) => {
     setSliderQuestionValue(newValue)
   }
 
-  function onApproveQuestion() {
-    setIsEditQuestionPicture(false)
-    onCrop(
-      cropQuestionArea,
-      inputQuestionImg,
-      canvaWidth,
-      canvaHeight,
-      props.setCropQuestionImg
-    ).then()
-  }
+
 
   const onFileAnswerChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
     props.setCropAnswerImg('')
@@ -108,6 +100,19 @@ export const CardImgUpload = (props: PropsType) => {
   function onApproveAnswer() {
     setIsEditAnswerPicture(false)
     onCrop(cropAnswerArea, inputAnswerImg, canvaWidth, canvaHeight, props.setCropAnswerImg).then()
+    props.onApproveAnswerCallback()
+  }
+
+  function onApproveQuestion() {
+    setIsEditQuestionPicture(false)
+    onCrop(
+        cropQuestionArea,
+        inputQuestionImg,
+        canvaWidth,
+        canvaHeight,
+        props.setCropQuestionImg
+    ).then()
+    props.onApproveQuestionCallback
   }
 
   const onCancelQuestion = () => {

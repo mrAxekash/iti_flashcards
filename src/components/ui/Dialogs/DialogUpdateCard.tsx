@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import {useRef, useState} from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -11,6 +11,9 @@ import { DialogsParrent } from '@/components/ui/Dialogs/DialogsParrent/DialogsPa
 import { useUpdateCardMutation } from '@/services/cards/cards.service.ts'
 
 export const DialogUpdateCard = (props: PropsType) => {
+  const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
+  const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
+
   const schema = z.object({
     question: z.string().min(2).max(500),
     answer: z.string().min(2).max(500),
