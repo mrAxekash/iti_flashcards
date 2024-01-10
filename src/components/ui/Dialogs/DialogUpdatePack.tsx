@@ -12,7 +12,7 @@ import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParr
 import {useAppDispatch} from '@/hooks.ts'
 import {useUpdateDeckMutation} from '@/services/decks/decks.service.ts'
 import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
-import {DialogImgUpload} from "@/components/ui/Dialogs/DialogImgUpload.tsx"
+import {SlaveImgUpload} from "@/components/ui/Dialogs/SlaveImgUpload.tsx"
 import {fromBase64} from "@/common/functions.ts"
 
 export const DialogUpdatePack = (props: PropsType) => {
@@ -126,7 +126,7 @@ export const DialogUpdatePack = (props: PropsType) => {
         >
             <div className={sC.DialogDescription}>
                 <div className={sC.dialogElement}>
-                    <DialogImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={onApprove}/>
+                    <SlaveImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={onApprove}/>
                 </div>
 
             </div>

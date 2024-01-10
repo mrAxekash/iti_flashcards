@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 import { Checkbox } from '@/components/ui/Checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-text-field'
-import { DialogImgUpload } from '@/components/ui/Dialogs/DialogImgUpload.tsx'
+import { SlaveImgUpload } from '@/components/ui/Dialogs/SlaveImgUpload.tsx'
 import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import { DialogsParrent } from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import { useAppDispatch } from '@/hooks.ts'
@@ -85,7 +85,7 @@ export const DialogAddPack = (props: PropsType) => {
     >
       <div className={sC.DialogDescription}>
         <div className={sC.dialogElement}>
-          <DialogImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={() => {}}/>
+          <SlaveImgUpload cropImg={cropImg} setCropImg={setCropImg} onApproveCallback={() => {}}/>
         </div>
         <div className={sC.dialogElement}>
           <form ref={formRef}>
