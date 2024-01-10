@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 
 import {ControlledTextField} from '@/components/ui/controlled/controlled-text-field'
-import {ExtraCardImgUpload} from '@/components/ui/Dialogs/DialogAddNewCard/ExtraCardImgUpload.tsx'
+import {CardImgUpload} from '@/components/ui/Dialogs/common/CardImgUpload.tsx'
 import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import {Select} from '@/components/ui/Select'
@@ -129,7 +129,7 @@ export const DialogAddNewCard = (props: PropsType) => {
                         </div>
                     </div>
                 </form>
-                <ExtraCardImgUpload
+                <CardImgUpload
                     cropQuestionImg={cropQuestionImg}
                     cropAnswerImg={cropAnswerImg}
                     setCropQuestionImg={setCropQuestionImg}

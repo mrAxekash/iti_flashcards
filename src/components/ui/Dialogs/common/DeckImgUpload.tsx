@@ -5,14 +5,14 @@ import { Area, Point } from 'react-easy-crop'
 import { onFileChange } from '@/common/functions.ts'
 import { onCrop } from '@/components/ui/Dialogs/common/cropFunctions.ts'
 import { CropType } from '@/components/ui/Dialogs/common/CropTypes.ts'
-import { ExtraChangeCoverDummyImgCropper } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx'
 import {
   canvaHeight,
   canvaWidth,
   minSliderValue,
-} from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts'
+} from '@/components/ui/Dialogs/common/DialogsData.ts'
+import {ChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx"
 
-export const ExtraDeckImgUpload = (props: PropsType) => {
+export const DeckImgUpload = (props: PropsType) => {
   const [isEditPicture, setIsEditPicture] = useState(false)
   const [inputImg, setInputImg] = useState<undefined | string>(undefined)
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
@@ -65,7 +65,7 @@ export const ExtraDeckImgUpload = (props: PropsType) => {
   }
 
   return (
-    <ExtraChangeCoverDummyImgCropper
+    <ChangeCoverDummyImgCropper
       file={{ cropImg: props.cropImg, isEditPicture, onFileChangeCallback }}
       inputImg={inputImg}
       cropper={{ crop, zoom, onCropChange, onCropComplete, onZoomChange }}

@@ -5,15 +5,15 @@ import { Area, Point } from 'react-easy-crop'
 import { onFileChange } from '@/common/functions.ts'
 import { onCrop } from '@/components/ui/Dialogs/common/cropFunctions.ts'
 import { CropType } from '@/components/ui/Dialogs/common/CropTypes.ts'
-import { ExtraChangeCoverDummyImgCropper } from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonComponents.tsx'
 import {
   canvaHeight,
   canvaWidth,
   minSliderValue,
-} from '@/components/ui/Dialogs/DialogsCommon/DialogsCommonData.ts'
+} from '@/components/ui/Dialogs/common/DialogsData.ts'
 import { Typography } from '@/components/ui/Typography'
+import {ChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx"
 
-export const ExtraCardImgUpload = (props: PropsType) => {
+export const CardImgUpload = (props: PropsType) => {
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
   const [inputAnswerImg, setInputAnswerImg] = useState<undefined | string>(undefined)
@@ -121,7 +121,7 @@ export const ExtraCardImgUpload = (props: PropsType) => {
   return (
     <>
       <Typography variant={'Body_2'}>Question:</Typography>
-      <ExtraChangeCoverDummyImgCropper
+      <ChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropQuestionImg,
           isEditPicture: isEditQuestionPicture,
@@ -145,7 +145,7 @@ export const ExtraCardImgUpload = (props: PropsType) => {
       />
 
       <Typography variant={'Body_2'}>Answer:</Typography>
-      <ExtraChangeCoverDummyImgCropper
+      <ChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropAnswerImg,
           isEditPicture: isEditAnswerPicture,
