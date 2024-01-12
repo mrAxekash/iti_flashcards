@@ -4,9 +4,6 @@ import s from "@/components/ui/Dialogs/DialogAddCard/DialogAddCard.module.scss"
 import imgUpload from "@/assets/icons/imgUpload.svg"
 import sT from "@/common/commonStyles/tables.module.scss"
 
-export type CustomFileUploadProps = {
-    onFileChangeCallback: (e: ChangeEvent<HTMLInputElement>) => void
-}
 export const CustomFileUpload = (props: CustomFileUploadProps) => {
     const inputFile = useRef<HTMLInputElement | null>(null)
     const onButtonClick = () => {
@@ -28,4 +25,8 @@ export const CustomFileUpload = (props: CustomFileUploadProps) => {
             </Button>
         </>
     )
+}
+
+export type CustomFileUploadProps = {
+    onFileChangeCallback: (e: ChangeEvent<HTMLInputElement>) => void
 }

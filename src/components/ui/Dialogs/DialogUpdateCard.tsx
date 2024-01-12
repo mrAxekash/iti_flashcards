@@ -89,15 +89,15 @@ export const DialogUpdateCard = (props: PropsType) => {
 
     return (
         <DialogsParrent
-            title={'Edite Card'}
+            title={'Edit Card'}
             open={props.open}
             setOpen={onClose}
             onButtonAction={onSubmitEmulation}
             actionButtonText={'Save Changes'}
             isButtonDisable={Object.keys(errors).length > 0}
         >
-            <form ref={formRef}>
-                <div className={sC.DialogDescription}>
+            <div className={sC.DialogDescription}>
+                <form ref={formRef}>
                     <div className={sC.dialogElement}>
                         <div className={sC.textFieldContainer}>
                             <div className={sC.element}>
@@ -111,20 +111,22 @@ export const DialogUpdateCard = (props: PropsType) => {
                         </div>
                     </div>
 
-                    <div className={sC.dialogElement}>
-                        <CardImgUpload
-                            cropQuestionImg={cropQuestionImg}
-                            cropAnswerImg={cropAnswerImg}
-                            setCropQuestionImg={setCropQuestionImg}
-                            setCropAnswerImg={setCropAnswerImg}
-                            onApproveAnswerCallback={() => {
-                            }}
-                            onApproveQuestionCallback={() => {
-                            }}
-                        />
-                    </div>
+                </form>
+
+
+                <div className={sC.dialogElement}>
+                    <CardImgUpload
+                        cropQuestionImg={cropQuestionImg}
+                        cropAnswerImg={cropAnswerImg}
+                        setCropQuestionImg={setCropQuestionImg}
+                        setCropAnswerImg={setCropAnswerImg}
+                        onApproveAnswerCallback={() => {
+                        }}
+                        onApproveQuestionCallback={() => {
+                        }}
+                    />
                 </div>
-            </form>
+            </div>
         </DialogsParrent>
     )
 }
