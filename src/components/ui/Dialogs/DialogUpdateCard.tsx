@@ -15,8 +15,8 @@ import {fromBase64} from "@/common/functions.ts"
 export const DialogUpdateCard = (props: PropsType) => {
     const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
     const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
-    const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.answerImg)
-    const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(props.selectedCard.questionImg)
+    const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.questionImg)
+    const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(props.selectedCard.answerImg)
 
     const schema = z.object({
         question: z.string().min(2).max(500),
