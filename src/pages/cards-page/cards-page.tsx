@@ -84,9 +84,15 @@ export const CardsPage = () => {
     setIsDeleteDialogOpen(true)
     setSelectedCard({ id, question })
   }
-  const onSelectCardForUpdate = (id: string, question: string, answer: string) => {
+  const onSelectCardForUpdate = (id: string, question: string, answer: string, questionImg?: string,  answerImg?: string) => {
     setIsUpdateDialogOpen(true)
-    setSelectedForUpdateCard({ id, question, answer })
+    setSelectedForUpdateCard({
+      id,
+      question,
+      answer,
+      questionImg: questionImg ? questionImg : '',
+      answerImg: answerImg ? answerImg : ''
+    })
   }
   const updateCardsCurrentPageCallback = (page: number | string) => {
     dispatch(updateCardsCurrentPage(+page))

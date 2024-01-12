@@ -14,8 +14,8 @@ import {CardImgUpload} from "@/components/ui/Dialogs/common/CardImgUpload.tsx"
 export const DialogUpdateCard = (props: PropsType) => {
     const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
     const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
-    const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
-    const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
+    const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.answerImg)
+    const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(props.selectedCard.questionImg)
 
     const schema = z.object({
         question: z.string().min(2).max(500),
@@ -125,7 +125,6 @@ export const DialogUpdateCard = (props: PropsType) => {
                     </div>
                 </div>
             </form>
-
         </DialogsParrent>
     )
 }

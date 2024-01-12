@@ -39,7 +39,13 @@ export const CardsTable = (props: PropsType) => {
   ]
 
   const onEdit = (data: Card) => {
-    props.onSelectCardForUpdate(data.id, data.question, data.answer)
+    props.onSelectCardForUpdate(
+        data.id,
+        data.question,
+        data.answer,
+        data.questionImg ? data.questionImg : '',
+        data.answerImg ? data.answerImg : ''
+    )
   }
 
   const onDelete = (data: Card) => {
@@ -122,6 +128,6 @@ type PropsType = {
   setSort: (value: Sort) => void
   items: Array<Card> | undefined
   isEditHidden: boolean
-  onSelectCardForUpdate: (id: string, question: string, answer: string) => void
+  onSelectCardForUpdate: (id: string, question: string, answer: string, questionImg?: string, answerImg?: string) => void
   onSelectCardForDel: (id: string, question: string) => void
 }
