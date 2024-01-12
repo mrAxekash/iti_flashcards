@@ -10,10 +10,11 @@ import sC from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scs
 import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.tsx'
 import {useUpdateCardMutation} from '@/services/cards/cards.service.ts'
 import {CardImgUpload} from "@/components/ui/Dialogs/common/CardImgUpload.tsx"
+import {fromBase64} from "@/common/functions.ts"
 
 export const DialogUpdateCard = (props: PropsType) => {
-    const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
     const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
+    const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.answerImg)
     const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(props.selectedCard.questionImg)
 
@@ -43,9 +44,14 @@ export const DialogUpdateCard = (props: PropsType) => {
     const [updateCard] = useUpdateCardMutation()
 
     const handleFormSubmitted = handleSubmit(values => {
-        onUpdateCard(values.question, values.answer)
-        reset()
-        props.setOpen(false)
+        onUpdateCard(values.question, values.answer, cropQuestionImg, cropAnswerImg)
+            .then(() => {
+                reset()
+                props.setOpen(false)
+            })
+            .catch(() => {
+                console.error('handleFormSubmitted error')
+            })
     })
 
     // on submit form emulation
@@ -55,14 +61,14 @@ export const DialogUpdateCard = (props: PropsType) => {
         formRef.current.submit()
     }
 
-    const onUpdateCard = (question: string, answer: string) => {
+    const onUpdateCard = async (question: string, answer: string, coverQuestionImg?: string, coverAnswerImg?: string) => {
         if (!question || !answer || !props.id) return
 
         // Check if either question or answer has changed
         const isQuestionChanged = props.question !== question
         const isAnswerChanged = props.answer !== answer
 
-        if (isQuestionChanged || isAnswerChanged) {
+        if (isQuestionChanged || isAnswerChanged || isCoverQuestionChanged || isCoverAnswerChanged) {
             const formData = new FormData()
 
             // Prepare the data object with only the changed properties
@@ -71,6 +77,16 @@ export const DialogUpdateCard = (props: PropsType) => {
             }
             if (isAnswerChanged) {
                 formData.append('answer', answer)
+            }
+            if (isCoverQuestionChanged) {
+                const questionImg = await fromBase64(coverQuestionImg ? coverQuestionImg : '')
+                if (questionImg) {
+                    formData.append('questionImg', questionImg)
+                }
+            }
+            if (isCoverAnswerChanged) {
+                const answerImg = await fromBase64(coverAnswerImg ? coverAnswerImg : '')
+                if (answerImg) formData.append('answerImg', answerImg)
             }
 
             updateCard({
@@ -85,6 +101,14 @@ export const DialogUpdateCard = (props: PropsType) => {
     const onClose = () => {
         reset()
         props.setOpen(false)
+    }
+
+    const onApproveQuestion = () => {
+        setIsCoverQuestionChanged(true)
+    }
+
+    const onApproveAnswer = () => {
+        setIsCoverAnswerChanged(true)
     }
 
     return (
@@ -120,10 +144,8 @@ export const DialogUpdateCard = (props: PropsType) => {
                         cropAnswerImg={cropAnswerImg}
                         setCropQuestionImg={setCropQuestionImg}
                         setCropAnswerImg={setCropAnswerImg}
-                        onApproveAnswerCallback={() => {
-                        }}
-                        onApproveQuestionCallback={() => {
-                        }}
+                        onApproveAnswerCallback={onApproveAnswer}
+                        onApproveQuestionCallback={onApproveQuestion}
                     />
                 </div>
             </div>

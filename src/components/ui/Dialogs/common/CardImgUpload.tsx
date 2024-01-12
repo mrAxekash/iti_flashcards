@@ -50,8 +50,6 @@ export const CardImgUpload = (props: PropsType) => {
     setSliderQuestionValue(newValue)
   }
 
-
-
   const onFileAnswerChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {
     props.setCropAnswerImg('')
     await onFileChange(e, setInputAnswerImg)
@@ -112,7 +110,7 @@ export const CardImgUpload = (props: PropsType) => {
         canvaHeight,
         props.setCropQuestionImg
     ).then()
-    props.onApproveQuestionCallback
+    props.onApproveQuestionCallback()
   }
 
   const onCancelQuestion = () => {
