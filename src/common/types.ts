@@ -18,4 +18,6 @@ export type SelectedCardUpdate = {
   id: string
   question: string
   answer: string
+  questionImg?: string
+  answerImg?: string
 }
