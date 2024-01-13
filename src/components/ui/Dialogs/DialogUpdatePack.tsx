@@ -61,6 +61,7 @@ export const DialogUpdatePack = (props: PropsType) => {
 
     // on submit form emulation
     const onSubmitEmulation = () => {
+        debugger
         if (!formRef.current) return
         formRef.current.submit = handleFormSubmitted
         formRef.current.submit()
@@ -112,7 +113,7 @@ export const DialogUpdatePack = (props: PropsType) => {
 
     return (
         <DialogsParrent
-            title={'Edite Pack'}
+            title={'Edit Pack'}
             open={props.open}
             setOpen={onClose}
             onButtonAction={onSubmitEmulation}
