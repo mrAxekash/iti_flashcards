@@ -61,7 +61,6 @@ export const DialogUpdatePack = (props: PropsType) => {
 
     // on submit form emulation
     const onSubmitEmulation = () => {
-        debugger
         if (!formRef.current) return
         formRef.current.submit = handleFormSubmitted
         formRef.current.submit()
