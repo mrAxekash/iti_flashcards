@@ -11,13 +11,21 @@ import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParr
 import {Select} from '@/components/ui/Select'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/common/functions.ts"
+import {VideoSection} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoSection.tsx"
 
 export const DialogAddCard = (props: PropsType) => {
-    const arr: Array<string> = ['Text + Picture', 'Video'] // for select
 
-    const [value, setValue] = useState('Text + Picture') // for select
+
+    const TextPicture = 'Text + Picture'
+    const Video = 'Video'
+
+    const arr: Array<string> = [TextPicture, Video] // for select
+
+    const [value, setValue] = useState(TextPicture) // for select
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
     const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
+    const [videoQuestionLink, setVideoQuestionLink] = useState<string>('')
+    const [videoAnswerLink, setVideoAnswerLink] = useState<string>('')
 
     const schema = z.object({
         answer: z.string().min(3),
@@ -132,7 +140,7 @@ export const DialogAddCard = (props: PropsType) => {
                         </div>
                     </div>
                 </form>
-                <CardImgUpload
+                {value === TextPicture && <CardImgUpload
                     cropQuestionImg={cropQuestionImg}
                     cropAnswerImg={cropAnswerImg}
                     setCropQuestionImg={setCropQuestionImg}
@@ -140,6 +148,12 @@ export const DialogAddCard = (props: PropsType) => {
                     onApproveAnswerCallback={() => {}}
                     onApproveQuestionCallback={() => {}}
                 />
+                }
+                {
+                    value === Video &&
+                    /*<VideoSection />*/
+                    <></>
+                }
 
             </div>
         </DialogsParrent>
