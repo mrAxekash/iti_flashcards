@@ -22,6 +22,7 @@ import { DialogUpdateCard } from '@/components/ui/Dialogs/DialogUpdateCard.tsx'
 import { DialogUpdatePack } from '@/components/ui/Dialogs/DialogUpdatePack.tsx'
 import { DropDownMenu } from '@/components/ui/DropDownMenu/DropDownMenu.tsx'
 import { DropdownItemWithIcon } from '@/components/ui/DropDownMenu/DropdownMenuWithIcon'
+import { Loader } from '@/components/ui/Loader/Loader.tsx'
 import { Pagination } from '@/components/ui/Pagination'
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch, useAppSelector } from '@/hooks.ts'
@@ -35,7 +36,6 @@ import {
 } from '@/services/cards/cards.slice.ts'
 import { Sort } from '@/services/common/types.ts'
 import { useGetCardsInDeckQuery, useGetDeckByIdQuery } from '@/services/decks/decks.service.ts'
-import { Loader } from '@/components/ui/Loader/Loader.tsx'
 
 export const CardsPage = () => {
   const { currentPage, itemsPerPage, orderBy } = useAppSelector(state => state.cards)
