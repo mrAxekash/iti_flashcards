@@ -151,8 +151,12 @@ export const DialogAddCard = (props: PropsType) => {
                 }
                 {
                     value === Video &&
-                    /*<VideoSection />*/
-                    <></>
+                        <VideoSection
+                            videoQuestionLink={videoQuestionLink}
+                            setVideoQuestionLink={setVideoQuestionLink}
+                            videoAnswerLink={videoAnswerLink}
+                            setAnswerQuestionLink={setVideoAnswerLink}
+                        />
                 }
 
             </div>
