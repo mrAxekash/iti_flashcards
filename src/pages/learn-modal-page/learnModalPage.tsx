@@ -1,4 +1,5 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import s from './learnModalPage.module.scss'
 
@@ -37,7 +38,9 @@ export const LearnModalPage = () => {
 
   if (isError) {
     // return <ErrorPage errorMessage={error?.data?.message} />
-    return <Navigate to={'/error-clean-pack'} />
+    toast.error()
+
+    return <Navigate to={'/'} />
   }
 
   const cardData = data || dataGet
