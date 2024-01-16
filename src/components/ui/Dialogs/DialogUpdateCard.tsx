@@ -91,7 +91,7 @@ export const DialogUpdateCard = (props: Props) => {
 
             updateCard({
                 id: props.id,
-                data: formData,
+                formData,
             })
         }
 

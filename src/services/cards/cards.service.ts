@@ -28,11 +28,11 @@ const cardsService = baseApi.injectEndpoints({
       },
       invalidatesTags: ['CardsInDeck'],
     }),
-    updateCard: builder.mutation<Card, { id: string; data: UpdateCardArgs }>({
-      query: ({ id, data }) => ({
+    updateCard: builder.mutation<Card, UpdateCardArgs>({
+      query: ({ id, formData }) => ({
         url: `/v1/cards/${id}`,
         method: 'PATCH',
-        body: data,
+        body: formData,
       }),
       invalidatesTags: ['CardsInDeck'],
     }),

@@ -16,5 +16,5 @@ export type Card = {
 
 export type UpdateCardArgs = {
     id: string
-    data: FormData
+    formData: FormData
 }
