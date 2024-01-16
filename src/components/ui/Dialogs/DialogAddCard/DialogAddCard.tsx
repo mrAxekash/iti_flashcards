@@ -14,8 +14,6 @@ import {fromBase64} from "@/common/functions.ts"
 import {VideoSection} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoSection.tsx"
 
 export const DialogAddCard = (props: Props) => {
-
-
     const TextPicture = 'Text + Picture'
     const Video = 'Video'
 
@@ -24,8 +22,8 @@ export const DialogAddCard = (props: Props) => {
     const [value, setValue] = useState(TextPicture) // for select
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(undefined)
     const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(undefined)
-    const [videoQuestionLink, setVideoQuestionLink] = useState<string>('')
-    const [videoAnswerLink, setVideoAnswerLink] = useState<string>('')
+    const [youtubeQuestionId, setYoutubeQuestionId] = useState<string>('')
+    const [youtubeAnswerId, setYoutubeAnswerId] = useState<string>('')
 
     const schema = z.object({
         answer: z.string().min(3),
@@ -152,10 +150,10 @@ export const DialogAddCard = (props: Props) => {
                 {
                     value === Video &&
                         <VideoSection
-                            videoQuestionLink={videoQuestionLink}
-                            setVideoQuestionLink={setVideoQuestionLink}
-                            videoAnswerLink={videoAnswerLink}
-                            setAnswerQuestionLink={setVideoAnswerLink}
+                            setYoutubeQuestionId={setYoutubeQuestionId}
+                            setYoutubeAnswerId={setYoutubeAnswerId}
+                            youtubeQuestionId={youtubeQuestionId}
+                            youtubeAnswerId={youtubeAnswerId}
                         />
                 }
 

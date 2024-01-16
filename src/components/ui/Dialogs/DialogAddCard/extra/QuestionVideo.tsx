@@ -12,7 +12,7 @@ const schema = z.object({
     videoQuestion: z.string().min(3), // todo: maybe add youtube check
 })
 
-const label = 'Question video link'
+const label = 'Question Youtube id'
 
 export const QuestionVideo = (props: Props) => {
     const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -36,7 +36,7 @@ export const QuestionVideo = (props: Props) => {
                 <div className={sP.element}>
                     <ControlledTextField
                         name={'videoQuestion'}
-                        placeholder={'https://youtu.be/ChPGLSuqIng?si=Y1qRo2ORBQ-snQt-'}
+                        placeholder={'HPU9xqdta3E'}
                         label={label}
                         control={control}
                     />
