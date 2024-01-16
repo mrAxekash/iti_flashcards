@@ -14,9 +14,9 @@ const schema = z.object({
 
 const label = 'Answer video link'
 
-export const AnswerVideo = () => {
+export const AnswerVideo = (props: Props) => {
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data)
+        props.setVideoLink(data.videoAnswer)
     }
 
     const {
@@ -51,3 +51,9 @@ export const AnswerVideo = () => {
 }
 
 type FormValues = z.input<typeof schema>
+
+type Props = {
+    setVideoLink: (value: string) => void
+}
+
+// todo: reduce code duplication with QuestionVideo

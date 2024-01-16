@@ -12,7 +12,7 @@ import {useUpdateCardMutation} from '@/services/cards/cards.service.ts'
 import {CardImgUpload} from "@/components/ui/Dialogs/common/CardImgUpload.tsx"
 import {fromBase64} from "@/common/functions.ts"
 
-export const DialogUpdateCard = (props: PropsType) => {
+export const DialogUpdateCard = (props: Props) => {
     const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
     const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.questionImg)
@@ -153,7 +153,7 @@ export const DialogUpdateCard = (props: PropsType) => {
     )
 }
 
-type PropsType = {
+type Props = {
     id: string
     question: string
     answer: string

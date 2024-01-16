@@ -13,7 +13,7 @@ import {
 import { Typography } from '@/components/ui/Typography'
 import {ChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx"
 
-export const CardImgUpload = (props: PropsType) => {
+export const CardImgUpload = (props: Props) => {
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
   const [isEditAnswerPicture, setIsEditAnswerPicture] = useState(false)
   const [inputAnswerImg, setInputAnswerImg] = useState<undefined | string>(undefined)
@@ -171,7 +171,7 @@ export const CardImgUpload = (props: PropsType) => {
   )
 }
 
-type PropsType = {
+type Props = {
   cropQuestionImg: string | undefined
   cropAnswerImg: string | undefined
   setCropQuestionImg: (value: string) => void

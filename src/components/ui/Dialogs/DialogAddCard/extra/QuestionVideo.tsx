@@ -14,9 +14,9 @@ const schema = z.object({
 
 const label = 'Question video link'
 
-export const QuestionVideo = () => {
+export const QuestionVideo = (props: Props) => {
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data)
+        props.setVideoLink(data.videoQuestion)
     }
 
     const {
@@ -51,3 +51,7 @@ export const QuestionVideo = () => {
 }
 
 type FormValues = z.input<typeof schema>
+
+type Props = {
+    setVideoLink: (value: string) => void
+}

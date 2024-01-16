@@ -13,7 +13,7 @@ import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/common/functions.ts"
 import {VideoSection} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoSection.tsx"
 
-export const DialogAddCard = (props: PropsType) => {
+export const DialogAddCard = (props: Props) => {
 
 
     const TextPicture = 'Text + Picture'
@@ -164,7 +164,7 @@ export const DialogAddCard = (props: PropsType) => {
     )
 }
 
-type PropsType = {
+type Props = {
     open: boolean
     setOpen: Dispatch<SetStateAction<boolean>>
     deckId: string

@@ -15,7 +15,7 @@ import {updateDecksCurrentPage} from '@/services/decks/decks.slice.ts'
 import {DeckImgUpload} from "@/components/ui/Dialogs/common/DeckImgUpload.tsx"
 import {fromBase64} from "@/common/functions.ts"
 
-export const DialogUpdatePack = (props: PropsType) => {
+export const DialogUpdatePack = (props: Props) => {
     const schema = z.object({
         cover: z.string(),
         name: z.string().min(3).max(30),
@@ -139,7 +139,7 @@ export const DialogUpdatePack = (props: PropsType) => {
     )
 }
 
-type PropsType = {
+type Props = {
     open: boolean
     name: string
     isPrivate?: boolean
