@@ -10,6 +10,26 @@ export const VideoSection = (props: Props) => {
     const [isQuestionEdit, setIsQuestionEdit] = useState(false)
     const [isAnswerEdit, setIsAnswerEdit] = useState(false)
 
+    const [tempQuestionValue, setTempQuestionValue] = useState('')
+
+    const onQuestionChangeVideo = () => {
+        setIsQuestionEdit(true)
+    }
+
+    const onAnswerChangeVideo = () => {
+        setIsAnswerEdit(true)
+    }
+
+    const onQuestionApprove = () => {
+        debugger
+        props.setYoutubeQuestionId(tempQuestionValue)
+        setIsQuestionEdit(false)
+    }
+
+    const onQuestionCancel = () => {
+        setIsQuestionEdit(false)
+    }
+
     return (
         <div>
             <div className={sP.DialogDescription}>
@@ -18,33 +38,47 @@ export const VideoSection = (props: Props) => {
                         ? <>
                             {
                                 props.youtubeQuestionId !== ''
-                                    ? <QuestionVideo setVideoLink={props.setYoutubeQuestionId}/>
+                                    ? <>
+                                        <MyYouTube videoId={props.youtubeQuestionId}/>
+                                        <Button variant="secondary" className={sC.button} onClick={onQuestionChangeVideo}>
+                                            Change video
+                                        </Button>
+                                    </>
                                     : <>
                                         <div className={sC.dummyVideo}>Question video</div>
-                                        <Button variant="secondary" className={sC.button}>
+                                        <Button variant="secondary" className={sC.button} onClick={onQuestionChangeVideo}>
                                             Change video
                                         </Button>
                                     </>
                             }
                         </>
-
-                        : <MyYouTube videoId={props.youtubeQuestionId}/>
+                        : <QuestionVideo
+                            value={tempQuestionValue}
+                            setValue={setTempQuestionValue}
+                            onApprove={onQuestionApprove}
+                            onCancel={onQuestionCancel}
+                        />
                 }
                 <div>
                     {
                         !isAnswerEdit
                             ? <>
                                 {props.youtubeAnswerId !== ''
-                                    ? <AnswerVideo setVideoLink={props.setYoutubeAnswerId}/>
+                                    ? <>
+                                        <MyYouTube videoId={props.youtubeQuestionId}/>
+                                        <Button variant="secondary" className={sC.button} onClick={onAnswerChangeVideo}>
+                                            Change video
+                                        </Button>
+                                    </>
                                     : <>
                                         <div className={sC.dummyVideo}>Answer video</div>
-                                        <Button variant="secondary" className={sC.button}>
+                                        <Button variant="secondary" className={sC.button} onClick={onAnswerChangeVideo}>
                                             Change video
                                         </Button>
                                     </>
                                 }
                             </>
-                            : <MyYouTube videoId={props.youtubeQuestionId}/>
+                            : <AnswerVideo setVideoLink={props.setYoutubeAnswerId}/>
 
                     }
 
@@ -61,3 +95,6 @@ type Props = {
     youtubeQuestionId: string
     youtubeAnswerId: string
 }
+
+// todo: reduce code duplication
+

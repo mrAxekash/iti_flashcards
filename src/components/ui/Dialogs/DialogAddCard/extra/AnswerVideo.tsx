@@ -39,9 +39,14 @@ export const AnswerVideo = (props: Props) => {
                         control={control}
                     />
                 </div>
-                <Button variant="secondary" className={sC.button}>
-                    Change video
-                </Button>
+                <div className={sC.container}>
+                    <Button variant="secondary" className={sC.halfButton}>
+                        Approve
+                    </Button>
+                    <Button variant="secondary" className={sC.halfButton}>
+                        Cancel
+                    </Button>
+                </div>
             </div>
         </form>
     )
