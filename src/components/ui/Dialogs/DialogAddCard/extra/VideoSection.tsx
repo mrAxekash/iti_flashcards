@@ -1,7 +1,6 @@
 import sP from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import sC from "@/components/ui/Dialogs/common/Dialogs.module.scss"
-import {QuestionVideo} from "@/components/ui/Dialogs/DialogAddCard/extra/QuestionVideo.tsx"
-import {AnswerVideo} from "@/components/ui/Dialogs/DialogAddCard/extra/AnswerVideo.tsx"
+import {SetVideoById} from "@/components/ui/Dialogs/DialogAddCard/extra/SetVideoById.tsx"
 import {MyYouTube} from "@/common/MyYouTube.tsx"
 import {useState} from "react"
 import {Button} from "@/components/ui/Button"
@@ -11,6 +10,7 @@ export const VideoSection = (props: Props) => {
     const [isAnswerEdit, setIsAnswerEdit] = useState(false)
 
     const [tempQuestionValue, setTempQuestionValue] = useState('')
+    const [tempAnswerValue, setTempAnswerValue] = useState('')
 
     const onQuestionChangeVideo = () => {
         setIsQuestionEdit(true)
@@ -21,13 +21,21 @@ export const VideoSection = (props: Props) => {
     }
 
     const onQuestionApprove = () => {
-        debugger
         props.setYoutubeQuestionId(tempQuestionValue)
         setIsQuestionEdit(false)
     }
 
+    const onAnswerApprove = () => {
+        props.setYoutubeAnswerId(tempAnswerValue)
+        setIsAnswerEdit(false)
+    }
+
     const onQuestionCancel = () => {
         setIsQuestionEdit(false)
+    }
+
+    const onAnswerCancel = () => {
+        setIsAnswerEdit(false)
     }
 
     return (
@@ -52,11 +60,12 @@ export const VideoSection = (props: Props) => {
                                     </>
                             }
                         </>
-                        : <QuestionVideo
-                            value={tempQuestionValue}
-                            setValue={setTempQuestionValue}
+                        : <SetVideoById
+                            tempValue={tempQuestionValue}
+                            setTempValue={setTempQuestionValue}
                             onApprove={onQuestionApprove}
                             onCancel={onQuestionCancel}
+                            label={'Question Youtube id'}
                         />
                 }
                 <div>
@@ -65,7 +74,7 @@ export const VideoSection = (props: Props) => {
                             ? <>
                                 {props.youtubeAnswerId !== ''
                                     ? <>
-                                        <MyYouTube videoId={props.youtubeQuestionId}/>
+                                        <MyYouTube videoId={props.youtubeAnswerId}/>
                                         <Button variant="secondary" className={sC.button} onClick={onAnswerChangeVideo}>
                                             Change video
                                         </Button>
@@ -78,7 +87,13 @@ export const VideoSection = (props: Props) => {
                                     </>
                                 }
                             </>
-                            : <AnswerVideo setVideoLink={props.setYoutubeAnswerId}/>
+                            : <SetVideoById
+                                tempValue={tempAnswerValue}
+                                setTempValue={setTempAnswerValue}
+                                onApprove={onAnswerApprove}
+                                onCancel={onAnswerCancel}
+                                label={'Answer Youtube id'}
+                            />
 
                     }
 
