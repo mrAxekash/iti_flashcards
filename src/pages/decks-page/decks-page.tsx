@@ -23,7 +23,7 @@ import { DecksTable } from '@/pages/decks-page/DecksTable/DecksTable.tsx'
 import { maxCardsCountHard } from '@/pages/decks-page/maxCardsCount.tsx'
 import { useGetMeQuery } from '@/services/auth/auth.service.ts'
 import { Sort } from '@/services/common/types.ts'
-import { useGetDecksQuery } from '@/services/decks/decks.service.ts'
+import { useGetCardQuery, useGetDecksQuery } from '@/services/decks/decks.service.ts'
 import {
   setAuthorId,
   setCardsCounts,
@@ -46,6 +46,8 @@ export const DecksPage = () => {
     isPrivate: false,
     cover: '',
   })
+
+  const {} = useGetCardQuery()
 
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false) // for update dialog
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false) // for delete dialog

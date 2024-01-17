@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 import s from './learnModalPage.module.scss'
 
@@ -36,11 +36,20 @@ export const LearnModalPage = () => {
   }
   console.log(error)
 
-  if (isError) {
+  if (isError && error) {
     // return <ErrorPage errorMessage={error?.data?.message} />
-    toast.error()
+    const notify = () => {
+      toast.error(error ?? error?.data?.message, { theme: 'colored', autoClose: 2000 })
+    }
 
-    return <Navigate to={'/'} />
+    notify()
+
+    return (
+      <>
+        <ToastContainer position={'top-center'} />
+        <Navigate to={'/'} />
+      </>
+    )
   }
 
   const cardData = data || dataGet
