@@ -3,8 +3,6 @@ import sP from "@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scs
 import {ControlledTextField} from "@/components/ui/controlled/controlled-text-field"
 import {Button} from "@/components/ui/Button"
 import sC from "@/components/ui/Dialogs/common/Dialogs.module.scss"
-import imgUpload from "@/assets/icons/imgUpload.svg"
-import sT from "@/common/commonStyles/tables.module.scss"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 
@@ -41,10 +39,15 @@ export const QuestionVideo = (props: Props) => {
                         control={control}
                     />
                 </div>
-                <Button variant="secondary" className={sC.button}>
-                    <img src={imgUpload} alt="trashIcon" className={sT.trashIcon}/>
-                    Approve
-                </Button>
+                <div className={sC.container}>
+                    <Button variant="secondary" className={sC.halfButton}>
+                        Approve
+                    </Button>
+                    <Button variant="secondary" className={sC.halfButton}>
+                        Cancel
+                    </Button>
+                </div>
+
             </div>
         </form>
     )

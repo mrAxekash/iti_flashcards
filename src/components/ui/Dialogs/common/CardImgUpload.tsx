@@ -28,7 +28,7 @@ export const CardImgUpload = (props: Props) => {
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
 
 
-  const cropSuggestionTextQuestion = 'Picture image'
+  const cropSuggestionTextQuestion = 'Question image'
   const cropSuggestionTextAnswer = 'Answer image'
 
   const onFileQuestionChangeCallback = async (e: ChangeEvent<HTMLInputElement>) => {

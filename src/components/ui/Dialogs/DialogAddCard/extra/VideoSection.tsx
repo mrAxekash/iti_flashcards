@@ -1,34 +1,51 @@
 import sP from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
+import sC from "@/components/ui/Dialogs/common/Dialogs.module.scss"
 import {QuestionVideo} from "@/components/ui/Dialogs/DialogAddCard/extra/QuestionVideo.tsx"
 import {AnswerVideo} from "@/components/ui/Dialogs/DialogAddCard/extra/AnswerVideo.tsx"
-import {useEffect} from "react"
 import {MyYouTube} from "@/common/MyYouTube.tsx"
+import {useState} from "react"
+import {Button} from "@/components/ui/Button"
 
 export const VideoSection = (props: Props) => {
-
-    // Temp for test
-    useEffect(() => {
-        console.log('youtubeQuestionId', props.youtubeQuestionId)
-
-    }, [props.youtubeQuestionId])
-    useEffect(() => {
-        console.log('youtubeAnswerId', props.youtubeAnswerId)
-
-    }, [props.youtubeAnswerId])
+    const [isQuestionEdit, setIsQuestionEdit] = useState(false)
+    const [isAnswerEdit, setIsAnswerEdit] = useState(false)
 
     return (
         <div>
             <div className={sP.DialogDescription}>
                 {
-                    props.youtubeQuestionId !== ''
-                        ? <MyYouTube videoId={props.youtubeQuestionId} />
-                        : <QuestionVideo setVideoLink={props.setYoutubeQuestionId}/>
+                    !isQuestionEdit
+                        ? <>
+                            {
+                                props.youtubeQuestionId !== ''
+                                    ? <QuestionVideo setVideoLink={props.setYoutubeQuestionId}/>
+                                    : <>
+                                        <div className={sC.dummyVideo}>Question video</div>
+                                        <Button variant="secondary" className={sC.button}>
+                                            Change video
+                                        </Button>
+                                    </>
+                            }
+                        </>
+
+                        : <MyYouTube videoId={props.youtubeQuestionId}/>
                 }
                 <div>
                     {
-                        props.youtubeAnswerId !== ''
-                            ? <MyYouTube videoId={props.youtubeAnswerId} />
-                            : <AnswerVideo setVideoLink={props.setYoutubeAnswerId}/>
+                        !isAnswerEdit
+                            ? <>
+                                {props.youtubeAnswerId !== ''
+                                    ? <AnswerVideo setVideoLink={props.setYoutubeAnswerId}/>
+                                    : <>
+                                        <div className={sC.dummyVideo}>Answer video</div>
+                                        <Button variant="secondary" className={sC.button}>
+                                            Change video
+                                        </Button>
+                                    </>
+                                }
+                            </>
+                            : <MyYouTube videoId={props.youtubeQuestionId}/>
+
                     }
 
                 </div>

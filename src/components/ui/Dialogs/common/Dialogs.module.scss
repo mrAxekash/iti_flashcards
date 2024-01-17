@@ -9,11 +9,10 @@
     @include mixins.imgUploadSize;
   }
 
-  .dummyImg {
-    border: 1px solid white;
-    @include mixins.flex($justifyContent: center, $alignItems: center);
-    @include mixins.imgUploadSize;
-  }
+}
+
+.dummyImg, .dummyVideo {
+
 }
 
 .dummyImg {
@@ -21,6 +20,12 @@
   @include mixins.flex($justifyContent: center, $alignItems: center);
   @include mixins.imgUploadSize;
   margin-top: 24px;
+}
+
+.dummyVideo {
+  border: 1px solid white;
+  @include mixins.flex($justifyContent: center, $alignItems: center);
+  @include mixins.videoSize;
 }
 
 .container {
