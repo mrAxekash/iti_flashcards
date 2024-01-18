@@ -39,6 +39,7 @@ export const LearnModalPage = () => {
     return <Loader />
   }
 
+  //TODO fix this error
   const errorData = error && error?.data
 
   if (isError) {
