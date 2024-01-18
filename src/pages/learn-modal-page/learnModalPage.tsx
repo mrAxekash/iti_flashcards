@@ -54,7 +54,7 @@ export const LearnModalPage = () => {
         <Typography variant={'Body_1'} className={s.text}>
           {errorData.message}
         </Typography>
-        <ToastContainer position={'top-center'} />
+        <ToastContainer position={'top-center'} limit={1} />
         <Link to={'/'}>
           <Button variant={'primary'}>Back to decks page</Button>
         </Link>
