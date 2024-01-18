@@ -1,10 +1,12 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
 import s from './learnModalPage.module.scss'
 
+import { Button } from '@/components/ui/Button'
 import { Loader } from '@/components/ui/Loader/Loader.tsx'
 import { LearnModal } from '@/components/ui/modal/LearnModal.tsx'
+import { Typography } from '@/components/ui/Typography'
 import {
   useGetCardQuery,
   useGetDeckByIdQuery,
@@ -34,21 +36,28 @@ export const LearnModalPage = () => {
   if (isLoading || isFetching || isPostCardLoading) {
     return <Loader />
   }
-  console.log(error)
 
-  if (isError && error) {
+  const errorData = error && error?.data
+
+  const notify = () => {
+    toast.error(errorData.message, { theme: 'colored', autoClose: 2000 })
+  }
+
+  if (isError && !isFetching) {
     // return <ErrorPage errorMessage={error?.data?.message} />
-    const notify = () => {
-      toast.error(error ?? error?.data?.message, { theme: 'colored', autoClose: 2000 })
-    }
 
     notify()
 
     return (
-      <>
+      <div className={s.body}>
+        <Typography variant={'Body_1'} className={s.text}>
+          {errorData.message}
+        </Typography>
         <ToastContainer position={'top-center'} />
-        <Navigate to={'/'} />
-      </>
+        <Link to={'/'}>
+          <Button variant={'primary'}>Back to decks page</Button>
+        </Link>
+      </div>
     )
   }
 
