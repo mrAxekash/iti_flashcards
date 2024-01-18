@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
@@ -39,12 +41,11 @@ export const LearnModalPage = () => {
 
   const errorData = error && error?.data
 
-  const notify = () => {
-    toast.error(errorData.message, { theme: 'colored', autoClose: 2000 })
-  }
-
-  if (isError && !isFetching) {
+  if (isError) {
     // return <ErrorPage errorMessage={error?.data?.message} />
+    const notify = () => {
+      toast.error(errorData.message, { theme: 'colored', autoClose: 2000 })
+    }
 
     notify()
 
