@@ -8,11 +8,11 @@ export const VideoSection = (props: Props) => {
     const [isQuestionEdit, setIsQuestionEdit] = useState(false)
     const [isAnswerEdit, setIsAnswerEdit] = useState(false)
 
-    const [tempQuestionValue, setTempQuestionValue] = useState('')
-    const [tempAnswerValue, setTempAnswerValue] = useState('')
+    const [tempQuestionUrl, setTempQuestionUrl] = useState('')
+    const [tempAnswerUrl, setTempAnswerUrl] = useState('')
 
-    const {videoId: questionVideoId, success: questionVideoIdStatus} = extractYouTubeVideoId(tempQuestionValue)
-    const {videoId: answerVideoId, success: answerVideoIdStatus} = extractYouTubeVideoId(tempAnswerValue)
+    const {videoId: questionVideoId, success: questionVideoIdStatus} = extractYouTubeVideoId(tempQuestionUrl)
+    const {videoId: answerVideoId, success: answerVideoIdStatus} = extractYouTubeVideoId(tempAnswerUrl)
 
     const onQuestionChangeVideo = () => {
         setIsQuestionEdit(true)
@@ -24,7 +24,7 @@ export const VideoSection = (props: Props) => {
 
     const onQuestionApprove = () => {
         if (questionVideoIdStatus && questionVideoId) {
-            props.setYoutubeQuestionUrl(questionVideoId)
+            props.setYoutubeQuestionUrl(tempQuestionUrl)
             setIsQuestionEdit(false)
         } else {
             alert('wrong question link')
@@ -33,7 +33,7 @@ export const VideoSection = (props: Props) => {
 
     const onAnswerApprove = () => {
         if (answerVideoIdStatus && answerVideoId) {
-            props.setYoutubeAnswerUrl(tempAnswerValue)
+            props.setYoutubeAnswerUrl(tempAnswerUrl)
             setIsAnswerEdit(false)
         } else {
             alert('wrong answer link')
@@ -60,8 +60,8 @@ export const VideoSection = (props: Props) => {
                             onQuestionChangeVideo={onQuestionChangeVideo}
                         />
                         : <ApproveCancelTextField
-                            tempValue={tempQuestionValue}
-                            setTempValue={setTempQuestionValue}
+                            tempValue={tempQuestionUrl}
+                            setTempValue={setTempQuestionUrl}
                             onApprove={onQuestionApprove}
                             onCancel={onQuestionCancel}
                             label={'Question Youtube id'}
@@ -77,8 +77,8 @@ export const VideoSection = (props: Props) => {
                                 onQuestionChangeVideo={onAnswerChangeVideo}
                             />
                             : <ApproveCancelTextField
-                                tempValue={tempAnswerValue}
-                                setTempValue={setTempAnswerValue}
+                                tempValue={tempAnswerUrl}
+                                setTempValue={setTempAnswerUrl}
                                 onApprove={onAnswerApprove}
                                 onCancel={onAnswerCancel}
                                 label={'Answer Youtube id'}
