@@ -76,6 +76,12 @@ export const DialogAddCard = (props: Props) => {
         if (answerImg) {
             formData.append('answerImg', answerImg)
         }
+        if (youtubeQuestionId) {
+            formData.append('questionVideo', youtubeQuestionId)
+        }
+        if (youtubeAnswerId) {
+            formData.append('answerVideo', youtubeAnswerId)
+        }
         createCardInDeck({
             deckId: props.deckId,
             formData,
