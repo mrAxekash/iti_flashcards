@@ -12,6 +12,7 @@ import {Select} from '@/components/ui/Select'
 import {useCreateCardInDeckMutation} from '@/services/decks/decks.service.ts'
 import {fromBase64} from "@/common/functions.ts"
 import {VideoSection} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoSection.tsx"
+import {extractYouTubeVideoId} from "@/components/ui/Dialogs/common/utils.ts"
 
 export const DialogAddCard = (props: Props) => {
     const TextPicture = 'Text + Picture'
@@ -76,8 +77,12 @@ export const DialogAddCard = (props: Props) => {
         if (answerImg) {
             formData.append('answerImg', answerImg)
         }
-        if (youtubeQuestionId) {
-            formData.append('questionVideo', youtubeQuestionId)
+        if (youtubeQuestionId ) {
+            if (extractYouTubeVideoId(youtubeQuestionId).success) {
+                formData.append('questionVideo', youtubeQuestionId)
+            } else {
+                alert('wrong address')
+            }
         }
         if (youtubeAnswerId) {
             formData.append('answerVideo', youtubeAnswerId)
@@ -156,10 +161,10 @@ export const DialogAddCard = (props: Props) => {
                 {
                     value === Video &&
                         <VideoSection
-                            setYoutubeQuestionId={setYoutubeQuestionId}
-                            setYoutubeAnswerId={setYoutubeAnswerId}
-                            youtubeQuestionId={youtubeQuestionId}
-                            youtubeAnswerId={youtubeAnswerId}
+                            setYoutubeQuestionUrl={setYoutubeQuestionId}
+                            setYoutubeAnswerUrl={setYoutubeAnswerId}
+                            youtubeQuestionUrl={youtubeQuestionId}
+                            youtubeAnswerUrl={youtubeAnswerId}
                         />
                 }
 
