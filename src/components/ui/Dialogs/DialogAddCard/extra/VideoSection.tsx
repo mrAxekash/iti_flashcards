@@ -1,6 +1,6 @@
 import sP from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
 import {ApproveCancelTextField} from "@/components/ui/Dialogs/DialogAddCard/extra/ApproveCancelTextField.tsx"
-import {useEffect, useState} from "react"
+import {useState} from "react"
 import {extractYouTubeVideoId} from "@/components/ui/Dialogs/common/utils.ts"
 import {VideoElement} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoElement.tsx"
 
@@ -11,26 +11,8 @@ export const VideoSection = (props: Props) => {
     const [tempQuestionUrl, setTempQuestionUrl] = useState(props.youtubeQuestionUrl)
     const [tempAnswerUrl, setTempAnswerUrl] = useState(props.youtubeAnswerUrl)
 
-    /*const {videoId: questionVideoId, success: questionVideoIdStatus} = extractYouTubeVideoId(tempQuestionUrl)
-    const {videoId: answerVideoId, success: answerVideoIdStatus} = extractYouTubeVideoId(tempAnswerUrl)*/
-
-    // for synchronization: //todo: maybe del later
-    const [questionVideoId, setQuestionVideoId] = useState('')
-    const [questionVideoIdStatus, setQuestionVideoIdStatus] = useState(false)
-    const [answerVideoId, setAnswerVideoId] = useState('')
-    const [answerVideoIdStatus, setAnswerVideoIdStatus] = useState(false)
-
-    useEffect(() => {
-        const {videoId: questionVideoId, success: questionVideoIdStatus} = extractYouTubeVideoId(tempQuestionUrl)
-        const {videoId: answerVideoId, success: answerVideoIdStatus} = extractYouTubeVideoId(tempAnswerUrl)
-        if (tempQuestionUrl || tempAnswerUrl) {
-            setQuestionVideoId(questionVideoId ? questionVideoId : '')
-            setQuestionVideoIdStatus(questionVideoIdStatus)
-            setAnswerVideoId(answerVideoId ? answerVideoId : '')
-            setAnswerVideoIdStatus(answerVideoIdStatus)
-        }
-
-    }, [tempQuestionUrl, tempAnswerUrl])
+    const {videoId: questionVideoId, success: questionVideoIdStatus} = extractYouTubeVideoId(tempQuestionUrl)
+    const {videoId: answerVideoId, success: answerVideoIdStatus} = extractYouTubeVideoId(tempAnswerUrl)
 
     const onQuestionChangeVideo = () => {
         setIsQuestionEdit(true)

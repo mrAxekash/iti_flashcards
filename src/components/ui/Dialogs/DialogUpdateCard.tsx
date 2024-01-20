@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useRef, useState} from 'react'
 
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from 'react-hook-form'
@@ -28,10 +28,6 @@ export const DialogUpdateCard = (props: Props) => {
 
     type FormValues = z.input<typeof schema>
 
-    useEffect(() => {
-        console.log('youtubeQuestionUrl', youtubeQuestionUrl, 'youtubeAnswerUrl', youtubeAnswerUrl)
-    }, [youtubeQuestionUrl, youtubeAnswerUrl]) // temp
-
     const {
         handleSubmit,
         control,
@@ -51,7 +47,8 @@ export const DialogUpdateCard = (props: Props) => {
     const [updateCard] = useUpdateCardMutation()
 
     const handleFormSubmitted = handleSubmit(values => {
-        onUpdateCard(values.question, values.answer, cropQuestionImg, cropAnswerImg)
+        onUpdateCard(values.question, values.answer, cropQuestionImg,
+            cropAnswerImg, youtubeQuestionUrl, youtubeAnswerUrl)
             .then(() => {
                 reset()
                 props.setOpen(false)
@@ -68,14 +65,17 @@ export const DialogUpdateCard = (props: Props) => {
         formRef.current.submit()
     }
 
-    const onUpdateCard = async (question: string, answer: string, coverQuestionImg?: string, coverAnswerImg?: string) => {
+    const onUpdateCard = async (question: string, answer: string, coverQuestionImg?: string, coverAnswerImg?: string, questionVideo?: string, answerVideo?: string) => {
         if (!question || !answer || !props.id) return
 
         // Check if either question or answer has changed
         const isQuestionChanged = props.question !== question
         const isAnswerChanged = props.answer !== answer
+        const isQuestionVideoChanged = props.selectedCard.questionVideo !== questionVideo
+        const isAnswerVideoChanged = props.selectedCard.answerVideo !== answerVideo
 
-        if (isQuestionChanged || isAnswerChanged || isCoverQuestionChanged || isCoverAnswerChanged) {
+        if (isQuestionChanged || isAnswerChanged || isCoverQuestionChanged || isCoverAnswerChanged
+            || isQuestionVideoChanged || isAnswerVideoChanged) {
             const formData = new FormData()
 
             // Prepare the data object with only the changed properties
@@ -94,6 +94,12 @@ export const DialogUpdateCard = (props: Props) => {
             if (isCoverAnswerChanged) {
                 const answerImg = await fromBase64(coverAnswerImg ? coverAnswerImg : '')
                 if (answerImg) formData.append('answerImg', answerImg)
+            }
+            if (isQuestionVideoChanged) {
+                formData.append('questionVideo', questionVideo ? questionVideo : '')
+            }
+            if (isAnswerVideoChanged) {
+                formData.append('answerVideo', answerVideo ? answerVideo : '')
             }
 
             updateCard({
