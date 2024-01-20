@@ -12,14 +12,12 @@
 }
 
 .dummyImg, .dummyVideo {
-  margin-top: 24px;
   border: 1px solid white;
   @include mixins.flex($justifyContent: center, $alignItems: center);
 }
 
 .dummyImg {
   @include mixins.imgUploadSize;
-  margin-top: 24px;
 }
 
 .dummyVideo {

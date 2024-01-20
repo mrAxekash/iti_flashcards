@@ -127,7 +127,7 @@ export const DialogUpdatePack = (props: Props) => {
             </div>
             <form ref={formRef}>
                 <div className={sC.DialogDescription}>
-                    <div className={sC.textFieldContainer}>
+                    <div className={sC.elementContainer}>
                         <div className={sC.element}>
                             <ControlledTextField name={'name'} label={'Name Pack'} control={control}/>
                         </div>

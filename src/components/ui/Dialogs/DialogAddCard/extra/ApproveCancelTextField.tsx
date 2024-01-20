@@ -6,7 +6,7 @@ import {Textfield} from "@/components/ui/Textfield"
 export const ApproveCancelTextField = (props: Props) => {
 
     return (
-        <div className={sP.textFieldContainer}>
+        <div className={sP.elementContainer}>
             <div className={sP.element}>
                 <Textfield
                     placeholder={'https://youtu.be/lVAjmCRr2_Q?si=ECE1RD9mNOHyCvhC'}

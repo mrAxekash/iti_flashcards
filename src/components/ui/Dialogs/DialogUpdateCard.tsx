@@ -136,12 +136,12 @@ export const DialogUpdateCard = (props: Props) => {
             <div className={sC.DialogDescription}>
                 <form ref={formRef}>
                     <div className={sC.dialogElement}>
-                        <div className={sC.textFieldContainer}>
+                        <div className={sC.elementContainer}>
                             <div className={sC.element}>
                                 <ControlledTextField name={'question'} label={'Question'} control={control}/>
                             </div>
                         </div>
-                        <div className={sC.textFieldContainer}>
+                        <div className={sC.elementContainer}>
                             <div className={sC.element}>
                                 <ControlledTextField name={'answer'} label={'Answer'} control={control}/>
                             </div>

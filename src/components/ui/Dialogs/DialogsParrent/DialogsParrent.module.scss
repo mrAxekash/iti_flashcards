@@ -193,8 +193,12 @@ input {
   }
 }
 
-.textFieldContainer {
+.elementContainer:not(:last-child) {
   margin-bottom: 24px;
+}
+
+.sectionContainer {
+  margin-top: 24px;
 }
 
 .element {
