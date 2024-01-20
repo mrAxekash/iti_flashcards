@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from 'react-hook-form'
@@ -17,6 +17,8 @@ export const DialogUpdateCard = (props: Props) => {
     const [isCoverAnswerChanged, setIsCoverAnswerChanged] = useState(false)
     const [cropQuestionImg, setCropQuestionImg] = useState<string | undefined>(props.selectedCard.questionImg)
     const [cropAnswerImg, setCropAnswerImg] = useState<string | undefined>(props.selectedCard.answerImg)
+    const [youtubeQuestionUrl, setYoutubeQuestionUrl] = useState(props.selectedCard.questionVideo)
+    const [youtubeAnswerUrl, setYoutubeAnswerUrl] = useState(props.selectedCard.answerVideo)
 
     const schema = z.object({
         question: z.string().min(2).max(500),
@@ -24,6 +26,10 @@ export const DialogUpdateCard = (props: Props) => {
     })
 
     type FormValues = z.input<typeof schema>
+
+    useEffect(() => {
+        console.log('youtubeQuestionUrl', youtubeQuestionUrl, 'youtubeAnswerUrl', youtubeAnswerUrl)
+    }, [youtubeQuestionUrl, youtubeAnswerUrl]) // temp
 
     const {
         handleSubmit,
