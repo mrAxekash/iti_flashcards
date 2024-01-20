@@ -11,6 +11,7 @@ import {DialogsParrent} from '@/components/ui/Dialogs/DialogsParrent/DialogsParr
 import {useUpdateCardMutation} from '@/services/cards/cards.service.ts'
 import {CardImgUpload} from "@/components/ui/Dialogs/common/CardImgUpload.tsx"
 import {fromBase64} from "@/common/functions.ts"
+import {VideoSection} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoSection.tsx"
 
 export const DialogUpdateCard = (props: Props) => {
     const [isCoverQuestionChanged, setIsCoverQuestionChanged] = useState(false)
@@ -142,18 +143,20 @@ export const DialogUpdateCard = (props: Props) => {
                     </div>
 
                 </form>
-
-
-                <div className={sC.dialogElement}>
-                    <CardImgUpload
-                        cropQuestionImg={cropQuestionImg}
-                        cropAnswerImg={cropAnswerImg}
-                        setCropQuestionImg={setCropQuestionImg}
-                        setCropAnswerImg={setCropAnswerImg}
-                        onApproveAnswerCallback={onApproveAnswer}
-                        onApproveQuestionCallback={onApproveQuestion}
-                    />
-                </div>
+                <CardImgUpload
+                    cropQuestionImg={cropQuestionImg}
+                    cropAnswerImg={cropAnswerImg}
+                    setCropQuestionImg={setCropQuestionImg}
+                    setCropAnswerImg={setCropAnswerImg}
+                    onApproveAnswerCallback={onApproveAnswer}
+                    onApproveQuestionCallback={onApproveQuestion}
+                />
+                <VideoSection
+                    setYoutubeQuestionUrl={setYoutubeQuestionUrl}
+                    setYoutubeAnswerUrl={setYoutubeAnswerUrl}
+                    youtubeQuestionUrl={youtubeQuestionUrl ? youtubeQuestionUrl : ''}
+                    youtubeAnswerUrl={youtubeAnswerUrl ? youtubeAnswerUrl : ''}
+                />
             </div>
         </DialogsParrent>
     )
