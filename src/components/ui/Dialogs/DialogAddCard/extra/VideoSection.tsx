@@ -3,6 +3,7 @@ import {ApproveCancelTextField} from "@/components/ui/Dialogs/DialogAddCard/extr
 import {useState} from "react"
 import {extractYouTubeVideoId} from "@/components/ui/Dialogs/common/utils.ts"
 import {VideoElement} from "@/components/ui/Dialogs/DialogAddCard/extra/VideoElement.tsx"
+import {Typography} from "@/components/ui/Typography"
 
 export const VideoSection = (props: Props) => {
     const [isQuestionEdit, setIsQuestionEdit] = useState(false)
@@ -51,6 +52,7 @@ export const VideoSection = (props: Props) => {
     return (
         <div>
             <div className={sP.DialogDescription}>
+                <Typography variant={'Body_2'}>Video question:</Typography>
                 {
                     !isQuestionEdit
                         ? <VideoElement
@@ -68,6 +70,7 @@ export const VideoSection = (props: Props) => {
                         />
                 }
                 <div>
+                    <Typography variant={'Body_2'}>Video answer:</Typography>
                     {
                         !isAnswerEdit
                             ? <VideoElement

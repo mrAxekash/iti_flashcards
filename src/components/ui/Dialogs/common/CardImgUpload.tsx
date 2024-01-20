@@ -27,7 +27,6 @@ export const CardImgUpload = (props: Props) => {
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null)
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
 
-
   const cropSuggestionTextQuestion = 'Question image'
   const cropSuggestionTextAnswer = 'Answer image'
 
@@ -123,7 +122,7 @@ export const CardImgUpload = (props: Props) => {
 
   return (
     <>
-      <Typography variant={'Body_2'}>Question:</Typography>
+      <Typography variant={'Body_2'}>Image question:</Typography>
       <ChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropQuestionImg,
@@ -147,7 +146,7 @@ export const CardImgUpload = (props: Props) => {
         onCancel={onCancelQuestion}
       />
 
-      <Typography variant={'Body_2'}>Answer:</Typography>
+      <Typography variant={'Body_2'}>Image answer: </Typography>
       <ChangeCoverDummyImgCropper
         file={{
           cropImg: props.cropAnswerImg,
