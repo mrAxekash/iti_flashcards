@@ -3,27 +3,27 @@
 .imgContainer {
   margin: 0 auto;
   position: relative;
-  @include mixins.imgUploadSize;
+  @include mixins.img-upload-size;
 
   .croppedImg {
-    @include mixins.imgUploadSize;
+    @include mixins.img-upload-size;
   }
-
 }
 
-.dummyImg, .dummyVideo {
+.dummyImg,
+.dummyVideo {
   margin-top: 24px;
   border: 1px solid white;
   @include mixins.flex($justifyContent: center, $alignItems: center);
 }
 
 .dummyImg {
-  @include mixins.imgUploadSize;
+  @include mixins.img-upload-size;
   margin-top: 24px;
 }
 
 .dummyVideo {
-  @include mixins.videoSize;
+  @include mixins.video-size;
 }
 
 .container {
@@ -39,6 +39,6 @@
 }
 
 .button {
-    width: 100%;
-    margin-top: 24px;
+  width: 100%;
+  margin-top: 24px;
 }

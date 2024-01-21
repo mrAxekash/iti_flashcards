@@ -3,6 +3,7 @@ import { ChangeEvent, useCallback, useState } from 'react'
 import { Area, Point } from 'react-easy-crop'
 
 import { onFileChange } from '@/common/functions.ts'
+import { ChangeCoverDummyImgCropper } from '@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx'
 import { onCrop } from '@/components/ui/Dialogs/common/cropFunctions.ts'
 import { CropType } from '@/components/ui/Dialogs/common/CropTypes.ts'
 import {
@@ -11,7 +12,6 @@ import {
   minSliderValue,
 } from '@/components/ui/Dialogs/common/DialogsData.ts'
 import { Typography } from '@/components/ui/Typography'
-import {ChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx"
 
 export const CardImgUpload = (props: Props) => {
   const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)
@@ -26,7 +26,6 @@ export const CardImgUpload = (props: Props) => {
   const [zoomAnswer, setZoomAnswer] = useState(minSliderValue)
   const [cropAnswerArea, setCropAnswerArea] = useState<null | CropType>(null)
   const [sliderAnswerValue, setSliderAnswerValue] = useState<number[]>([minSliderValue])
-
 
   const cropSuggestionTextQuestion = 'Question image'
   const cropSuggestionTextAnswer = 'Answer image'
@@ -104,11 +103,11 @@ export const CardImgUpload = (props: Props) => {
   function onApproveQuestion() {
     setIsEditQuestionPicture(false)
     onCrop(
-        cropQuestionArea,
-        inputQuestionImg,
-        canvaWidth,
-        canvaHeight,
-        props.setCropQuestionImg
+      cropQuestionArea,
+      inputQuestionImg,
+      canvaWidth,
+      canvaHeight,
+      props.setCropQuestionImg
     ).then()
     props.onApproveQuestionCallback()
   }
