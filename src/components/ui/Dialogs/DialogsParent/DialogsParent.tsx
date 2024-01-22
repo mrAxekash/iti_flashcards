@@ -22,7 +22,9 @@ export const DialogsParent = (props: Props) => {
               </button>
             </RDialog.Close>
           </RDialog.Title>
-          {props.children}
+          <RDialog.Description className={s.dialogDescription}>
+            {props.children}
+          </RDialog.Description>
           <div className={s.buttonContainer}>
             <RDialog.Close asChild>
               <Button className={s.buttonCancel}>Cancel</Button>
