@@ -1,6 +1,6 @@
-import { MyYouTube } from '@/common/MyYouTube.tsx'
 import { Button } from '@/components/ui/Button'
 import sC from '@/components/ui/Dialogs/common/Dialogs.module.scss'
+import {MyYouTube} from "@/common/MyYouTube/MyYouTube.tsx"
 
 export const VideoElement = (props: Props) => {
   return (
