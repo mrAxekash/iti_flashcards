@@ -52,7 +52,7 @@ export const VideoSection = (props: Props) => {
     return (
         <div className={sP.sectionContainer}>
             <div className={sP.elementContainer}>
-                <Typography variant={'Body_2'}>Video question</Typography>
+                <Typography variant={'Body_2'} className={sP.greyText}>Video question</Typography>
                 {
                     !isQuestionEdit
                         ? <VideoElement
@@ -71,7 +71,7 @@ export const VideoSection = (props: Props) => {
                 }
             </div>
             <div className={sP.elementContainer}>
-                <Typography variant={'Body_2'}>Video answer</Typography>
+                <Typography variant={'Body_2'} className={sP.greyText}>Video answer</Typography>
                 {
                     !isAnswerEdit
                         ? <VideoElement

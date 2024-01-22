@@ -124,7 +124,7 @@ export const CardImgUpload = (props: Props) => {
     return (
         <div className={sC.sectionContainer}>
             <div className={sC.elementContainer}>
-                <Typography variant={'Body_2'}>Image question</Typography>
+                <Typography variant={'Body_2'} className={sC.greyText}>Image question</Typography>
                 <ChangeCoverDummyImgCropper
                     file={{
                         cropImg: props.cropQuestionImg,
@@ -148,7 +148,7 @@ export const CardImgUpload = (props: Props) => {
                     onCancel={onCancelQuestion}
                 />
             </div>
-            <Typography variant={'Body_2'}>Image answer</Typography>
+            <Typography variant={'Body_2'} className={sC.greyText}>Image answer</Typography>
             <ChangeCoverDummyImgCropper
                 file={{
                     cropImg: props.cropAnswerImg,
