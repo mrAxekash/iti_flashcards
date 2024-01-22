@@ -1,4 +1,4 @@
-import sP from "@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss"
+import sP from "@/components/ui/Dialogs/DialogsParent/DialogsParent.module.scss"
 import {Button} from "@/components/ui/Button"
 import sC from "@/components/ui/Dialogs/common/Dialogs.module.scss"
 import {Textfield} from "@/components/ui/Textfield"

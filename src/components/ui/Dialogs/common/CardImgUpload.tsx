@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/Dialogs/common/DialogsData.ts'
 import {Typography} from '@/components/ui/Typography'
 import {ChangeCoverDummyImgCropper} from "@/components/ui/Dialogs/common/ChangeCoverDummyImgCropper.tsx"
-import sC from "@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss"
+import sC from "@/components/ui/Dialogs/DialogsParent/DialogsParent.module.scss"
 
 export const CardImgUpload = (props: Props) => {
     const [isEditQuestionPicture, setIsEditQuestionPicture] = useState(false)

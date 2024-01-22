@@ -1,4 +1,4 @@
-import sP from '@/components/ui/Dialogs/DialogsParrent/DialogsParrent.module.scss'
+import sP from '@/components/ui/Dialogs/DialogsParent/DialogsParent.module.scss'
 import {ApproveCancelTextField} from "@/components/ui/Dialogs/DialogAddCard/extra/ApproveCancelTextField.tsx"
 import {useState} from "react"
 import {extractYouTubeVideoId} from "@/components/ui/Dialogs/common/utils.ts"
