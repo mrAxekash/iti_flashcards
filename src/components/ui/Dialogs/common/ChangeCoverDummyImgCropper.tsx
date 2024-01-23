@@ -53,6 +53,7 @@ export const ChangeCoverDummyImgCropper = (props: ExtraChangeCoverDummyImgCroppe
                 step={sliderStep}
                 value={props.slider.sliderValue[0]}
                 onValueChange={props.slider.sliderChangeHandler}
+                isValueHidden={true}
               />
               <div className={sC.container}>
                 <Button onClick={props.onApprove} variant="secondary" className={sC.halfButton}>
