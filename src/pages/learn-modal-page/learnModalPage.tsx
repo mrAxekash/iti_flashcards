@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
@@ -39,8 +38,9 @@ export const LearnModalPage = () => {
     return <Loader />
   }
 
-  //TODO fix this error
-  const errorData = error && error?.data
+  const errorData = ((error as FetchBaseQueryError)?.data || { message: 'some error' }) as {
+    message: string
+  }
 
   if (isError) {
     // return <ErrorPage errorMessage={error?.data?.message} />
@@ -78,6 +78,8 @@ export const LearnModalPage = () => {
           onChange={sendGrade}
           imgAnswer={cardData.answerImg}
           imgQuestion={cardData.questionImg}
+          questionVideo={cardData.questionVideo}
+          answerVideo={cardData.answerVideo}
         />
       )}
     </div>
