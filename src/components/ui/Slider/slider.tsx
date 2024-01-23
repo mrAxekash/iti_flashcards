@@ -20,7 +20,24 @@ export const Slider = forwardRef<
       )}
       <div className={s.container}>
         <div>
-          <span className={s.value}>{props?.value?.[0]}</span>
+          <span className={s.value}>
+            <input
+              onChange={e => {
+                props.onValueCommit &&
+                  props.onValueCommit([
+                    +e.currentTarget.value,
+                    props?.value?.[1] ? props?.value?.[1] : 0,
+                  ])
+                props.onValueChange &&
+                  props.onValueChange([
+                    +e.currentTarget.value,
+                    props?.value?.[1] ? props?.value?.[1] : 0,
+                  ])
+              }}
+              value={props?.value?.[0]}
+            />
+            {/*<Textfield>{props?.value?.[0]}</Textfield>*/}
+          </span>
         </div>
         <SliderPrimitive.Root ref={ref} className={clsx(s.root, className)} {...props}>
           <SliderPrimitive.Track className={s.track}>
