@@ -22,18 +22,19 @@ export const Slider = forwardRef<
         <div>
           <span className={s.value}>
             <input
-              onChange={e => {
-                props.onValueCommit &&
-                  props.onValueCommit([
-                    +e.currentTarget.value,
-                    props?.value?.[1] ? props?.value?.[1] : 0,
-                  ])
-                props.onValueChange &&
-                  props.onValueChange([
-                    +e.currentTarget.value,
-                    props?.value?.[1] ? props?.value?.[1] : 0,
-                  ])
-              }}
+              // onChange={e => {
+              //   props.onValueCommit &&
+              //     props.onValueCommit([
+              //       +e.currentTarget.value,
+              //       props?.value?.[1] ? props?.value?.[1] : 0,
+              //     ])
+              //   // props.onValueCommit && props.onValueCommit()
+              //   props.onValueChange &&
+              //     props.onValueChange([
+              //       +e.currentTarget.value,
+              //       props?.value?.[1] ? props?.value?.[1] : 0,
+              //     ])
+              // }}
               value={props?.value?.[0]}
             />
             {/*<Textfield>{props?.value?.[0]}</Textfield>*/}
@@ -47,7 +48,25 @@ export const Slider = forwardRef<
           <SliderPrimitive.Thumb className={s.thumb} />
         </SliderPrimitive.Root>
         <div>
-          <span className={s.value}>{props?.value?.[1]}</span>
+          <span className={s.value}>
+            <input
+              value={props?.value?.[1]}
+              // onChange={e => {
+              //   props.onValueCommit &&
+              //     props.onValueCommit([
+              //       props?.value?.[0] ? props?.value?.[0] : 0,
+              //       +e.currentTarget.value,
+              //     ])
+              //   // props.onValueCommit && props.onValueCommit()
+              //   props.onValueChange &&
+              //     props.onValueChange([
+              //       props?.value?.[0] ? props?.value?.[0] : 0,
+              //       +e.currentTarget.value,
+              //     ])
+              // }}
+            />
+            {/*{props?.value?.[1]}*/}
+          </span>
         </div>
       </div>
     </div>
