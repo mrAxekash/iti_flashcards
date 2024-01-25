@@ -24,10 +24,13 @@ export const Slider = forwardRef<
             <input
               // onChange={e => {
               //   props.onValueCommit &&
-              //     props.onValueCommit([
-              //       +e.currentTarget.value,
-              //       props?.value?.[1] ? props?.value?.[1] : 0,
-              //     ])
+              //     props.onValueCommit(
+              //       //     [
+              //       //   +e.currentTarget.value,
+              //       //   props?.value?.[1] ? props?.value?.[1] : 0,
+              //       // ]
+              //       [+e.currentTarget.value]
+              //     )
               //   // props.onValueCommit && props.onValueCommit()
               //   props.onValueChange &&
               //     props.onValueChange([
@@ -53,10 +56,10 @@ export const Slider = forwardRef<
               value={props?.value?.[1]}
               // onChange={e => {
               //   props.onValueCommit &&
-              //     props.onValueCommit([
-              //       props?.value?.[0] ? props?.value?.[0] : 0,
-              //       +e.currentTarget.value,
-              //     ])
+              //     props.onValueCommit(
+              //       [props?.value?.[0] ? props?.value?.[0] : 0, +e.currentTarget.value]
+              //       // [+e.currentTarget.value]
+              //     )
               //   // props.onValueCommit && props.onValueCommit()
               //   props.onValueChange &&
               //     props.onValueChange([
