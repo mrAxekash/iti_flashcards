@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import { clsx } from 'clsx'
@@ -10,7 +10,16 @@ import { Typography } from '@/components/ui/Typography'
 export const Slider = forwardRef<
   ElementRef<typeof SliderPrimitive.Root>,
   ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, name, title, ...props }, ref) => {
+>(({ className, name, title, value, ...props }, ref) => {
+  const [currentSliderValue, setCurrentSliderValue] = useState([value?.[0], value?.[1]])
+
+  // const currentRef = useRef([props.min, props.max])
+
+  const applyValueCommit = () => {
+    props.onValueCommit && props.onValueCommit(currentSliderValue)
+    props.onValueChange && props.onValueChange(currentSliderValue)
+  }
+
   return (
     <div>
       {title && (
@@ -22,28 +31,26 @@ export const Slider = forwardRef<
         <div>
           <span className={s.value}>
             <input
-              // onChange={e => {
-              //   props.onValueCommit &&
-              //     props.onValueCommit(
-              //       //     [
-              //       //   +e.currentTarget.value,
-              //       //   props?.value?.[1] ? props?.value?.[1] : 0,
-              //       // ]
-              //       [+e.currentTarget.value]
-              //     )
-              //   // props.onValueCommit && props.onValueCommit()
-              //   props.onValueChange &&
-              //     props.onValueChange([
-              //       +e.currentTarget.value,
-              //       props?.value?.[1] ? props?.value?.[1] : 0,
-              //     ])
-              // }}
-              value={props?.value?.[0]}
+              onChange={e => {
+                // props.onValueChange && props.onValueChange([+e.currentTarget.value, props.value[1]])
+                setCurrentSliderValue([+e.currentTarget.value, value?.[1]])
+              }}
+              onBlur={applyValueCommit}
+              value={currentSliderValue?.[0]}
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  applyValueCommit()
+                }
+              }}
             />
-            {/*<Textfield>{props?.value?.[0]}</Textfield>*/}
           </span>
         </div>
-        <SliderPrimitive.Root ref={ref} className={clsx(s.root, className)} {...props}>
+        <SliderPrimitive.Root
+          ref={ref}
+          className={clsx(s.root, className)}
+          value={value}
+          {...props}
+        >
           <SliderPrimitive.Track className={s.track}>
             <SliderPrimitive.Range className={s.range} />
           </SliderPrimitive.Track>
@@ -53,7 +60,11 @@ export const Slider = forwardRef<
         <div>
           <span className={s.value}>
             <input
-              value={props?.value?.[1]}
+              // value={props?.value?.[1]}
+              value={currentSliderValue[1]}
+              onChange={e => {
+                setCurrentSliderValue([currentSliderValue[0], +e.currentTarget.value])
+              }}
               // onChange={e => {
               //   props.onValueCommit &&
               //     props.onValueCommit(
@@ -68,7 +79,6 @@ export const Slider = forwardRef<
               //     ])
               // }}
             />
-            {/*{props?.value?.[1]}*/}
           </span>
         </div>
       </div>

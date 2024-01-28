@@ -40,8 +40,6 @@ export const DecksPage = () => {
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
   const [sliderValue, setSliderValue] = useState([cardsCounts[0], cardsCounts[1]])
 
-  console.log(sliderValue)
-
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
     id: '',
     name: '',
@@ -66,6 +64,7 @@ export const DecksPage = () => {
     dispatch(setCardsCounts(sliderValue))
   }
 
+  // debugger
   const {
     currentData,
     data,
@@ -74,8 +73,8 @@ export const DecksPage = () => {
   } = useGetDecksQuery({
     itemsPerPage: +itemsPerPage,
     name: searchByName,
-    minCardsCount: cardsCounts[0],
-    maxCardsCount: cardsCounts[1],
+    minCardsCount: sliderValue[0],
+    maxCardsCount: sliderValue[1],
     currentPage,
     authorId,
     orderBy,
@@ -83,6 +82,7 @@ export const DecksPage = () => {
 
   const decks = currentData ?? data
 
+  // debugger
   //for tabSwitcher
   const tabSwitcherValues: Array<TabSwitcherValues> = [
     { index: 1, value: 'MyCards', text: 'My Cards' },
