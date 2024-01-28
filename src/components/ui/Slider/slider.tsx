@@ -10,14 +10,26 @@ import { Typography } from '@/components/ui/Typography'
 export const Slider = forwardRef<
   ElementRef<typeof SliderPrimitive.Root>,
   ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, name, title, value, ...props }, ref) => {
+>(({ className, name, title, value, onValueChange, ...props }, ref) => {
   const [currentSliderValue, setCurrentSliderValue] = useState([value?.[0], value?.[1]])
 
   // const currentRef = useRef([props.min, props.max])
 
   const applyValueCommit = () => {
+    // const value1 = currentSliderValue[0]
+    // const value2 = currentSliderValue[1]
+    //
+    // let newValue1
+    // let newValue2
+    //
+    // if (value1 < props.min || value1 > props.max) {
+    //   newValue1 = props.min
+    // } else {
+    //   newValue1 = currentSliderValue[1]
+    // }
+    debugger
     props.onValueCommit && props.onValueCommit(currentSliderValue)
-    props.onValueChange && props.onValueChange(currentSliderValue)
+    onValueChange && onValueChange(currentSliderValue)
   }
 
   return (
@@ -48,7 +60,10 @@ export const Slider = forwardRef<
         <SliderPrimitive.Root
           ref={ref}
           className={clsx(s.root, className)}
-          value={value}
+          value={currentSliderValue}
+          onValueChange={e => {
+            setCurrentSliderValue(e)
+          }}
           {...props}
         >
           <SliderPrimitive.Track className={s.track}>
