@@ -14,10 +14,20 @@ export const Slider = forwardRef<
   const [currentSliderValue, setCurrentSliderValue] = useState([value?.[0], value?.[1]])
 
   const onLeftInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentSliderValue([+e.currentTarget.value, value?.[1]])
+    setCurrentSliderValue([
+      +e.currentTarget.value < props.min || +e.currentTarget.value > props.max
+        ? props.min
+        : +e.currentTarget.value,
+      value?.[1],
+    ])
   }
   const onRightInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentSliderValue([currentSliderValue[0], +e.currentTarget.value])
+    setCurrentSliderValue([
+      currentSliderValue[0],
+      +e.currentTarget.value > props.max || +e.currentTarget.value < props.min
+        ? props.max
+        : +e.currentTarget.value,
+    ])
   }
   const applyValueCommit = () => {
     // let value1 = value?.[0]
