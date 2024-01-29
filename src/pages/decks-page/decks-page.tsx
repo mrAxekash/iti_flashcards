@@ -40,6 +40,8 @@ export const DecksPage = () => {
   const [sort, setSort] = useState<Sort>(null) // for sorting cells in table
   const [sliderValue, setSliderValue] = useState([cardsCounts[0], cardsCounts[1]])
 
+  console.log(sliderValue)
+
   const [selectedDeck, setSelectedDeck] = useState<SelectedDeck>({
     id: '',
     name: '',
