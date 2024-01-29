@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import { clsx } from 'clsx'
@@ -13,7 +13,27 @@ export const Slider = forwardRef<
 >(({ className, name, title, value, onValueChange, onValueCommit, ...props }, ref) => {
   const [currentSliderValue, setCurrentSliderValue] = useState([value?.[0], value?.[1]])
 
+  const onLeftInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentSliderValue([+e.currentTarget.value, value?.[1]])
+  }
+  const onRightInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentSliderValue([currentSliderValue[0], +e.currentTarget.value])
+  }
   const applyValueCommit = () => {
+    // let value1 = value?.[0]
+    // let value2 = value?.[1]
+    //
+    // let newValue1 = value1
+    // let newValue2 = value2
+    //
+    // if (value1 < props.min || value1 > props.max) {
+    //   newValue1 = props.min
+    // }
+    //
+    // if (value2 > props.max || value2 < props.min) {
+    //   newValue2 = props.max
+    // }
+
     onValueChange && onValueChange(currentSliderValue)
     onValueCommit && onValueCommit(currentSliderValue)
   }
@@ -29,9 +49,8 @@ export const Slider = forwardRef<
         <div>
           <span className={s.value}>
             <input
-              onChange={e => {
-                setCurrentSliderValue([+e.currentTarget.value, value?.[1]])
-              }}
+              id={'1'}
+              onChange={onLeftInput}
               onBlur={applyValueCommit}
               value={currentSliderValue?.[0]}
               onKeyPress={e => {
@@ -61,10 +80,9 @@ export const Slider = forwardRef<
         <div>
           <span className={s.value}>
             <input
+              id={'2'}
               value={currentSliderValue[1]}
-              onChange={e => {
-                setCurrentSliderValue([currentSliderValue[0], +e.currentTarget.value])
-              }}
+              onChange={onRightInput}
               onBlur={applyValueCommit}
               onKeyPress={e => {
                 if (e.key === 'Enter') {
