@@ -11,25 +11,38 @@ export const Slider = forwardRef<
   ElementRef<typeof SliderPrimitive.Root>,
   ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, name, title, value, onValueChange, onValueCommit, ...props }, ref) => {
-  const [currentSliderValue, setCurrentSliderValue] = useState([value?.[0], value?.[1]])
+  const [currentSliderValue, setCurrentSliderValue] = useState<number[]>([
+    value?.[0] || 0,
+    value?.[1] || 0,
+  ])
 
   const onLeftInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentSliderValue([
-      +e.currentTarget.value < props.min || +e.currentTarget.value > props.max
-        ? props.min
-        : +e.currentTarget.value,
-      value?.[1],
-    ])
+    //console.log(/^[0-9]*$/.test(e.currentTarget.value))
+    if (/^[0-9]*$/.test(e.currentTarget.value)) {
+      setCurrentSliderValue([
+        +e.currentTarget.value < (props?.min || 0) || +e.currentTarget.value > (props?.max || 0)
+          ? props.min || 0
+          : +e.currentTarget.value,
+        value?.[1] || 0,
+      ])
+    }
   }
   const onRightInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentSliderValue([
-      currentSliderValue[0],
-      +e.currentTarget.value > props.max || +e.currentTarget.value < props.min
-        ? props.max
-        : +e.currentTarget.value,
-    ])
+    //console.log(/^[0-9]*$/.test(e.currentTarget.value))
+    if (/^[0-9]*$/.test(e.currentTarget.value)) {
+      setCurrentSliderValue([
+        currentSliderValue[0],
+        +e.currentTarget.value > (props.max || 0) || +e.currentTarget.value < (props.min || 0)
+          ? props.max || 0
+          : +e.currentTarget.value,
+      ])
+    }
   }
   const applyValueCommit = () => {
+    if (currentSliderValue) {
+      onValueChange && onValueChange(currentSliderValue)
+      onValueCommit && onValueCommit(currentSliderValue)
+    }
     // let value1 = value?.[0]
     // let value2 = value?.[1]
     //
@@ -43,9 +56,6 @@ export const Slider = forwardRef<
     // if (value2 > props.max || value2 < props.min) {
     //   newValue2 = props.max
     // }
-
-    onValueChange && onValueChange(currentSliderValue)
-    onValueCommit && onValueCommit(currentSliderValue)
   }
 
   return (
