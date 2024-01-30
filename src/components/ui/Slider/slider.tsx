@@ -43,19 +43,6 @@ export const Slider = forwardRef<
       onValueChange && onValueChange(currentSliderValue)
       onValueCommit && onValueCommit(currentSliderValue)
     }
-    // let value1 = value?.[0]
-    // let value2 = value?.[1]
-    //
-    // let newValue1 = value1
-    // let newValue2 = value2
-    //
-    // if (value1 < props.min || value1 > props.max) {
-    //   newValue1 = props.min
-    // }
-    //
-    // if (value2 > props.max || value2 < props.min) {
-    //   newValue2 = props.max
-    // }
   }
 
   return (
