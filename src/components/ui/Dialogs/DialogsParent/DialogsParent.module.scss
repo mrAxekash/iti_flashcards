@@ -37,6 +37,7 @@ input {
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   max-height: 95%;
   overflow-y: hidden;
+
 }
 
 .DialogContent:focus {
@@ -61,7 +62,7 @@ input {
 
 .children {
   margin: 0 auto;
-  padding: 24px 10px 0;
+  padding-top: 24px;
   max-width: var(--canva-width);
   width: 100%;
 
@@ -191,6 +192,14 @@ input {
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
+  }
+}
+
+.DialogDescription {
+  &::-webkit-scrollbar {
+    background-color: black;
+    width: 12px;
+    padding-left: 12px;
   }
 }
 
