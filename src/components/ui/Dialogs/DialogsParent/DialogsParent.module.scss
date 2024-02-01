@@ -1,7 +1,8 @@
-@import '../../../../../node_modules/@radix-ui/colors/black-alpha.css';
-@import '../../../../../node_modules/@radix-ui/colors/green.css';
-@import '../../../../../node_modules/@radix-ui/colors/mauve.css';
-@import '../../../../../node_modules/@radix-ui/colors/violet.css';
+@forward '../../../../../node_modules/@radix-ui/colors/black-alpha';
+@forward '../../../../../node_modules/@radix-ui/colors/green';
+@forward '../../../../../node_modules/@radix-ui/colors/mauve';
+@forward '../../../../../node_modules/@radix-ui/colors/violet';
+@forward '../../../../common/constants';
 
 /* reset */
 button,
@@ -61,7 +62,7 @@ input {
 .children {
   margin: 0 auto;
   padding: 24px 10px 0;
-  max-width: 484px;
+  max-width: var(--canva-width);
   width: 100%;
 
   font-size: 16px;
