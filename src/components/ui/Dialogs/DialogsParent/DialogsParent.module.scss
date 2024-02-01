@@ -61,9 +61,11 @@ input {
 }
 
 .children {
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 24px;
-  max-width: var(--canva-width);
+  
   width: 100%;
 
   font-size: 16px;
@@ -196,11 +198,8 @@ input {
 }
 
 .DialogDescription {
-  &::-webkit-scrollbar {
-    background-color: black;
-    width: 12px;
-    padding-left: 12px;
-  }
+  width: 100%;
+  max-width: var(--canva-width);
 }
 
 .elementContainer:not(:last-child) {

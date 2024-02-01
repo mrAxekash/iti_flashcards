@@ -6,6 +6,7 @@
   @include mixins.img-upload-size;
 
   .croppedImg {
+    width: 100%;
     max-width: var(--canva-width);
   }
 
