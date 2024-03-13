@@ -60,6 +60,8 @@ export const DialogAddCard = (props: Props) => {
         if (!question || !answer || !props.deckId) return
 
         // clean old values
+        setCropQuestionImg(undefined)
+        setCropAnswerImg(undefined)
         setYoutubeQuestionUrl('')
         setYoutubeAnswerUrl('')
 
