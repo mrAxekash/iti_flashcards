@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import { clsx } from 'clsx'
@@ -7,7 +7,6 @@ import s from './slider.module.scss'
 
 import { Typography } from '@/components/ui/Typography'
 import { useAppDispatch } from '@/hooks.ts'
-import { setCardsCounts } from '@/services/decks/decks.slice.ts'
 
 export const Slider = forwardRef<
   ElementRef<typeof SliderPrimitive.Root>,
@@ -17,8 +16,6 @@ export const Slider = forwardRef<
   //   value?.[0] || 0,
   //   value?.[1] || 0,
   // ])
-
-  const dispatch = useAppDispatch()
 
   const onLeftInput = (e: ChangeEvent<HTMLInputElement>) => {
     //console.log(/^[0-9]*$/.test(e.currentTarget.value))
